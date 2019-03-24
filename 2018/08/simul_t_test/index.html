@@ -67,7 +67,7 @@ Congratulations! Your simulation code from the previous post has impressed all a
   "description" : "Same difference.
 Congratulations! Your simulation code from the previous post has impressed all and sundry and you&#39;ve been asked to teach introductory statistics to first year students at the prestigious Vandelay University. You&#39;ve got 2 stats classes, one with a group of 65 students, and another with a group of 35 students. We assume that the students have been randomly allocated to each group, and that they share the same final exam.",
   "inLanguage" : "en",
-  "wordCount": 996,
+  "wordCount": 994,
   "datePublished" : "2018-08-29T00:00:00",
   "dateModified" : "2018-08-29T00:00:00",
   "image" : "https://adelr.github.io/img/avatar-icon.png",
@@ -242,7 +242,7 @@ Congratulations! Your simulation code from the previous post has impressed all a
     &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;5&nbsp;minutes
   
   
-    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;996&nbsp;words
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;994&nbsp;words
   
   
     &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Adel Rahmani
@@ -282,34 +282,28 @@ while with group2 you sometimes use interpretive dance instead of equations to e
 <img src="https://media.giphy.com/media/xT1XGXgtj8PWdvCLFS/giphy.gif" width="400">
 </div>
 
-Let's jump right in.
+<p>Let's jump right in.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
+<span class="c1"># suppress warning messages.</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
 
-```python
-from math import *
-import numpy as np
+<span class="c1"># import the scipy module which comtains scientific and stats functions.</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="kn">as</span> <span class="nn">stats</span>
 
-# suppress warning messages.
-import warnings
-warnings.filterwarnings('ignore')
+<span class="c1"># usual plotting stuff.</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
 
-# import the scipy module which comtains scientific and stats functions.
-import scipy.stats as stats
+<span class="c1"># set the matplotlib style </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&#34;seaborn-darkgrid&#34;</span><span class="p">)</span>
 
-# usual plotting stuff.
-import matplotlib.pyplot as plt
-from matplotlib import cm
-%matplotlib inline
-
-# set the matplotlib style 
-plt.style.use("seaborn-darkgrid")
-
-from IPython.core.display import display, HTML
-display(HTML("<style>.container { width:100% !important; }</style>"))
-```
-
+<span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">&#34;&lt;style&gt;.container { width:100% !important; }&lt;/style&gt;&#34;</span><span class="p">))</span></code></pre></div>
 <style>.container { width:100% !important; }</style>
-
 
 <p>Here are the marks (out of 100) in the final exam for these two groups.</p>
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">group1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">57</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">74</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span>
@@ -332,7 +326,7 @@ that those in group1.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&#34;mark&#34;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></div>
-<p><img src="output_9_0.png" alt="png" /></p>
+<p><img src="output_8_0.png" alt="png" /></p>
 
 <h5 id="is-this-difference-in-means-statistically-significant-i-e-should-you-drop-the-interpretive-dance-routine">Is this difference in means statistically significant (i.e., should you drop the interpretive dance routine)?</h5>
 
@@ -395,7 +389,7 @@ it turns out there&rsquo;s an app for that.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&#34;count&#34;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></div>
-<p><img src="output_18_0.png" alt="png" /></p>
+<p><img src="output_17_0.png" alt="png" /></p>
 
 <p>On the histogram, we see that the observed difference is quite far from the mode of the distribution.</p>
 
