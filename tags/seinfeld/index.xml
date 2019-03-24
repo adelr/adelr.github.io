@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Seinfeld on Dinkum Data Blog</title>
+    <link>https://adelr.github.io/tags/seinfeld/</link>
+    <description>Recent content in Seinfeld on Dinkum Data Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <managingEditor>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</managingEditor>
+    <webMaster>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</webMaster>
+    <lastBuildDate>Wed, 29 Aug 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://adelr.github.io/tags/seinfeld/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>That ain&#39;t dancing Sally!</title>
+      <link>https://adelr.github.io/2018/08/simul_t_test/</link>
+      <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
+      <author>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</author>
+      <guid>https://adelr.github.io/2018/08/simul_t_test/</guid>
+      <description>Same difference.
+Congratulations! Your simulation code from the previous post has impressed all and sundry and you&#39;ve been asked to teach introductory statistics to first year students at the prestigious Vandelay University. You&#39;ve got 2 stats classes, one with a group of 65 students, and another with a group of 35 students. We assume that the students have been randomly allocated to each group, and that they share the same final exam.</description>
+    </item>
+    
+    <item>
+      <title>Seinfeld&#39;s Magnificent Seven</title>
+      <link>https://adelr.github.io/2018/05/seinfeld_effect/</link>
+      <pubDate>Thu, 10 May 2018 00:00:00 +0000</pubDate>
+      <author>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</author>
+      <guid>https://adelr.github.io/2018/05/seinfeld_effect/</guid>
+      <description>In this post I want to take a look at a classic data set: the US baby names.
+While the origin of many names can be found in popular culture and (what&#39;s the alternative to popular culture? impopular culture?) elsewhere, we shall focus on how the TV show Seinfeld may have influenced the naming of hundreds of innocent babies.
+We&#39;ll roughly follow the steps outlined by Wes McKinney in his excellent book Python for Data Analysis to load the data.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Seinfeld&#39;s Magnificent Seven - Dinkum Data Blog</title>
+  <meta property="og:title" content="Seinfeld&#39;s Magnificent Seven" />
+  <meta name="twitter:title" content="Seinfeld&#39;s Magnificent Seven" />
+  <meta name="description" content="In this post I want to take a look at a classic data set: the US baby names.
+While the origin of many names can be found in popular culture and (what&#39;s the alternative to popular culture? impopular culture?) elsewhere, we shall focus on how the TV show Seinfeld may have influenced the naming of hundreds of innocent babies.
+We&#39;ll roughly follow the steps outlined by Wes McKinney in his excellent book Python for Data Analysis to load the data.">
+  <meta property="og:description" content="In this post I want to take a look at a classic data set: the US baby names.
+While the origin of many names can be found in popular culture and (what&#39;s the alternative to popular culture? impopular culture?) elsewhere, we shall focus on how the TV show Seinfeld may have influenced the naming of hundreds of innocent babies.
+We&#39;ll roughly follow the steps outlined by Wes McKinney in his excellent book Python for Data Analysis to load the data.">
+  <meta name="twitter:description" content="In this post I want to take a look at a classic data set: the US baby names.
+While the origin of many names can be found in popular culture and (what&#39;s the alternative to popular culture? impopular …">
+  <meta name="author" content="Adel Rahmani"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Dinkum Data Blog",
+    
+    "url": "https://adelr.github.io/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https://adelr.github.io/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https://adelr.github.io/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https://adelr.github.io/2018/05/seinfeld_effect/",
+          "name": "Seinfeld&#39;s magnificent seven"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Adel Rahmani"
+  },
+  "headline": "Seinfeld&#39;s Magnificent Seven",
+  "description" : "In this post I want to take a look at a classic data set: the US baby names.
+While the origin of many names can be found in popular culture and (what&#39;s the alternative to popular culture? impopular culture?) elsewhere, we shall focus on how the TV show Seinfeld may have influenced the naming of hundreds of innocent babies.
+We&#39;ll roughly follow the steps outlined by Wes McKinney in his excellent book Python for Data Analysis to load the data.",
+  "inLanguage" : "en",
+  "wordCount": 3098,
+  "datePublished" : "2018-05-10T00:00:00",
+  "dateModified" : "2018-05-10T00:00:00",
+  "image" : "https://adelr.github.io/img/avatar-icon.png",
+  "keywords" : [ "python, seinfeld" ],
+  "mainEntityOfPage" : "https://adelr.github.io/2018/05/seinfeld_effect/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https://adelr.github.io/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https://adelr.github.io/img/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Seinfeld&#39;s Magnificent Seven" />
+<meta property="og:description" content="In this post I want to take a look at a classic data set: the US baby names.
+While the origin of many names can be found in popular culture and (what&#39;s the alternative to popular culture? impopular culture?) elsewhere, we shall focus on how the TV show Seinfeld may have influenced the naming of hundreds of innocent babies.
+We&#39;ll roughly follow the steps outlined by Wes McKinney in his excellent book Python for Data Analysis to load the data.">
+<meta property="og:image" content="https://adelr.github.io/img/avatar-icon.png" />
+<meta property="og:url" content="https://adelr.github.io/2018/05/seinfeld_effect/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Dinkum Data Blog" />
+  <meta name="twitter:title" content="Seinfeld&#39;s Magnificent Seven" />
+  <meta name="twitter:description" content="In this post I want to take a look at a classic data set: the US baby names.
+While the origin of many names can be found in popular culture and (what&#39;s the alternative to popular culture? impopular …">
+  <meta name="twitter:image" content="https://adelr.github.io/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://adelr.github.io/img/avatar-icon.png" />
+  <meta name="twitter:image" content="https://adelr.github.io/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://adelr.github.io/2018/05/seinfeld_effect/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Dinkum Data Blog" />
+
+  <meta name="generator" content="Hugo 0.54.0" />
+  <link rel="alternate" href="https://adelr.github.io/index.xml" type="application/rss+xml" title="Dinkum Data Blog"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://adelr.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://adelr.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://adelr.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://adelr.github.io/">Dinkum Data Blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Dinkum Data Blog" href="https://adelr.github.io/">
+            <img class="avatar-img" src="https://adelr.github.io/img/avatar-icon.png" alt="Dinkum Data Blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Seinfeld&#39;s Magnificent Seven</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on May 10, 2018
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;15&nbsp;minutes
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;3098&nbsp;words
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Adel Rahmani
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<p>In this post I want to take a look at a classic data set: the US baby names.</p>
+
+<p>While the origin of many names can be found in popular culture and (what's the alternative to popular culture? 
+impopular culture?) elsewhere, we shall focus on how the TV show Seinfeld may have influenced the naming of hundreds of innocent babies.</p>
+
+<p>We'll roughly follow the steps outlined by Wes McKinney in his excellent book <a href="http://shop.oreilly.com/product/0636920023784.do">Python for Data Analysis</a> to load the data.</p>
+
+<p>Let's first start by importing a couple of modules.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="kn">as</span> <span class="nn">mpl</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-white&#39;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">&#34;&lt;style&gt;.container { width:100% !important; }&lt;/style&gt;&#34;</span><span class="p">))</span></code></pre></div>
+<style>.container { width:100% !important; }</style>
+
+<h3> <center><font color=MediumVioletRed>A. Loading the data</font></center></h3>
+
+<p>The dataset can be downloaded from <a href="http://www.ssa.gov/oact/babynames/limits.html">http://www.ssa.gov/oact/babynames/limits.html</a>. (Follow the link and download the dataset
+in the datasets directory, in a directory called names, and unzip it).</p>
+
+<p>The dataset contains the top 1000 most popular names starting in 1880.</p>
+
+<p>The data for each year is in its own text file. For instance, the data for 1880 is in the file <code>yob1880.txt</code> (which should
+be located in the datasets/names/ folder.)</p>
+
+<p>The first thing to do is merge the data for all the different years into a single dataframe, however, as a warm up, let&rsquo;s look at the data for a single year.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">input_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;data/names/yob1880.txt&#39;</span><span class="p">)</span>
+<span class="err">!</span><span class="n">head</span> <span class="p">{</span><span class="n">input_path</span><span class="p">}</span></code></pre></div><div class="highlight"><pre class="chroma">Mary,F,7065
+Anna,F,2604
+Emma,F,2003
+Elizabeth,F,1939
+Minnie,F,1746
+Margaret,F,1578
+Ida,F,1472
+Alice,F,1414
+Bertha,F,1320
+Sarah,F,1288</pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">names1880</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">input_path</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="s1">&#39;births&#39;</span><span class="p">])</span>
+<span class="n">names1880</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>sex</th>
+      <th>births</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Mary</td>
+      <td>F</td>
+      <td>7065</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Anna</td>
+      <td>F</td>
+      <td>2604</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Emma</td>
+      <td>F</td>
+      <td>2003</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Elizabeth</td>
+      <td>F</td>
+      <td>1939</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Minnie</td>
+      <td>F</td>
+      <td>1746</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Let&rsquo;s try to automate the loading of all the files.</p>
+
+<p>First we need a list of all the files in our directory.</p>
+
+<p>A <code>Path</code> object has a <code>glob</code> method that returns a generator with the elements within a given directory.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">dataset_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;data/names&#39;</span><span class="p">)</span>
+<span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">dataset_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&#34;*.txt&#34;</span><span class="p">))]</span>
+<span class="c1"># Extract a list of years</span>
+<span class="n">years</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">7</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">files</span><span class="p">]</span></code></pre></div>
+<h4 id="we-gather-the-data-into-a-single-dataset-in-two-steps">We gather the data into a single dataset in two steps:</h4>
+
+<ol>
+<li>We create a list of dataframes where each element corresponds to a particular year.</li>
+<li>We concatenate all the data (why can&rsquo;t we use merge here?) into a single dataframe.</li>
+</ol>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">L</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="nb">file</span><span class="p">,</span> <span class="n">year</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">years</span><span class="p">):</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">dataset_dir</span><span class="p">,</span> <span class="nb">file</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="s1">&#39;births&#39;</span><span class="p">])</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">year</span>
+    <span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    
+<span class="n">names</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>    
+<span class="n">names</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>sex</th>
+      <th>births</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Mary</td>
+      <td>F</td>
+      <td>7065</td>
+      <td>1880</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Anna</td>
+      <td>F</td>
+      <td>2604</td>
+      <td>1880</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Emma</td>
+      <td>F</td>
+      <td>2003</td>
+      <td>1880</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Elizabeth</td>
+      <td>F</td>
+      <td>1939</td>
+      <td>1880</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Minnie</td>
+      <td>F</td>
+      <td>1746</td>
+      <td>1880</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div style="background-color:#F2FBEF;">
+<p>It's always a good idea to check the data types of our features (columns). Don't assume that the data you downloaded is in the right format. </p>
+
+<p>If we fix any issue early, it'll make the analysis a lot easier.</p>
+</div>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">names</span><span class="o">.</span><span class="n">dtypes</span></code></pre></div><div class="highlight"><pre class="chroma">name      object
+sex       object
+births     int64
+year      object
+dtype: object</pre></div>
+<p>The <code>year</code> feature is of type <code>object</code> which is Python&rsquo;s way of telling us it&rsquo;s got a generic datatype.</p>
+
+<p>We&rsquo;d like it to be a <code>datetime</code> type so let&rsquo;s fix that.</p>
+
+<p>Pandas has <a href="http://pandas.pydata.org/pandas-docs/stable/timeseries.html">several features</a> that make manipulating date and timestamp objects easy.
+(We&rsquo;ll also change the type of <code>sex</code> to category while we&rsquo;re at it)</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">names</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">],</span> <span class="n">format</span><span class="o">=</span><span class="s2">&#34;%Y&#34;</span><span class="p">)</span>
+<span class="n">names</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">names</span><span class="o">.</span><span class="n">sex</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">names</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>sex</th>
+      <th>births</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Mary</td>
+      <td>F</td>
+      <td>7065</td>
+      <td>1880-01-01</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Anna</td>
+      <td>F</td>
+      <td>2604</td>
+      <td>1880-01-01</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Emma</td>
+      <td>F</td>
+      <td>2003</td>
+      <td>1880-01-01</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Elizabeth</td>
+      <td>F</td>
+      <td>1939</td>
+      <td>1880-01-01</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Minnie</td>
+      <td>F</td>
+      <td>1746</td>
+      <td>1880-01-01</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Notice how our year column has been changed into a <code>datetime</code> object.</p>
+
+<p>By default, since we only specified the year, the <code>datetime</code> object is set at time 00:00:00 on the 1st of January.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">names</span><span class="o">.</span><span class="n">dtypes</span></code></pre></div><div class="highlight"><pre class="chroma">name              object
+sex             category
+births             int64
+year      datetime64[ns]
+dtype: object</pre></div>
+<h3> <center><font color=MediumVioletRed>B. Exploring the data</font></center></h3>
+
+<h4 id="so-how-big-is-our-dataset">So how big is our dataset?</h4>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">names</span><span class="o">.</span><span class="n">count</span><span class="p">()</span></code></pre></div><div class="highlight"><pre class="chroma">name      1924665
+sex       1924665
+births    1924665
+year      1924665
+dtype: int64</pre></div>
+<h4 id="how-is-the-data-split-on-the-sex-of-the-baby">How is the data split on the sex of the baby?</h4>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">names</span><span class="o">.</span><span class="n">sex</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span></code></pre></div><div class="highlight"><pre class="chroma">F    1138293
+M     786372
+Name: sex, dtype: int64</pre></div>
+<h4 id="let-s-get-percentages">Let&rsquo;s get percentages.</h4>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">names</span><span class="o">.</span><span class="n">sex</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">f</span><span class="s1">&#39;{x*100:.0f}%&#39;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">F    59%
+M    41%
+Name: sex, dtype: object</pre></div>
+<h4 id="let-s-find-the-total-number-of-births-for-each-year-for-both-genders">Let&rsquo;s find the total number of births <em>for each year, for both genders</em>.</h4>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">total_births_per_year_per_gender</span> <span class="o">=</span> <span class="n">names</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="s1">&#39;births&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="nb">sum</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">total_births_per_year_per_gender</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>sex</th>
+      <th>F</th>
+      <th>M</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1880-01-01</th>
+      <td>90993</td>
+      <td>110491</td>
+    </tr>
+    <tr>
+      <th>1881-01-01</th>
+      <td>91953</td>
+      <td>100743</td>
+    </tr>
+    <tr>
+      <th>1882-01-01</th>
+      <td>107847</td>
+      <td>113686</td>
+    </tr>
+    <tr>
+      <th>1883-01-01</th>
+      <td>112319</td>
+      <td>104627</td>
+    </tr>
+    <tr>
+      <th>1884-01-01</th>
+      <td>129020</td>
+      <td>114442</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div style="background-color:#F7F2E0;">
+<h3> <font color=MediumVioletRed>Note:</font> </h3>
+<p>The <code>pivot_table</code> method is just a convenient shortcut for a <code>groupby</code> operation.</p>
+</div>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">names</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;sex&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">births</span><span class="o">.</span><span class="nb">sum</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>sex</th>
+      <th>F</th>
+      <th>M</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1880-01-01</th>
+      <td>90993</td>
+      <td>110491</td>
+    </tr>
+    <tr>
+      <th>1881-01-01</th>
+      <td>91953</td>
+      <td>100743</td>
+    </tr>
+    <tr>
+      <th>1882-01-01</th>
+      <td>107847</td>
+      <td>113686</td>
+    </tr>
+    <tr>
+      <th>1883-01-01</th>
+      <td>112319</td>
+      <td>104627</td>
+    </tr>
+    <tr>
+      <th>1884-01-01</th>
+      <td>129020</td>
+      <td>114442</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">total_births_per_year_per_gender</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&#34;Total births by sex and year&#34;</span><span class="p">,</span> 
+                                      <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">);</span></code></pre></div>
+<p><img src="output_27_0.png" alt="png" /></p>
+
+<h4 id="how-many-unique-names-are-there-for-each-year-and-gender">How many unique names are there for each year and gender?</h4>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">unique_names</span> <span class="o">=</span> <span class="n">names</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;sex&#39;</span><span class="p">])[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">unique_names</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&#34;Unique names by sex and year&#34;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">);</span></code></pre></div>
+<p><img src="output_30_0.png" alt="png" /></p>
+
+<h4 id="how-many-names-from-1880-were-still-used-in-the-most-recent-year-we-have-and-which-ones-have-fallen-into-desuetude">How many names from 1880 were still used in the most recent year we have, and which ones have fallen into desuetude?</h4>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">last_year</span> <span class="o">=</span> <span class="n">names</span><span class="o">.</span><span class="n">year</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span><span class="o">.</span><span class="nb">max</span><span class="p">()</span>
+
+<span class="n">s1880</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">year</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="mi">1880</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+<span class="n">slast</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">year</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="n">last_year</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;&#34;&#34;
+</span><span class="s2">There were {len(s1880)} distinct names recorded in 1880
+</span><span class="s2">There were {len(slast)} distinct names recorded in {last_year}</span><span class="se">\n</span><span class="s2">
+</span><span class="s2">{len(slast.intersection(s1880))} names were found in both years
+</span><span class="s2">{len(s1880.difference(slast))} names found in 1880 were not recorded in {last_year}
+</span><span class="s2">{len(slast.difference(s1880))} names found in {last_year} were not recorded in 1880
+</span><span class="s2">&#34;&#34;&#34;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;The names recorded in 1880 but no longer in use in {last_year} are:</span><span class="se">\n\n</span><span class="s2">&#34;</span><span class="p">,</span> 
+      <span class="nb">sorted</span><span class="p">([</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">s1880</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">slast</span><span class="p">)]))</span></code></pre></div><div class="highlight"><pre class="chroma">There were 1889 distinct names recorded in 1880
+There were 29910 distinct names recorded in 2017
+
+1501 names were found in both years
+388 names found in 1880 were not recorded in 2017
+28409 names found in 2017 were not recorded in 1880
+
+The names recorded in 1880 but no longer in use in 2017 are:
+
+ [&#39;Ab&#39;, &#39;Adelbert&#39;, &#39;Adline&#39;, &#39;Adolf&#39;, &#39;Adolphus&#39;, &#39;Agustus&#39;, &#39;Albertina&#39;, &#39;Albertine&#39;, &#39;Albertus&#39;, &#39;Alcide&#39;, &#39;Alda&#39;, &#39;Alf&#39;, &#39;Algie&#39;, &#39;Almeda&#39;, &#39;Almer&#39;, &#39;Almon&#39;, &#39;Alonza&#39;, &#39;Alpheus&#39;, &#39;Altha&#39;, &#39;Alvah&#39;, &#39;Alvena&#39;, &#39;Alverta&#39;, &#39;Alvia&#39;, &#39;Anner&#39;, &#39;Annis&#39;, &#39;Araminta&#39;, &#39;Arch&#39;, &#39;Ardelia&#39;, &#39;Ardella&#39;, &#39;Arminta&#39;, &#39;Arther&#39;, &#39;Arvid&#39;, &#39;Arvilla&#39;, &#39;Asberry&#39;, &#39;Asbury&#39;, &#39;Aurthur&#39;, &#39;Auther&#39;, &#39;Author&#39;, &#39;Authur&#39;, &#39;Babe&#39;, &#39;Ballard&#39;, &#39;Bama&#39;, &#39;Barnett&#39;, &#39;Barney&#39;, &#39;Bart&#39;, &#39;Bedford&#39;, &#39;Bena&#39;, &#39;Benjaman&#39;, &#39;Benjamine&#39;, &#39;Bertie&#39;, &#39;Berton&#39;, &#39;Bertram&#39;, &#39;Bess&#39;, &#39;Besse&#39;, &#39;Bettie&#39;, &#39;Bird&#39;, &#39;Birt&#39;, &#39;Birtha&#39;, &#39;Birtie&#39;, &#39;Blanch&#39;, &#39;Budd&#39;, &#39;Buford&#39;, &#39;Bulah&#39;, &#39;Burley&#39;, &#39;Burr&#39;, &#39;Butler&#39;, &#39;Byrd&#39;, &#39;Caddie&#39;, &#39;Celie&#39;, &#39;Ceylon&#39;, &#39;Chalmers&#39;, &#39;Chancy&#39;, &#39;Charlotta&#39;, &#39;Chas&#39;, &#39;Chin&#39;, &#39;Christena&#39;, &#39;Cicero&#39;, &#39;Cinda&#39;, &#39;Clarance&#39;, &#39;Clarinda&#39;, &#39;Classie&#39;, &#39;Claud&#39;, &#39;Claudie&#39;, &#39;Claudine&#39;, &#39;Claus&#39;, &#39;Clemie&#39;, &#39;Clemmie&#39;, &#39;Cloyd&#39;, &#39;Clyda&#39;, &#39;Colonel&#39;, &#39;Commodore&#39;, &#39;Concepcion&#39;, &#39;Corda&#39;, &#39;Cordella&#39;, &#39;Cordia&#39;, &#39;Cordie&#39;, &#39;Corine&#39;, &#39;Cornelious&#39;, &#39;Creola&#39;, &#39;Dee&#39;, &#39;Dellar&#39;, &#39;Dewitt&#39;, &#39;Dicie&#39;, &#39;Dick&#39;, &#39;Dillard&#39;, &#39;Dillie&#39;, &#39;Docia&#39;, &#39;Dock&#39;, &#39;Doctor&#39;, &#39;Dolphus&#39;, &#39;Donie&#39;, &#39;Dosha&#39;, &#39;Doshia&#39;, &#39;Doshie&#39;, &#39;Dow&#39;, &#39;Drucilla&#39;, &#39;Drusilla&#39;, &#39;Duff&#39;, &#39;Earle&#39;, &#39;Early&#39;, &#39;Edd&#39;, &#39;Edmonia&#39;, &#39;Ednah&#39;, &#39;Edyth&#39;, &#39;Effa&#39;, &#39;Eldora&#39;, &#39;Electa&#39;, &#39;Elick&#39;, &#39;Eliga&#39;, &#39;Eligah&#39;, &#39;Elige&#39;, &#39;Elizebeth&#39;, &#39;Ellar&#39;, &#39;Elmire&#39;, &#39;Elmo&#39;, &#39;Elmore&#39;, &#39;Elzie&#39;, &#39;Emmer&#39;, &#39;Eola&#39;, &#39;Ephriam&#39;, &#39;Erasmus&#39;, &#39;Erastus&#39;, &#39;Ernst&#39;, &#39;Estell&#39;, &#39;Estie&#39;, &#39;Etha&#39;, &#39;Ethelyn&#39;, &#39;Ethyl&#39;, &#39;Etna&#39;, &#39;Etter&#39;, &#39;Fayette&#39;, &#39;Ferd&#39;, &#39;Finis&#39;, &#39;Firman&#39;, &#39;Flem&#39;, &#39;Fleming&#39;, &#39;Florance&#39;, &#39;Florida&#39;, &#39;Flossie&#39;, &#39;Floy&#39;, &#39;Freda&#39;, &#39;Friend&#39;, &#39;Frona&#39;, &#39;Fronie&#39;, &#39;Fronnie&#39;, &#39;Garfield&#39;, &#39;Gee&#39;, &#39;Gorge&#39;, &#39;Gottlieb&#39;, &#39;Green&#39;, &#39;Guss&#39;, &#39;Gussie&#39;, &#39;Gust&#39;, &#39;Gustavus&#39;, &#39;Hamp&#39;, &#39;Handy&#39;, &#39;Hardie&#39;, &#39;Harl&#39;, &#39;Harrie&#39;, &#39;Harriette&#39;, &#39;Harve&#39;, &#39;Hassie&#39;, &#39;Hedwig&#39;, &#39;Helma&#39;, &#39;Hence&#39;, &#39;Hermann&#39;, &#39;Hermine&#39;, &#39;Hessie&#39;, &#39;Hester&#39;, &#39;Hettie&#39;, &#39;Hillard&#39;, &#39;Hilliard&#39;, &#39;Hilma&#39;, &#39;Holmes&#39;, &#39;Hortense&#39;, &#39;Hosteen&#39;, &#39;Hoy&#39;, &#39;Hulda&#39;, &#39;Huldah&#39;, &#39;Hyman&#39;, &#39;Icy&#39;, &#39;Idell&#39;, &#39;Irven&#39;, &#39;Isham&#39;, &#39;Izora&#39;, &#39;Jennette&#39;, &#39;Josiephine&#39;, &#39;Junious&#39;, &#39;Kittie&#39;, &#39;Kizzie&#39;, &#39;Knute&#39;, &#39;Lafe&#39;, &#39;Lavenia&#39;, &#39;Lavonia&#39;, &#39;Lawyer&#39;, &#39;Leatha&#39;, &#39;Leitha&#39;, &#39;Lem&#39;, &#39;Lemma&#39;, &#39;Lessie&#39;, &#39;Letha&#39;, &#39;Letitia&#39;, &#39;Letta&#39;, &#39;Lew&#39;, &#39;Lewie&#39;, &#39;Liddie&#39;, &#39;Lidie&#39;, &#39;Lige&#39;, &#39;Liller&#39;, &#39;Lillis&#39;, &#39;Lissie&#39;, &#39;Littie&#39;, &#39;Lollie&#39;, &#39;Loma&#39;, &#39;Lon&#39;, &#39;Lonie&#39;, &#39;Lotta&#39;, &#39;Louetta&#39;, &#39;Loula&#39;, &#39;Louvenia&#39;, &#39;Lovisa&#39;, &#39;Ludie&#39;, &#39;Lue&#39;, &#39;Lugenia&#39;, &#39;Lular&#39;, &#39;Lulie&#39;, &#39;Lum&#39;, &#39;Lutie&#39;, &#39;Luvenia&#39;, &#39;Madge&#39;, &#39;Madie&#39;, &#39;Madora&#39;, &#39;Mal&#39;, &#39;Malvina&#39;, &#39;Mammie&#39;, &#39;Manda&#39;, &#39;Manerva&#39;, &#39;Manervia&#39;, &#39;Manford&#39;, &#39;Manie&#39;, &#39;Manley&#39;, &#39;Manly&#39;, &#39;Margaretta&#39;, &#39;Margeret&#39;, &#39;Mart&#39;, &#39;Mat&#39;, &#39;Math&#39;, &#39;Matie&#39;, &#39;Maymie&#39;, &#39;Media&#39;, &#39;Melville&#39;, &#39;Mertie&#39;, &#39;Merton&#39;, &#39;Meta&#39;, &#39;Mettie&#39;, &#39;Mignon&#39;, &#39;Milford&#39;, &#39;Mima&#39;, &#39;Minda&#39;, &#39;Miner&#39;, &#39;Minervia&#39;, &#39;Minor&#39;, &#39;Minta&#39;, &#39;Mintie&#39;, &#39;Missouri&#39;, &#39;Mittie&#39;, &#39;Mont&#39;, &#39;Mortimer&#39;, &#39;Morton&#39;, &#39;Mozella&#39;, &#39;Myrta&#39;, &#39;Myrtie&#39;, &#39;Myrtle&#39;, &#39;Nan&#39;, &#39;Nannie&#39;, &#39;Nat&#39;, &#39;Nealie&#39;, &#39;Neppie&#39;, &#39;Nimrod&#39;, &#39;Nolie&#39;, &#39;Nonie&#39;, &#39;Norval&#39;, &#39;Ocie&#39;, &#39;Octave&#39;, &#39;Oda&#39;, &#39;Olie&#39;, &#39;Omie&#39;, &#39;Onie&#39;, &#39;Oral&#39;, &#39;Orie&#39;, &#39;Orilla&#39;, &#39;Orley&#39;, &#39;Orpha&#39;, &#39;Orrie&#39;, &#39;Orval&#39;, &#39;Osie&#39;, &#39;Ossie&#39;, &#39;Otelia&#39;, &#39;Otha&#39;, &#39;Otho&#39;, &#39;Ottie&#39;, &#39;Pansy&#39;, &#39;Paralee&#39;, &#39;Pat&#39;, &#39;Pattie&#39;, &#39;Pearlie&#39;, &#39;Perley&#39;, &#39;Permelia&#39;, &#39;Pink&#39;, &#39;Pinkey&#39;, &#39;Pinkie&#39;, &#39;Pinkney&#39;, &#39;Pleas&#39;, &#39;Pleasant&#39;, &#39;Ples&#39;, &#39;Pollie&#39;, &#39;Press&#39;, &#39;Redden&#39;, &#39;Rella&#39;, &#39;Reta&#39;, &#39;Rice&#39;, &#39;Rillie&#39;, &#39;Roena&#39;, &#39;Rolla&#39;, &#39;Rosia&#39;, &#39;Rube&#39;, &#39;Sannie&#39;, &#39;Sim&#39;, &#39;Squire&#39;, &#39;Sudie&#39;, &#39;Sybilla&#39;, &#39;Sylvanus&#39;, &#39;Tella&#39;, &#39;Tempie&#39;, &#39;Tennie&#39;, &#39;Teressa&#39;, &#39;Theda&#39;, &#39;Theophile&#39;, &#39;Thursa&#39;, &#39;Tilmon&#39;, &#39;Tishie&#39;, &#39;Tobe&#39;, &#39;Ula&#39;, &#39;Vannie&#39;, &#39;Venie&#39;, &#39;Verdie&#39;, &#39;Vern&#39;, &#39;Verne&#39;, &#39;Vernie&#39;, &#39;Vertie&#39;, &#39;Viney&#39;, &#39;Virgie&#39;, &#39;Volney&#39;, &#39;Wash&#39;, &#39;Watt&#39;, &#39;Weaver&#39;, &#39;Wilburn&#39;, &#39;Wilda&#39;, &#39;Wilhelmine&#39;, &#39;Willam&#39;, &#39;Wm&#39;, &#39;Wong&#39;, &#39;Wood&#39;, &#39;Woodie&#39;, &#39;Worthy&#39;, &#39;Yee&#39;, &#39;Yetta&#39;, &#39;Zilpha&#39;]</pre></div>
+<h3> <center><font color=MediumVioletRed>C. Data Exploration</font></center></h3>
+
+<h4> Let's extract the names that were given to both male and female babies and put it in a list named <code>both</code>.</h4>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">s1</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">sex</span> <span class="o">==</span> <span class="s1">&#39;F&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">sex</span> <span class="o">==</span> <span class="s1">&#39;M&#39;</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
+
+<span class="n">both</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">s1</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">s2</span><span class="p">))</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&#34;{len(both)} names in our dataset were given to both boys and girls. </span><span class="se">\n\n</span><span class="s2"> Here&#39;s a sample:</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34; | &#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">both</span><span class="p">)[:</span><span class="mi">100</span><span class="p">]))</span></code></pre></div><div class="highlight"><pre class="chroma">10663 names in our dataset were given to both boys and girls. 
+
+ Here&#39;s a sample:
+
+Sylas | Hadley | Rene | Clester | Ilia | Kahlen | Araceli | Romayne | Alvia | Tasean | Aj | Marchand | Million | Lugene | Coley | Loel | Jasiya | Altie | Donnelle | Caziah | Ace | Darrel | Bond | Glenda | Hany | Madden | Maisyn | Pam | Harjap | Elizabeth | Javae | Mccrae | Alondra | Azaiah | Elysium | Daron | Orval | Tobie | Demeatrice | Carlos | Doug | Tommy | Emmanuel | Dana | Lucille | Schuyler | Briley | Penny | Page | Jamy | Stav | Honest | Koree | Anael | Reilley | Dot | Madeleine | Tyne | Kimbrell | Tyme | Mariam | Kensley | Binnie | Aryan | Constance | Farrin | Jadyne | Nihaal | Odie | Rayaan | Quay | Iesha | Ople | Javen | Jaylyn | Rox | Emani | Murphey | Itzel | Mio | Asa | Hau | Alfie | Mardie | Brianne | Wan | Dani | Misael | Rylynn | Elda | Chantelle | Mizan | Oluwadamilola | Jontue | Rick | Teegan | Emersyn | Zamarii | Oluwatomisin | Haddon</pre></div>
+<p>Upon a more careful examination of the whole output, some interesting observations can be made.</p>
+<p>For instance I would expect names like Lucille to be only given to girls (or <a href="https://en.wikipedia.org/wiki/Lucille_(guitar)">B.B. King's guitar</a>), but according to our result, these names were also given to boys. </p>
+
+<p>On the other hand, while to me the name Basil may evoke a cantankerous hotel manager in Torquay, apparently, some parents thought it the perfect moniker for their baby girl. Similarly, the name Sylvester was given to both boys and girls.</p>
+
+<p>Let's have a closer look.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">names</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Lucille&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>name</th>
+      <th>sex</th>
+      <th>births</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>248</th>
+      <td>Lucille</td>
+      <td>F</td>
+      <td>40</td>
+      <td>1880-01-01</td>
+    </tr>
+    <tr>
+      <th>2223</th>
+      <td>Lucille</td>
+      <td>F</td>
+      <td>48</td>
+      <td>1881-01-01</td>
+    </tr>
+    <tr>
+      <th>4105</th>
+      <td>Lucille</td>
+      <td>F</td>
+      <td>85</td>
+      <td>1882-01-01</td>
+    </tr>
+    <tr>
+      <th>6282</th>
+      <td>Lucille</td>
+      <td>F</td>
+      <td>66</td>
+      <td>1883-01-01</td>
+    </tr>
+    <tr>
+      <th>8334</th>
+      <td>Lucille</td>
+      <td>F</td>
+      <td>94</td>
+      <td>1884-01-01</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h4 id="in-how-many-years-does-the-name-lucille-appear-for-either-boys-or-girls">In how many years does the name Lucille appear for either boys or girls?</h4>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">names</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Lucille&#39;</span><span class="p">][</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span></code></pre></div><div class="highlight"><pre class="chroma">F    138
+M     49
+Name: sex, dtype: int64</pre></div>
+<div style="background-color:#F7F2E0;">
+<h3> <font color=MediumVioletRed>Note:</font> </h3>
+<p>Note that <b>this is not</b> the number of babies of each sex with that name. </p>
+
+<p>We've grouped the data by <code>year</code> and <code>sex</code> so this count corresponds to the <b>number of years</b> in which at least five babies of either gender were named Lucille (5 being the yearly threshold beyond which a name isn't recorded in the data set).</p>
+</div>
+
+<p>We can compute the same information for other names.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">names</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Basil&#39;</span><span class="p">][</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span></code></pre></div><div class="highlight"><pre class="chroma">M    138
+F     13
+Name: sex, dtype: int64</pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">names</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Sylvester&#39;</span><span class="p">][</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span></code></pre></div><div class="highlight"><pre class="chroma">M    138
+F     62
+Name: sex, dtype: int64</pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">names</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Hannah&#39;</span><span class="p">][</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span></code></pre></div><div class="highlight"><pre class="chroma">F    138
+M     38
+Name: sex, dtype: int64</pre></div>
+<p>Let&rsquo;s get the <strong>total number</strong> of babies named Basil for any given year?</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">basil</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Basil&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="s1">&#39;births&#39;</span><span class="p">,</span> 
+                                                 <span class="n">index</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> 
+                                                 <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span> 
+                                                 <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+                                                 <span class="n">aggfunc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="nb">sum</span> <span class="p">)</span>
+<span class="n">basil</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>sex</th>
+      <th>F</th>
+      <th>M</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1880-01-01</th>
+      <td>0</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>1881-01-01</th>
+      <td>0</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>1882-01-01</th>
+      <td>0</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>1883-01-01</th>
+      <td>0</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>1884-01-01</th>
+      <td>0</td>
+      <td>11</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Let&rsquo;s filter out the years where no girl was named Basil.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">basil</span><span class="p">[</span><span class="n">basil</span><span class="o">.</span><span class="n">F</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span></code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>sex</th>
+      <th>F</th>
+      <th>M</th>
+    </tr>
+    <tr>
+      <th>year</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1919-01-01</th>
+      <td>7</td>
+      <td>262</td>
+    </tr>
+    <tr>
+      <th>1927-01-01</th>
+      <td>5</td>
+      <td>249</td>
+    </tr>
+    <tr>
+      <th>2006-01-01</th>
+      <td>7</td>
+      <td>64</td>
+    </tr>
+    <tr>
+      <th>2008-01-01</th>
+      <td>5</td>
+      <td>31</td>
+    </tr>
+    <tr>
+      <th>2009-01-01</th>
+      <td>7</td>
+      <td>56</td>
+    </tr>
+    <tr>
+      <th>2010-01-01</th>
+      <td>11</td>
+      <td>47</td>
+    </tr>
+    <tr>
+      <th>2011-01-01</th>
+      <td>7</td>
+      <td>44</td>
+    </tr>
+    <tr>
+      <th>2012-01-01</th>
+      <td>20</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>2013-01-01</th>
+      <td>21</td>
+      <td>56</td>
+    </tr>
+    <tr>
+      <th>2014-01-01</th>
+      <td>17</td>
+      <td>44</td>
+    </tr>
+    <tr>
+      <th>2015-01-01</th>
+      <td>16</td>
+      <td>52</td>
+    </tr>
+    <tr>
+      <th>2016-01-01</th>
+      <td>22</td>
+      <td>60</td>
+    </tr>
+    <tr>
+      <th>2017-01-01</th>
+      <td>24</td>
+      <td>58</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h4 id="note-that-we-have-13-years-in-agreement-with-the-output-of-value-counts-above">Note that we have 13 years, in agreement with the output of <code>value_counts</code> above.</h4>
+
+<p>Let&rsquo;s visualise this for a couple of names. I&rsquo;m using a <code>log</code> scale because otherwise only the data for the dominant gender would be visible.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">basil</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">logy</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+           <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Basil&#39;</span><span class="p">,</span> 
+           <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">);</span></code></pre></div>
+<p><img src="output_49_0.png" alt="png" /></p>
+
+<p>We can daisy chain the name selection and the plotting.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">names</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Christina&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="s1">&#39;births&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> 
+                                             <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span> 
+                                             <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+                                             <span class="n">aggfunc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="nb">sum</span> <span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+                                                                   <span class="n">logy</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                                                   <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">),</span> 
+                                                                   <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Christina&#39;</span><span class="p">,</span>
+                                                                   <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">);</span></code></pre></div>
+<p><img src="output_51_0.png" alt="png" /></p>
+
+<h4 id="let-s-put-that-code-into-a-function-to-make-it-more-convenient-and-follow-the-dry-principle">Let&rsquo;s put that code into a function to make it more convenient and follow the DRY principle.</h4>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">timeline_name</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Basil&#39;</span><span class="p">):</span>
+    <span class="n">names</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="s1">&#39;births&#39;</span><span class="p">,</span> 
+                                          <span class="n">index</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> 
+                                          <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span> 
+                                          <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+                                          <span class="n">aggfunc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="nb">sum</span> <span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+                                                                <span class="n">logy</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                                                                <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">),</span> 
+                                                                <span class="n">title</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                                                                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">timeline_name</span><span class="p">(</span><span class="s1">&#39;Lucille&#39;</span><span class="p">)</span></code></pre></div>
+<p><img src="output_54_0.png" alt="png" /></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">timeline_name</span><span class="p">(</span><span class="s1">&#39;Hannah&#39;</span><span class="p">)</span></code></pre></div>
+<p><img src="output_55_0.png" alt="png" /></p>
+
+<h3> <center><font color=MediumVioletRed>D. The Seinfeld effect?</font></center></h3>
+
+<p>Note that a plausible explanation of why the dominant gender for a given name may have changed over the years can sometimes be found relatively easily, as in the case of the name <b>Ashley</b>...</p> 
+
+<p>For other names, a change in popularity may be due to a less conventional reason... </p>
+
+<p>In an episode of <a href="http://www.imdb.com/title/tt0697774/">Seinfeld</a> George mentions to his friends that should he ever have a kid, he'd name him (or her) Seven, after the jersey number of Yankee baseball player Mickey Mantle.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">YouTubeVideo</span>
+<span class="n">YouTubeVideo</span><span class="p">(</span><span class="s2">&#34;NRUdaWZ4FN0&#34;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">    &lt;iframe
+        width=&#34;400&#34;
+        height=&#34;300&#34;
+        src=&#34;https://www.youtube.com/embed/NRUdaWZ4FN0&#34;
+        frameborder=&#34;0&#34;
+        allowfullscreen
+    &gt;&lt;/iframe&gt;</pre></div>
+<p>First, let&rsquo;s check whether &ldquo;Seven&rdquo; is in our data set.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="s1">&#39;Seven&#39;</span> <span class="ow">in</span> <span class="n">names</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span></code></pre></div><div class="highlight"><pre class="chroma">True</pre></div>
+<p>Giddy up!</p>
+
+<p>The Seinfeld episode was aired in 1996.</p>
+
+<p>Let&rsquo;s see if there&rsquo;s any indication that it may have influenced the popularity of the name &ldquo;Seven&rdquo;.</p>
+
+<p>First let&rsquo;s create a date range over which to plot the data.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">seinfeldYear</span> <span class="o">=</span> <span class="s1">&#39;1996&#39;</span>
+<span class="n">start</span> <span class="o">=</span> <span class="s1">&#39;1991&#39;</span>
+<span class="n">end</span>   <span class="o">=</span> <span class="s1">&#39;2017&#39;</span>
+
+<span class="c1"># Let&#39;s create a range of dates from start to end containing every other year</span>
+<span class="n">date_range</span>   <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;2A&#39;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">date_range</span></code></pre></div><div class="highlight"><pre class="chroma">DatetimeIndex([&#39;1991-12-31&#39;, &#39;1993-12-31&#39;, &#39;1995-12-31&#39;, &#39;1997-12-31&#39;,
+               &#39;1999-12-31&#39;, &#39;2001-12-31&#39;, &#39;2003-12-31&#39;, &#39;2005-12-31&#39;,
+               &#39;2007-12-31&#39;, &#39;2009-12-31&#39;, &#39;2011-12-31&#39;, &#39;2013-12-31&#39;,
+               &#39;2015-12-31&#39;],
+              dtype=&#39;datetime64[ns]&#39;, freq=&#39;2A-DEC&#39;)</pre></div>
+<p>Let&rsquo;s visualise the trend for &ldquo;Seven&rdquo;.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+
+<span class="c1"># The data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;Seven&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="s1">&#39;births&#39;</span><span class="p">,</span> 
+                                                <span class="n">index</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> 
+                                                <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span> 
+                                                <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+                                                <span class="n">aggfunc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">)</span>
+
+<span class="c1"># The base plot</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> 
+          <span class="n">logy</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> 
+          <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> 
+          <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">),</span> 
+          <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> 
+          <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Seven&#39;</span><span class="p">,</span> 
+          <span class="n">grid</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="c1"># The vertical strip</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">seinfeldYear</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">date_range</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">])</span>
+
+<span class="c1"># Ensure that the labels on the x axis match the years.</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">date_range</span><span class="o">.</span><span class="n">year</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span> <span class="p">)</span>
+
+<span class="c1"># Annotate the figure with some text by specifying location using xy parameter</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;Episode &#34;The Seven&#34; is aired&#39;</span><span class="p">,</span> 
+            <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">seinfeldYear</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s2">&#34;%Y&#34;</span><span class="p">),</span> <span class="mi">100</span><span class="p">),</span>
+            <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span>
+            <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span>
+            <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></div><div class="highlight"><pre class="chroma">&lt;Figure size 432x288 with 0 Axes&gt;</pre></div>
+<p><img src="output_64_1.png" alt="png" /></p>
+
+<p>Note that this <em>does not prove</em> that the show "created" the name fad (correlation &#8800; causation and all that; there could be another reason behind both the increase in popularity of the name, and the use of the name in the show), but it does seem to indicate that it enhanced it...</p> 
+<p>Poor kids! Serenity now!</p>
+
+<h3> <center><font color=MediumVioletRed>E. Mom &amp; Pop culture </font></center></h3>
+
+<p>While we&rsquo;re on this topic, can we find other possible influences of pop culture in the data set?</p>
+
+<p>Let&rsquo;s create a general function that we can use to plot various trends.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">plot_name_event</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">names</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&#34;Seven&#34;</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="s1">&#39;1996&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;1968&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;2013&#39;</span><span class="p">,</span> 
+                  <span class="n">event_type</span> <span class="o">=</span> <span class="s1">&#39;movie&#39;</span><span class="p">,</span> <span class="n">event_title</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">):</span>    
+    
+    <span class="n">date_range</span>   <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;A-JAN&#39;</span><span class="p">)</span>
+    
+    <span class="n">data</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="s1">&#39;births&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">aggfunc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">)</span>
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="n">logy</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> 
+              <span class="n">title</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&#34;Name: {name} | The {event_type} {event_title} was released in {year}&#34;</span><span class="p">,</span> 
+                   <span class="n">grid</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">year</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="nb">max</span><span class="p">()</span><span class="o">.</span><span class="nb">max</span><span class="p">(),</span> <span class="n">lw</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">date_range</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">])</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">date_range</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span> <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></div>
+<h4 id="first-let-s-look-at-a-few-movie-characters-actors">First, let&rsquo;s look at a few movie characters/actors.</h4>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plot_name_event</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;Neo&#34;</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="s1">&#39;1999&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;1990&#39;</span><span class="p">,</span> 
+                <span class="n">event_type</span><span class="o">=</span><span class="s2">&#34;The movie The Matrix was released&#34;</span><span class="p">)</span></code></pre></div>
+<p><img src="output_69_0.png" alt="png" /></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plot_name_event</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;Denzel&#34;</span><span class="p">,</span> <span class="n">year</span><span class="o">=</span><span class="s1">&#39;1989&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;1985&#39;</span><span class="p">,</span> 
+                <span class="n">event_type</span><span class="o">=</span><span class="s2">&#34;The movie Glory was released&#34;</span><span class="p">)</span></code></pre></div>
+<p><img src="output_70_0.png" alt="png" /></p>
+
+<h4 id="how-about-further-back-in-time">How about further back in time?</h4>
+
+<p>Errol Flynn got his big break in Captain Blood back in 1935. Let&rsquo;s see if all that swashbuckling influenced parents when it came to naming their progeny.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plot_name_event</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;Errol&#34;</span><span class="p">,</span>  <span class="n">year</span><span class="o">=</span><span class="s1">&#39;1935&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;1931&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;1961&#39;</span><span class="p">,</span> 
+                <span class="n">event_type</span><span class="o">=</span><span class="s2">&#34;The movie Captain Blood was released&#34;</span><span class="p">)</span></code></pre></div>
+<p><img src="output_72_0.png" alt="png" /></p>
+
+<p>Of course, we can&rsquo;t talk about movies without talking about Star Wars.</p>
+
+<p>Let&rsquo;s see if we can track the names of some of the characters.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plot_name_event</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;Han&#34;</span><span class="p">,</span>  <span class="n">year</span><span class="o">=</span><span class="s1">&#39;1977&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;1970&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;2015&#39;</span><span class="p">,</span> 
+                <span class="n">event_type</span><span class="o">=</span><span class="s2">&#34;The movie Star Wars was released&#34;</span><span class="p">)</span></code></pre></div>
+<p><img src="output_74_0.png" alt="png" /></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plot_name_event</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;Leia&#34;</span><span class="p">,</span>  <span class="n">year</span><span class="o">=</span><span class="s1">&#39;1977&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;1970&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;2015&#39;</span><span class="p">,</span> 
+                <span class="n">event_type</span><span class="o">=</span><span class="s2">&#34;The movie Star Wars was released&#34;</span><span class="p">)</span></code></pre></div>
+<p><img src="output_75_0.png" alt="png" /></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plot_name_event</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;Lando&#34;</span><span class="p">,</span>  <span class="n">year</span><span class="o">=</span><span class="s1">&#39;1980&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;1970&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;2015&#39;</span><span class="p">,</span> 
+                <span class="n">event_type</span><span class="o">=</span><span class="s2">&#34;The movie The Empire Strikes Back was released&#34;</span><span class="p">)</span></code></pre></div>
+<p><img src="output_76_0.png" alt="png" /></p>
+
+<p>Hmmmm&hellip; Quite a sharp decline shortly after the movie release.</p>
+
+<p>What about other characters from the trilogy?</p>
+
+<p>Fortunately (for the kids) there doesn&rsquo;t seem to be any Jabba or Jar Jar in our list&hellip; (TBH, I&rsquo;m mildly disappointed).</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">characters</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&#34;Jabba&#34;</span><span class="p">,</span> <span class="s2">&#34;Yoda&#34;</span><span class="p">,</span> <span class="s2">&#34;Chewbacca&#34;</span><span class="p">,</span> <span class="s2">&#34;Jar Jar&#34;</span><span class="p">]</span>
+
+<span class="n">names_unique</span> <span class="o">=</span> <span class="n">names</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+
+<span class="nb">any</span><span class="p">([</span><span class="n">c</span> <span class="ow">in</span> <span class="n">names_unique</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">characters</span><span class="p">])</span></code></pre></div><div class="highlight"><pre class="chroma">False</pre></div>
+<p>Let&rsquo;s look at the main character of another popular movie series.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plot_name_event</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;Indiana&#34;</span><span class="p">,</span>  <span class="n">year</span><span class="o">=</span><span class="s1">&#39;1981&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;1970&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;2015&#39;</span><span class="p">,</span> 
+                <span class="n">event_type</span><span class="o">=</span><span class="s2">&#34;The movie Raiders Of The Lost Ark was released&#34;</span><span class="p">)</span></code></pre></div>
+<p><img src="output_80_0.png" alt="png" /></p>
+
+<p>While on this topic&hellip;</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plot_name_event</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;Harrison&#34;</span><span class="p">,</span>  <span class="n">year</span><span class="o">=</span><span class="s1">&#39;1981&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;1975&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;2015&#39;</span><span class="p">,</span> 
+                <span class="n">event_type</span><span class="o">=</span><span class="s2">&#34;The movie Raiders Of The Lost Ark was released&#34;</span><span class="p">)</span></code></pre></div>
+<p><img src="output_82_0.png" alt="png" /></p>
+
+<p>In a different genre we also have:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plot_name_event</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;Clint&#34;</span><span class="p">,</span>  <span class="n">year</span><span class="o">=</span><span class="s1">&#39;1966&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;1950&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;1981&#39;</span><span class="p">,</span> 
+                <span class="n">event_type</span><span class="o">=</span><span class="s2">&#34;The movie The Good, the Bad, and the Ugly was released&#34;</span><span class="p">)</span></code></pre></div>
+<p><img src="output_84_0.png" alt="png" /></p>
+
+<p>We&rsquo;ve focused on movies, but of course, popular culture&rsquo;s influence on baby names isn&rsquo;t limited to movies or television.</p>
+
+<p>Songs or singers can also contribute to the popularity of a given name.</p>
+
+<p>Here&rsquo;s one example.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plot_name_event</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;Michelle&#34;</span><span class="p">,</span>  <span class="n">year</span><span class="o">=</span><span class="s1">&#39;1965&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;1960&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;1981&#39;</span><span class="p">,</span> 
+                <span class="n">event_type</span><span class="o">=</span><span class="s2">&#34;The Beatle song Michelle was released&#34;</span><span class="p">)</span></code></pre></div>
+<p><img src="output_86_0.png" alt="png" /></p>
+
+<p>&hellip; And a couple of more recent ones</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plot_name_event</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;Beyonce&#34;</span><span class="p">,</span>  <span class="n">year</span><span class="o">=</span><span class="s1">&#39;1998&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;1995&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;2015&#39;</span><span class="p">,</span> 
+                <span class="n">event_type</span><span class="o">=</span><span class="s2">&#34;The group Destiny&#39;s Child released its debut album&#34;</span><span class="p">)</span></code></pre></div>
+<p><img src="output_88_0.png" alt="png" /></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plot_name_event</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;Adele&#34;</span><span class="p">,</span>  <span class="n">year</span><span class="o">=</span><span class="s1">&#39;2006&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;2000&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;2015&#39;</span><span class="p">,</span> 
+                <span class="n">event_type</span><span class="o">=</span><span class="s2">&#34;British pop singer Adele made her debut&#34;</span><span class="p">)</span></code></pre></div>
+<p><img src="output_89_0.png" alt="png" /></p>
+
+<p>Same with sport.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plot_name_event</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;Kobe&#34;</span><span class="p">,</span>  <span class="n">year</span><span class="o">=</span><span class="s1">&#39;1996&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;1988&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;2015&#39;</span><span class="p">,</span>
+                <span class="n">event_type</span><span class="o">=</span><span class="s2">&#34;NBA player Kobe Bryant made his debut in the league&#34;</span><span class="p">)</span></code></pre></div>
+<p><img src="output_91_0.png" alt="png" /></p>
+
+<p>I&rsquo;ll stop here, but I&rsquo;m sure many other interesting patterns can be found in this data set&hellip;</p>
+
+<p>As I mentioned earlier, the fact that a name&rsquo;s increase in popularity coincides with a particular event isn&rsquo;t enough to demonstrate a causal relationship, however for some of these examples the coincidence is certainly interesting.</p>
+
+<p>In any case, I&rsquo;d like to think that hundreds, if not thousands, of people owe their moniker to George Costanza.</p>
+
+<p>A sobering thought.</p>
+
+<p>That&rsquo;s ok. It could have been worse&hellip;</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="s2">&#34;Mulva&#34;</span> <span class="ow">in</span> <span class="n">names</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span></code></pre></div><div class="highlight"><pre class="chroma">False</pre></div>
+<p>I had to check!</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://adelr.github.io//tags/python/">python</a>&nbsp;
+            
+              <a href="https://adelr.github.io//tags/seinfeld/">seinfeld</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=https%3a%2f%2fadelr.github.io%2f2018%2f05%2fseinfeld_effect%2f&amp;text=Seinfeld%27s%20Magnificent%20Seven&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//plus.google.com/share?url=https%3a%2f%2fadelr.github.io%2f2018%2f05%2fseinfeld_effect%2f" target="_blank" title="Share on Google Plus">
+          <i class="fab fa-google-plus"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fadelr.github.io%2f2018%2f05%2fseinfeld_effect%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=https%3a%2f%2fadelr.github.io%2f2018%2f05%2fseinfeld_effect%2f&amp;title=Seinfeld%27s%20Magnificent%20Seven" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fadelr.github.io%2f2018%2f05%2fseinfeld_effect%2f&amp;title=Seinfeld%27s%20Magnificent%20Seven" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fadelr.github.io%2f2018%2f05%2fseinfeld_effect%2f&amp;title=Seinfeld%27s%20Magnificent%20Seven" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fadelr.github.io%2f2018%2f05%2fseinfeld_effect%2f&amp;description=Seinfeld%27s%20Magnificent%20Seven" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+              </div>
+            </section>
+        
+
+        
+          
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+          
+            <li class="next">
+              <a href="https://adelr.github.io/2018/06/simul_coin_flip/" data-toggle="tooltip" data-placement="top" title="Do you feel lucky?">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:adel.rahmani&#43;dinkumdata@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/adelr" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://adelr.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              Adel Rahmani
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2018
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://adelr.github.io/">Dinkum Data Blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.54.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://adelr.github.io/js/main.js"></script>
+<script src="https://adelr.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://adelr.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [
+        ['$', '$'],
+        ['\\(', '\\)']
+      ],
+      displayMath: [
+        ['$$', '$$']
+      ],
+      processEscapes: true,
+      processEnvironments: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      TeX: {
+        equationNumbers: {
+          autoNumber: "AMS"
+        },
+        extensions: ["AMSmath.js", "AMSsymbols.js"]
+      }
+    }
+  });
+  MathJax.Hub.Queue(function () {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(),
+      i;
+    for (i = 0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+    
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+
+
+  </body>
+</html>
+

@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Do you feel lucky? - Dinkum Data Blog</title>
+  <meta property="og:title" content="Do you feel lucky?" />
+  <meta name="twitter:title" content="Do you feel lucky?" />
+  <meta name="description" content="A coin flipped 100 times comes up heads 60 times. How likely is it that the coin is fair?
+This is a basic example of statistical inference, trying to infer an estimate of some quantity (here the probability for heads) from some data (observation of 100 coin flips). This type of problem is invariably described in every first year stats course. To solve it, we first need to represent the underlying process generating our observations in a mathematical form.">
+  <meta property="og:description" content="A coin flipped 100 times comes up heads 60 times. How likely is it that the coin is fair?
+This is a basic example of statistical inference, trying to infer an estimate of some quantity (here the probability for heads) from some data (observation of 100 coin flips). This type of problem is invariably described in every first year stats course. To solve it, we first need to represent the underlying process generating our observations in a mathematical form.">
+  <meta name="twitter:description" content="A coin flipped 100 times comes up heads 60 times. How likely is it that the coin is fair?
+This is a basic example of statistical inference, trying to infer an estimate of some quantity (here the …">
+  <meta name="author" content="Adel Rahmani"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Dinkum Data Blog",
+    
+    "url": "https://adelr.github.io/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https://adelr.github.io/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https://adelr.github.io/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https://adelr.github.io/2018/06/simul_coin_flip/",
+          "name": "Do you feel lucky?"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Adel Rahmani"
+  },
+  "headline": "Do you feel lucky?",
+  "description" : "A coin flipped 100 times comes up heads 60 times. How likely is it that the coin is fair?
+This is a basic example of statistical inference, trying to infer an estimate of some quantity (here the probability for heads) from some data (observation of 100 coin flips). This type of problem is invariably described in every first year stats course. To solve it, we first need to represent the underlying process generating our observations in a mathematical form.",
+  "inLanguage" : "en",
+  "wordCount": 3562,
+  "datePublished" : "2018-06-15T00:00:00",
+  "dateModified" : "2018-06-15T00:00:00",
+  "image" : "https://adelr.github.io/img/avatar-icon.png",
+  "keywords" : [ "python, probability, statistics" ],
+  "mainEntityOfPage" : "https://adelr.github.io/2018/06/simul_coin_flip/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https://adelr.github.io/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https://adelr.github.io/img/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Do you feel lucky?" />
+<meta property="og:description" content="A coin flipped 100 times comes up heads 60 times. How likely is it that the coin is fair?
+This is a basic example of statistical inference, trying to infer an estimate of some quantity (here the probability for heads) from some data (observation of 100 coin flips). This type of problem is invariably described in every first year stats course. To solve it, we first need to represent the underlying process generating our observations in a mathematical form.">
+<meta property="og:image" content="https://adelr.github.io/img/avatar-icon.png" />
+<meta property="og:url" content="https://adelr.github.io/2018/06/simul_coin_flip/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Dinkum Data Blog" />
+  <meta name="twitter:title" content="Do you feel lucky?" />
+  <meta name="twitter:description" content="A coin flipped 100 times comes up heads 60 times. How likely is it that the coin is fair?
+This is a basic example of statistical inference, trying to infer an estimate of some quantity (here the …">
+  <meta name="twitter:image" content="https://adelr.github.io/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://adelr.github.io/img/avatar-icon.png" />
+  <meta name="twitter:image" content="https://adelr.github.io/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://adelr.github.io/2018/06/simul_coin_flip/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Dinkum Data Blog" />
+
+  <meta name="generator" content="Hugo 0.54.0" />
+  <link rel="alternate" href="https://adelr.github.io/index.xml" type="application/rss+xml" title="Dinkum Data Blog"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://adelr.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://adelr.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://adelr.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://adelr.github.io/">Dinkum Data Blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Dinkum Data Blog" href="https://adelr.github.io/">
+            <img class="avatar-img" src="https://adelr.github.io/img/avatar-icon.png" alt="Dinkum Data Blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Do you feel lucky?</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on June 15, 2018
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;17&nbsp;minutes
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;3562&nbsp;words
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Adel Rahmani
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<p><br><p>A coin flipped 100 times comes up heads 60 times. How likely is it that the coin is fair?</p></p>
+
+<p>This is a basic example of <em>statistical inference</em>, trying to infer an estimate of some quantity (here the  probability for heads) from some data (observation of 100 coin flips). This type of problem is invariably described in every first year stats course. To solve it, we first need to represent the underlying process generating our observations in a mathematical form. For coin flips, the binomial distribution is the natural choice. Let's affectionately call our random variable representing the <b>number</b> of heads $X$.</p>
+
+<p>The probability of observing k heads in a run of N coin flips is given by the <b>probability mass function (pmf)</b>:</p>
+
+<p>$$P(X=k) = \left(\begin{array}{c}N \\ k \end{array}   \right)p^k\, (1-p)^{N-k} = \dfrac{N!}{k!(N-k)!}\,p^k\, (1-p)^{N-k}$$</p>
+
+<p>But where does this formula come from? It's actually quite simple. If we denote by p the probability of heads (outcome H) for one coin flip, the probability of tails (outcome T) is $1-p$ because we only have 2 mutually exclusive outcomes (we assume the coin doesn't land sideways).</p>
+
+<p>If we flip the coin 2 times, since each coin flip is independent, we multiply the probabilities of the outcomes of each flip. For instance, the probability of observing HH (two heads) is $p^2$. The probability associated with TT is $(1-p)^2$, while the one associated with HT is $p(1-p)$, etc...</p>
+
+<p>So if we flip the coin $N$ times, what is the probability of observing $k$ heads? Well, it's the probability of observing any configuration with $k$ heads and $N-k$ tails, which is $p^k(1-p)^{N-k}$ times the number of such configurations. To count the configurations we simply need to formalise the fact that, for this problem, the ordering doesn't matter. As far as we are concerned, HTH, HHT, and THH are equivalent, they all represent 2 heads in 3 coin flips. Instead of thinking about one coin flipped $N$ times, let's consider the equivalent problem of $N$ identical coins flipped once each.</p> 
+
+<p>How many ways can we arrange the $N$ coins? We've got $N$ options when picking the first coin. Once that's done, we've got $N-1$ ways of choosing the second coin, and so on, all the way to the last coin for which there's only one choice left to make, namely that very coin... 
+This means that there are $N\times(N-1)\times\cdots2\times1$ ways or arranging the $N$ coins, which is the factorial of $N$ or $N!$.</p>
+
+<p>Now suppose that $k\leq N$ of these coins have landed heads up. This means of course that $N-k$ coins show tails.
+If we were to reorder the $k$ coins among themselves, this would not change our result. We'd still have $k$ heads out of $N$ flips. Same with the $N-k$ tails. Therefore, when it comes to counting the number of configurations for which we have $k$ heads, we should divide the total number of ways to arrange $N$ coins by the total number of ways we can rearrange the $k$ heads among themselves, and the $N-k$ tails among themselves. This ends up to be the binomial coefficient called "N choose k":</p>
+
+<p>$$\left(\begin{array}{c}N \\ k \end{array}\right) = \frac{N!}{k!(N-k)!}.$$</p>
+
+<p>Hence the formula above.</p>
+
+<p>One minor detail is that we don't know the value of $p$, the probability that a coin flip lands heads up.
+For a fair coin, we of course expect that $p=0.5$. Using the formula above we can also compute the probability of 60 heads
+out of 100 coin flips for a fair coin.</p>
+
+<p>This will be our starting in figuring out how to compute an estimate of $p$.</p>
+
+<p>Let&rsquo;s import all the modules we need.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># usual stuff</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="c1"># suppress warning messages.</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="c1"># import the scipy module which contains scientific and stats functions.</span>
+<span class="kn">import</span> <span class="nn">scipy</span> <span class="kn">as</span> <span class="nn">sp</span>
+
+<span class="c1"># import matplotlib and redirect plots to jupyter notebook. (cm is for color maps)</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">cm</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+
+<span class="c1"># sets the default figure size </span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="kn">as</span> <span class="nn">mpl</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+
+<span class="c1"># sets some default plotting styles.</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sns</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s2">&#34;darkgrid&#34;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">&#34;&lt;style&gt;.container { width:100% !important; }&lt;/style&gt;&#34;</span><span class="p">))</span></code></pre></div>
+<style>.container { width:100% !important; }</style>
+
+<p>Let&rsquo;s write a Python function that computes the formula above.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+<span class="k">def</span> <span class="nf">choose</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">factorial</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">factorial</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">k</span><span class="p">)</span> <span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">binom</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">choose</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">p</span><span class="o">**</span><span class="n">k</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">k</span><span class="p">)</span>
+
+<span class="n">binom</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">0.010843866711637987</pre></div>
+<p>So the pmf tells us that the probability of getting 60 heads out of 100 coin flips is a hair above 1%, <em><b>if the coin is fair</b></em>.</p>
+
+<p>Note that this does not tell us if the coin is fair. So let&rsquo;s determine how <em>likely</em> are we to observe 60 heads <b>or more</b> in a sequence of 100 flips from a fair coin.</p>
+
+<p>There&rsquo;s typically 2 ways that this problem is solved in introductory stats courses.</p>
+
+<h3 id="method-1-binomial-distribution">Method 1: Binomial Distribution</h3>
+
+<h4 id="one-tailed-binomial-test">One-tailed binomial test.</h4>
+
+<p>Under the hypothesis that the coin is fair, the probability of observing at least 60 heads in a run of 100 coin flips can be computed using the one-tailed binomial test. One tailed means we only care for differences in one direction, either higher or smaller than the result that is expected under the hypothesis that the coin is fair. Here we only care about the probability of observing 60 <b>or more</b> heads. The <code>scipy</code> module has a suitable implementation of the <em>two-tailed</em> binomial test that we can divide by 2 to get the one-tailed result (note that we can divide the two-tailed result by 2 only because we are testing the hypothesis that the coin is fair and for p=0.5 the distribution is symmetric).</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">sp</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">binom_test</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span></code></pre></div><div class="highlight"><pre class="chroma">0.02844396682049039</pre></div>
+<p>That's around 2.8%. This number is nothing more that the sum of the probabilities for all the values of k between 60 and 100.</p>
+
+<div>
+$$\sum_{k = 60}^{100}\left(\begin{array}{c}N\\k \end{array}   \right)p^k\, (1-p)^{N-k}$$
+</div>
+
+<p>Here's a check using our <code>binom</code> function if you don't believe me.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="nb">sum</span><span class="p">(</span><span class="n">binom</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">101</span><span class="p">))</span></code></pre></div><div class="highlight"><pre class="chroma">0.028443966820490392</pre></div>
+<div style="background-color:#F7F2E0;">
+<h3> <font color=MediumVioletRed>Note:</font> </h3>
+<p>The sum version has the advantage of stating explicit what the computation is doing.
+We'll use this approach henceforth whenever we need to perform a binomial test.</p>
+</div>
+
+<h3 id="method-2-normal-approximation-to-the-binomial-distribution">Method 2: Normal approximation to the binomial distribution</h3>
+
+<h4 id="one-tailed-z-test">One-tailed Z-test</h4>
+
+<p>When we have a large enough number of coin flips, we can approximate the <b>discrete</b> binomial distribution by a suitably defined <b>continuous</b> normal (gaussian) distribution with mean 50 ($=Np$) and standard deviation $\sqrt{Np(1-p)}$, courtesy of the famous <a href="http://www.math.uah.edu/stat/sample/CLT.html">central limit theorem</a>.</p>
+
+<p>This allows us to use the beloved Z test of introductory stats courses to determine the probability of observing <em>at least</em> 60 heads, under the hypothesis that the coin is fair. The Z test is just a way to compute how likely it is to observe a value of the the random variable that is beyond a given distance from its assumed mean, using units of the standard deviation.</p>
+
+<p>Once again, <code>scipy</code> can help us by supplying the <a href="https://www.youtube.com/watch?v=4BswLMKgXzU">cumulative distribution function (cdf)</a> for our normal distribution. The cdf is a function that tells us the probability of getting a value lower than, or equal to the value we are considering. The cdf obviously integrates (sums) to 1.
+By subtracting the cdf at a given value z_0 from 1, we get the probability of observing a result at least as large
+as z_0.</p>
+
+<p>The probability we want is:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="n">p</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+<span class="mi">1</span> <span class="o">-</span> <span class="n">sp</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">p</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)))</span>  <span class="c1"># notice the -0.5?</span></code></pre></div><div class="highlight"><pre class="chroma">0.028716559816001852</pre></div>
+<p>We could have computed this directly by first computing the Z score for k, which is nothing more than the observed count of heads minus its average for a fair coin (50), divided by its standard deviation.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">mean</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">sd</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">p</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">))</span> <span class="c1"># standard deviation (the mean is 50 for a fair coin)</span>
+<span class="n">zscore</span> <span class="o">=</span> <span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span><span class="o">/</span><span class="n">sd</span>  <span class="c1"># notice the -0.5?</span>
+
+<span class="mi">1</span> <span class="o">-</span> <span class="n">sp</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">zscore</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">0.028716559816001852</pre></div>
+<div style="background-color:#F7F2E0;">
+<h3><font color=MediumVioletRed>Note:</font></h3>
+    
+Why did we substract 0.5 from k? It called a <a href="http://www.statisticshowto.com/what-is-the-continuity-correction-factor/">continuity correction.</a> We need it to compensate for the fact that we are substituting a continuous distribution for a discrete one.
+</div>
+
+<h3 id="method-3-simulation">Method 3: Simulation</h3>
+
+<p>This is all nice and peachy, but deep down, do we really understand everything we&rsquo;ve done above?
+Coin flips are a fairly trivial concept, so our reasoning should be straightforward, however, what would we
+have done if we hadn&rsquo;t been provided with the pmf of the binomial distribution? Since we derived from
+&ldquo;first principles&rdquo; above, it wouldn&rsquo;t have been much of a problem. However, could we have worked out the normal approximation to the binomial
+distribution (a tad trickier perhaps, with that continuity-correction business)?
+There&rsquo;s got to be a better way! Not really, but there&rsquo;s a <em>different</em> way: <b>simulation</b>.</p>
+
+<p>The question is how likely is it for a fair coin to land 60 or more times heads up in a sequence of 100 flips?</p>
+
+<p>One way to find out is to flip a <b>fair</b> coin 100 times and record the number of heads. Then we flip the coin another 100 times and record the number of heads. Then we flip the coin another 100 times and record the number of heads. Then we flip the coin another 100 times and record the number of heads. Then we flip the coin another 100 times and record the number of heads. Then we flip the coin another 100 times and record the number of heads. Then we flip the coin another 100 times and record the number of heads. Then we flip the coin another 100 times and record the number of heads. Then we flip the coin another 100 times and record the number of heads&hellip; You get the gist.</p>
+
+<p>If we repeat this a large enough number of times, we should get an estimate of how likely it is for a fair coin
+to land heads up 60 or more times in a run of 100 flips simply by computing the proportion of trials where we got 60 or more heads.</p>
+
+<h4>Let the computer flip some coins for us!</h4>
+
+<p><code>numpy</code> has a very useful function called <code>random.randint</code> that will randomly pick an integer drawn from a uniform random distribution.</p>
+
+<p>For instance, let 1 correspond to heads and 0 to tails, we can simulate 10 flips of a fair coin with:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">array([1, 1, 1, 1, 0, 0, 1, 0, 0, 1])</pre></div>
+<p>Note that we can simulate multiple trials of 10 flips by passing a tuple to the size parameter of the function.</p>
+
+<p>Here&rsquo;s for instance a series of 3 trials with 10 flips each.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span></code></pre></div><div class="highlight"><pre class="chroma">array([[1, 0, 1, 1, 0, 0, 0, 1, 0, 0],
+       [1, 0, 1, 0, 1, 0, 0, 0, 0, 0],
+       [1, 1, 1, 0, 0, 1, 0, 1, 0, 0]])</pre></div>
+<h4 id="let-s-flip-our-fair-coin-200-million-times">Let&rsquo;s flip our fair coin 200 million times.</h4>
+
+<p>We&rsquo;ll simulate 2 million trials of 100 coin flips. Since we get 1 for heads and 0 for tails, the number
+of heads in a trial is simply the sum of all the values observed in that trial.</p>
+
+<p>We set the random seed so that we all get the same result, not that it matters that much here.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># number of flips per trial</span>
+<span class="n">repeats</span> <span class="o">=</span> <span class="mi">2000000</span>   <span class="c1"># number of trials</span>
+
+<span class="c1"># we flip the &#34;coin&#34; N times and compute the sum of 1s (heads).</span>
+<span class="c1"># the whole thing is repeated &#34;repeats&#34; times.</span>
+<span class="n">coin_flips</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">repeats</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">coin_flips</span><span class="o">.</span><span class="n">shape</span></code></pre></div><div class="highlight"><pre class="chroma">(2000000,)</pre></div>
+<h4 id="let-s-compute-the-normal-approximation-to-the-binomial-distribution-for-our-case">Let&rsquo;s compute the normal approximation to the binomial distribution for our case.</h4>
+
+<p>(this is so that we can plot it alongside our histogram)</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">p</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># probability of heads for a fair coin</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">coin_flips</span><span class="o">.</span><span class="nb">min</span><span class="p">(),</span> <span class="n">coin_flips</span><span class="o">.</span><span class="nb">max</span><span class="p">(),</span> <span class="mi">100</span><span class="p">)</span>   <span class="c1"># 100 evenly spaced values between the min and max counts</span>
+<span class="n">ndist</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">p</span> <span class="o">*</span> <span class="n">N</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">p</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)))</span> <span class="c1"># we use scipy to compute the normal approximation</span></code></pre></div>
+<h4 id="let-s-plot-the-histogram-of-our-simulation-as-well-as-the-normal-approximation">Let&rsquo;s plot the histogram of our simulation, as well as the normal approximation.</h4>
+
+<p>The red vertical line marks the observed result (number of heads).</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">coin_flips</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s1">&#39;mid&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="c1"># plot the histogram</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&#34;observed # heads&#34;</span><span class="p">)</span>  <span class="c1"># plot a vertical line at x = k</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span> <span class="c1"># label for the x axis</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$P(k)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span> <span class="c1"># label for the y axis</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;{} coin flips repeated {:,d} times&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">repeats</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span> <span class="c1"># title of the figure</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ndist</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&#34;normal approx.&#34;</span><span class="p">)</span> <span class="c1"># plot normal approximation curve</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># add legend</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1"># display the result</span></code></pre></div>
+<p><img src="output_25_0.png" alt="png" /></p>
+
+<h4 id="let-s-extract-the-proportion-of-our-100-coin-flip-trials-which-have-60-or-more-heads-from-our-simulation">Let&rsquo;s extract the proportion of our 100 coin flip trials which have 60 or more heads from our simulation.</h4>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">coin_flips</span> <span class="o">&gt;=</span> <span class="n">k</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">0.0285285</pre></div>
+<div style="background-color:#F7F2E0;">
+<h3> <font color=MediumVioletRed>Note:</font> </h3>
+<p>Computing the mean is the same as adding all the values for which the condition is true, which gives us the number of trials where we got at least k heads, and dividing by the number of trials, which gives us the proportion we're after.</p>
+</div>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">coin_flips</span> <span class="o">&gt;=</span> <span class="n">k</span><span class="p">)</span> <span class="o">/</span> <span class="n">repeats</span></code></pre></div><div class="highlight"><pre class="chroma">0.0285285</pre></div>
+<div style="background-color:#F7F2E0;">
+<h3> <font color=MediumVioletRed>Note:</font> </h3>
+<p>In the context of statistical inference (the frequentist kind), this probability is called a p-value. It gives us the probability of observing a result as or more extreme than the one observed ($X\geqslant 60$) if the null hypothesis ($p=0.5$) is true. It also sometimes gives statistics a bad name...</p>
+</div>
+
+<p>Not a bad estimate of the propability of having $X\geqslant 60$ under the (null) hypothesis that the coin is fair.</p>
+
+<p>So it looks like our simulation works for 60 or more heads. It would be nice to check that it works for other values.</p>
+
+<p>We could either change the value of k above, and re-run our code, or we could copy and paste the code and change
+the value of k, but neither approach is good programming practice. Whenever we realise that we&rsquo;d like to run the same piece of code multiple times, for different values of parameters, we should <b>wrap our code in a function</b>.</p>
+
+<p>Let&rsquo;s do that.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">compute_pvalue</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;p-value&#34;</span><span class="p">,</span>
+          <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">Our simulation:         &#34;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">coin_flips</span> <span class="o">&gt;=</span> <span class="n">k</span><span class="p">),</span>
+          <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">Scipy (Binomial test):  &#34;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">binom</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">kvalue</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span> <span class="k">for</span> <span class="n">kvalue</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="mi">101</span><span class="p">)),</span>
+          <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">Scipy (Normal Approx):  &#34;</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">sp</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">p</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">))))</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">coin_flips</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ndist</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$P(k)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;{} coin flips repeated {:,d} times&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">repeats</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">compute_pvalue</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">p-value 
+Our simulation:          0.0285285 
+Scipy (Binomial test):   0.028443966820490392 
+Scipy (Normal Approx):   0.028716559816001852</pre></div>
+<p><img src="output_32_1.png" alt="png" /></p>
+
+<p>We've considered the probability that the number of heads is at least k in a run of 100 coin flips.</p>
+
+<p>Let's write a version of the code above that will compute, and visualise the probability that the number of heads is <b>exactly</b> k in a run of 100 coin flips, under the hypothesis that the coin is fair.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">compute_pvalue_B</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;p-value&#34;</span><span class="p">,</span>
+          <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">Our simulation:         &#34;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">coin_flips</span> <span class="o">==</span> <span class="n">k</span><span class="p">),</span>
+          <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">Scipy (Binomial test):  &#34;</span><span class="p">,</span> <span class="n">binom</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span>
+          <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">Scipy (Normal Approx):  &#34;</span><span class="p">,</span> <span class="n">sp</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">p</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)))</span> <span class="o">-</span> <span class="n">sp</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">p</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">))))</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">coin_flips</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ndist</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$P(k)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;{} coin flips repeated {:,d} times&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">repeats</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+<span class="n">compute_pvalue_B</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">p-value 
+Our simulation:          0.0108845 
+Scipy (Binomial test):   0.010843866711637987 
+Scipy (Normal Approx):   0.010852139253185289</pre></div>
+<p><img src="output_34_1.png" alt="png" /></p>
+
+<p>Let's now write a version of the code above that will compute, and visualise the probability that the number of heads is <b>between</b> two values k_1 and k_2 in a run of 100 coin flips, under the hypothesis that the coin is fair (assume that $0\leqslant k_1 \leqslant 50$ and $50 \leqslant k_2 \leqslant 100$).</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">compute_pvalue</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+    <span class="n">k1</span><span class="p">,</span> <span class="n">k2</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;p-value&#34;</span><span class="p">,</span>
+          <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">Our simulation:         &#34;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">coin_flips</span> <span class="o">&gt;=</span> <span class="n">k1</span><span class="p">,</span> <span class="n">coin_flips</span> <span class="o">&lt;=</span> <span class="n">k2</span><span class="p">)),</span>
+          <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">Scipy (Binomial test):  &#34;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">([</span><span class="n">binom</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">k2</span><span class="o">+</span><span class="mi">1</span><span class="p">)]),</span>
+          <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">Scipy (Normal Approx):  &#34;</span><span class="p">,</span> <span class="n">sp</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">k2</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">p</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)))</span><span class="o">-</span>
+                                        <span class="n">sp</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">k1</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">p</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)))</span> <span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">coin_flips</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ndist</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">k1</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">k2</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$P(k)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;{} coin flips repeated {:,d} times&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">repeats</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+<span class="n">compute_pvalue</span><span class="p">(</span><span class="n">k1</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">k2</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">p-value 
+Our simulation:          0.847064 
+Scipy (Binomial test):   0.8467733878542303 
+Scipy (Normal Approx):   0.8464695184908008</pre></div>
+<p><img src="output_36_1.png" alt="png" /></p>
+
+<hr style="height:5px;border:none;color:#333;background-color:#333;" />
+
+<h1> Dice roll</h1>
+
+<p>Aside from its usefulness in statistical inference, simulation is a nice way to explore problems which involve counting occurences of a certain event. Since this is the basic concept behind probability theory, simulation can be an convenient way to tackle probabilitic problems.</p>
+
+<p>Let's look at a simple example.</p>
+
+<p>Assuming that we have a regular, fair, six-sided die with sides numbered 1 to 6.</p> 
+
+<p>What is the probability of getting:
+<ul>
+<li> 6 when rolling the die once?</li>
+<li> no 6 when rolling the die once?</li>
+</ul></p>
+
+<p>What about the probability of getting:
+<ul>
+<li> no 6 when rolling the die twice?</li>
+<li> a single 6 when rolling the die twice?</li>
+<li> two 6s when rolling the die twice?</li>
+</ul>
+<p>We can of course enumerate (count) all the ways you can obtain the required outcome, and normalise (divide) this by all the  possible outcomes, but it&rsquo;s not a great general strategy. A better way is to work out the exact mathematical formula for the probability we&rsquo;re interested in. We&rsquo;ll do that shortly, but first let&rsquo;s just simulate the process of rolling dice.</p></p>
+
+<p>Let's create a function <code>roll_dice</code> that takes two integers <code>n_rolls</code> and <code>n_trials</code>
+as arguments, and returns an array with the number of 6s obtained in each of the <code>n_trials</code> trials when we roll <code>n_rolls</code> dice at the same time.</p>
+
+<p>For instance, <code>roll_dice(2, 10)</code> would return an array of 10 values representing the number of 6s observed when rolling 2 dice in each of the 10 trials.</p>
+
+<p>We'll fix the random seed for reproducibility.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">roll_dice</span><span class="p">(</span><span class="n">n_rolls</span><span class="p">,</span> <span class="n">n_trials</span><span class="p">):</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">die_rolls</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">n_trials</span><span class="p">,</span> <span class="n">n_rolls</span><span class="p">))</span> <span class="o">==</span> <span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">die_rolls</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">roll_dice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">array([0, 0, 0, 0, 0, 0, 1, 0, 2, 0])</pre></div>
+<p>Note that the values in the array represent the number of 6s observed in each of the 10 trials.</p>
+
+<p>The function below will visualise the result of <code>roll_dice</code> as a histogram.</p>
+
+<p>It uses the <code>roll_dice</code> function to compute the counts of 6s across <code>n_trials</code> trials by default.</p>
+
+<p>It will also output the numerical value for the proportion of 6s in each case.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">plot_histogram</span><span class="p">(</span><span class="n">n_rolls</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">n_trials</span> <span class="o">=</span> <span class="mi">100000</span><span class="p">):</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">12345</span><span class="p">)</span>
+    <span class="n">rolls</span> <span class="o">=</span> <span class="n">roll_dice</span><span class="p">(</span><span class="n">n_rolls</span><span class="o">=</span><span class="n">n_rolls</span><span class="p">,</span> <span class="n">n_trials</span><span class="o">=</span><span class="n">n_trials</span><span class="p">)</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">rolls</span><span class="p">,</span> 
+                      <span class="n">bins</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_rolls</span><span class="o">+</span><span class="mi">2</span><span class="p">),</span> 
+                      <span class="n">density</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> 
+                      <span class="n">align</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> 
+                      <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.6</span><span class="p">,</span> 
+                      <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span>
+                    <span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_rolls</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Number of 6s in {n_rolls} rolls over {n_trials:,} trials&#39;</span><span class="p">,</span>
+              <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">f</span><span class="s2">&#34;Number of 6s: {i:3d} | Proportion: {values[0][i]:.6f}&#34;</span> 
+                     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_rolls</span><span class="o">+</span><span class="mi">1</span><span class="p">)]))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plot_histogram</span><span class="p">(</span><span class="n">n_rolls</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">Number of 6s:   0 | Proportion: 0.695630
+Number of 6s:   1 | Proportion: 0.276400
+Number of 6s:   2 | Proportion: 0.027970</pre></div>
+<p><img src="output_44_1.png" alt="png" /></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plot_histogram</span><span class="p">(</span><span class="n">n_rolls</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">Number of 6s:   0 | Proportion: 0.580000
+Number of 6s:   1 | Proportion: 0.345960
+Number of 6s:   2 | Proportion: 0.069400
+Number of 6s:   3 | Proportion: 0.004640</pre></div>
+<p><img src="output_45_1.png" alt="png" /></p>
+
+<p>Assuming that we have regular, fair, six-sided dice, what is the probability of getting exactly five 6s when we roll 10 dice at the same time (or the same die 10 times in a row)?</p> 
+
+<p><b>Hints:</b> </p>
+The <code>choose</code> function we introduced earlier gives us the number of ways you can
+pick k interchangeable items from a collection of N elements.
+
+<p>Using the <code>choose</code> function we introduced earlier, we can write the proportion of rolls where we get exactly 5 sixes. In 10 rolls, we have $6^{10}$ possible outcomes. If we observe 5 sixes, this means that we
+also have 5 values other than 6. These 5 values come in $5^5$ combinations (5 ways to choose something other than 6 for each of the 5 dice). How many ways are there to choose which 5 dice don't show a 6: "10 choose 5" ways. Hence:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">choose</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">*</span> <span class="mi">5</span><span class="o">**</span><span class="mi">5</span> <span class="o">/</span> <span class="mi">6</span> <span class="o">**</span> <span class="mi">10</span></code></pre></div><div class="highlight"><pre class="chroma">0.013023810204237159</pre></div>
+<p>Meaning that the probability of observing five 6s in 10 rolls is about 1.3%.</p>
+
+<p>We can check that against our dice roll simulation code.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plot_histogram</span><span class="p">(</span><span class="n">n_rolls</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_trials</span><span class="o">=</span><span class="mi">1000000</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">Number of 6s:   0 | Proportion: 0.161252
+Number of 6s:   1 | Proportion: 0.323586
+Number of 6s:   2 | Proportion: 0.290073
+Number of 6s:   3 | Proportion: 0.155074
+Number of 6s:   4 | Proportion: 0.054466
+Number of 6s:   5 | Proportion: 0.013067
+Number of 6s:   6 | Proportion: 0.002203
+Number of 6s:   7 | Proportion: 0.000253
+Number of 6s:   8 | Proportion: 0.000026
+Number of 6s:   9 | Proportion: 0.000000
+Number of 6s:  10 | Proportion: 0.000000</pre></div>
+<p><img src="output_50_1.png" alt="png" /></p>
+
+<h4>The exact result.</h4>
+
+<p>Let's implement the formula for an arbitrary number k of 6s when rolling N fair dice ($k\leqslant N$).   </p> 
+
+<p>We'll call this function <code>number_of_sixes(N, k)</code>.</p>
+
+<p><p>We&rsquo;ll use this function to:</p>
+<ol>
+<li>check the simulation results in the histogram above.</li>
+<li>compute the probability of getting
+<b>at least</b> five 6s in 10 rolls of a die.</li>
+<li>compute the probability of getting
+<b>at most</b> five 6s in 10 rolls of a die.</li>
+</ol>
+</ul></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">number_of_sixes</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">choose</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span><span class="o">*</span><span class="mi">5</span><span class="o">**</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="n">k</span><span class="p">)</span><span class="o">/</span><span class="mi">6</span><span class="o">**</span><span class="n">N</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Probability of {:2d} 6s in 10 rolls: {:.6f}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">number_of_sixes</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">i</span><span class="p">)))</span>
+    
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">Probability of at least five 6s in 10 rolls: {:.6f}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">number_of_sixes</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">))))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">Probability of at most five 6s in 10 rolls: {:.6f}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">number_of_sixes</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">))))</span></code></pre></div><div class="highlight"><pre class="chroma">Probability of  0 6s in 10 rolls: 0.161506
+Probability of  1 6s in 10 rolls: 0.323011
+Probability of  2 6s in 10 rolls: 0.290710
+Probability of  3 6s in 10 rolls: 0.155045
+Probability of  4 6s in 10 rolls: 0.054266
+Probability of  5 6s in 10 rolls: 0.013024
+Probability of  6 6s in 10 rolls: 0.002171
+Probability of  7 6s in 10 rolls: 0.000248
+Probability of  8 6s in 10 rolls: 0.000019
+Probability of  9 6s in 10 rolls: 0.000001
+Probability of 10 6s in 10 rolls: 0.000000
+
+Probability of at least five 6s in 10 rolls: 0.015462
+
+Probability of at most five 6s in 10 rolls: 0.997562</pre></div>
+<p>Our simulation results above are in good agreement with these exact values.</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://adelr.github.io//tags/python/">python</a>&nbsp;
+            
+              <a href="https://adelr.github.io//tags/probability/">probability</a>&nbsp;
+            
+              <a href="https://adelr.github.io//tags/statistics/">statistics</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=https%3a%2f%2fadelr.github.io%2f2018%2f06%2fsimul_coin_flip%2f&amp;text=Do%20you%20feel%20lucky%3f&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//plus.google.com/share?url=https%3a%2f%2fadelr.github.io%2f2018%2f06%2fsimul_coin_flip%2f" target="_blank" title="Share on Google Plus">
+          <i class="fab fa-google-plus"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fadelr.github.io%2f2018%2f06%2fsimul_coin_flip%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=https%3a%2f%2fadelr.github.io%2f2018%2f06%2fsimul_coin_flip%2f&amp;title=Do%20you%20feel%20lucky%3f" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fadelr.github.io%2f2018%2f06%2fsimul_coin_flip%2f&amp;title=Do%20you%20feel%20lucky%3f" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fadelr.github.io%2f2018%2f06%2fsimul_coin_flip%2f&amp;title=Do%20you%20feel%20lucky%3f" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fadelr.github.io%2f2018%2f06%2fsimul_coin_flip%2f&amp;description=Do%20you%20feel%20lucky%3f" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+              </div>
+            </section>
+        
+
+        
+          
+          
+          <h4 class="see-also">See also</h4>
+          <ul>
+          
+            <li><a href="/2018/05/seinfeld_effect/">Seinfeld&#39;s Magnificent Seven</a></li>
+          
+          </ul>
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://adelr.github.io/2018/05/seinfeld_effect/" data-toggle="tooltip" data-placement="top" title="Seinfeld&#39;s Magnificent Seven">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://adelr.github.io/2018/06/simul_birthday/" data-toggle="tooltip" data-placement="top" title="Happy birthday to you!">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:adel.rahmani&#43;dinkumdata@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/adelr" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://adelr.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              Adel Rahmani
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2018
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://adelr.github.io/">Dinkum Data Blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.54.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://adelr.github.io/js/main.js"></script>
+<script src="https://adelr.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://adelr.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [
+        ['$', '$'],
+        ['\\(', '\\)']
+      ],
+      displayMath: [
+        ['$$', '$$']
+      ],
+      processEscapes: true,
+      processEnvironments: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      TeX: {
+        equationNumbers: {
+          autoNumber: "AMS"
+        },
+        extensions: ["AMSmath.js", "AMSsymbols.js"]
+      }
+    }
+  });
+  MathJax.Hub.Queue(function () {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(),
+      i;
+    for (i = 0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+    
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+
+
+  </body>
+</html>
+

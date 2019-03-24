@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Unicode strings in Python - Dinkum Data Blog</title>
+  <meta property="og:title" content="Unicode strings in Python" />
+  <meta name="twitter:title" content="Unicode strings in Python" />
+  <meta name="description" content="1. Unicode: an introduction. Computers only understand one thing: binary code. For instance, when you type the letter &ldquo;A&rdquo; the computer must represent this as a sequence of 0s and 1s.
+Therefore we need a rule (code) for converting between characters and sequences of 0s and 1s. A basic way to do this is provided by the ASCII code.
+The ASCII code uses 1 byte (8 bits) to encode 256 possible characters, corresponding to a binary number between 0 and $255 = 2^7&#43;2^6&#43;2^5&#43;2^4&#43;2^3&#43;2^2&#43;2^1&#43;2^0$.">
+  <meta property="og:description" content="1. Unicode: an introduction. Computers only understand one thing: binary code. For instance, when you type the letter &ldquo;A&rdquo; the computer must represent this as a sequence of 0s and 1s.
+Therefore we need a rule (code) for converting between characters and sequences of 0s and 1s. A basic way to do this is provided by the ASCII code.
+The ASCII code uses 1 byte (8 bits) to encode 256 possible characters, corresponding to a binary number between 0 and $255 = 2^7&#43;2^6&#43;2^5&#43;2^4&#43;2^3&#43;2^2&#43;2^1&#43;2^0$.">
+  <meta name="twitter:description" content="1. Unicode: an introduction. Computers only understand one thing: binary code. For instance, when you type the letter &ldquo;A&rdquo; the computer must represent this as a sequence of 0s and 1s. …">
+  <meta name="author" content="Adel Rahmani"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Dinkum Data Blog",
+    
+    "url": "https://adelr.github.io/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https://adelr.github.io/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https://adelr.github.io/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https://adelr.github.io/2018/10/unicode_intro/",
+          "name": "Unicode strings in python"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Adel Rahmani"
+  },
+  "headline": "Unicode strings in Python",
+  "description" : "1. Unicode: an introduction. Computers only understand one thing: binary code. For instance, when you type the letter &amp;ldquo;A&amp;rdquo; the computer must represent this as a sequence of 0s and 1s.
+Therefore we need a rule (code) for converting between characters and sequences of 0s and 1s. A basic way to do this is provided by the ASCII code.
+The ASCII code uses 1 byte (8 bits) to encode 256 possible characters, corresponding to a binary number between 0 and $255 = 2^7&#43;2^6&#43;2^5&#43;2^4&#43;2^3&#43;2^2&#43;2^1&#43;2^0$.",
+  "inLanguage" : "en",
+  "wordCount": 3273,
+  "datePublished" : "2018-10-05T00:00:00",
+  "dateModified" : "2018-10-05T00:00:00",
+  "image" : "https://adelr.github.io/img/avatar-icon.png",
+  "keywords" : [ "python, unicode" ],
+  "mainEntityOfPage" : "https://adelr.github.io/2018/10/unicode_intro/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https://adelr.github.io/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https://adelr.github.io/img/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Unicode strings in Python" />
+<meta property="og:description" content="1. Unicode: an introduction. Computers only understand one thing: binary code. For instance, when you type the letter &ldquo;A&rdquo; the computer must represent this as a sequence of 0s and 1s.
+Therefore we need a rule (code) for converting between characters and sequences of 0s and 1s. A basic way to do this is provided by the ASCII code.
+The ASCII code uses 1 byte (8 bits) to encode 256 possible characters, corresponding to a binary number between 0 and $255 = 2^7&#43;2^6&#43;2^5&#43;2^4&#43;2^3&#43;2^2&#43;2^1&#43;2^0$.">
+<meta property="og:image" content="https://adelr.github.io/img/avatar-icon.png" />
+<meta property="og:url" content="https://adelr.github.io/2018/10/unicode_intro/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Dinkum Data Blog" />
+  <meta name="twitter:title" content="Unicode strings in Python" />
+  <meta name="twitter:description" content="1. Unicode: an introduction. Computers only understand one thing: binary code. For instance, when you type the letter &ldquo;A&rdquo; the computer must represent this as a sequence of 0s and 1s. …">
+  <meta name="twitter:image" content="https://adelr.github.io/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://adelr.github.io/img/avatar-icon.png" />
+  <meta name="twitter:image" content="https://adelr.github.io/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://adelr.github.io/2018/10/unicode_intro/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Dinkum Data Blog" />
+
+  <meta name="generator" content="Hugo 0.54.0" />
+  <link rel="alternate" href="https://adelr.github.io/index.xml" type="application/rss+xml" title="Dinkum Data Blog"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://adelr.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://adelr.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://adelr.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://adelr.github.io/">Dinkum Data Blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Dinkum Data Blog" href="https://adelr.github.io/">
+            <img class="avatar-img" src="https://adelr.github.io/img/avatar-icon.png" alt="Dinkum Data Blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Unicode strings in Python</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on October 5, 2018
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;16&nbsp;minutes
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;3273&nbsp;words
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Adel Rahmani
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<h1 id="1-unicode-an-introduction">1. Unicode: an introduction.</h1>
+
+<p>Computers only understand one thing: <b>binary</b> code. For instance, when you type the letter &ldquo;A&rdquo; the computer
+must represent this as a sequence of 0s and 1s.</p>
+
+<p>Therefore we need a rule (code) for converting between characters and sequences of 0s and 1s. A basic way to do this is
+provided by the <a href="http://www.ascii-code.com/">ASCII code</a>.</p>
+
+<p>The ASCII code uses 1 byte (8 bits) to encode 256 possible characters, corresponding to a binary number between 0 and $255 = 2^7+2^6+2^5+2^4+2^3+2^2+2^1+2^0$.</p>
+
+<p>These can be split into 3 groups (see the link above). The usual characters used in English are those whose ASCII codes are between
+32 and 127.</p>
+
+<p>For instance the letter &ldquo;A&rdquo; corresponds to the number 65 which is treated by the computer as the binary sequence $1000001$.</p>
+
+<p>In Python, the ASCII code of a given letter can be obtained using the <code>ord</code> function. It can be converted to binary using <code>bin</code>, and to hexadecimal (base 16) code using <code>hex</code>.</p>
+
+<p>Conversely, the character corresponding to a given ASCII code can be obtained using the <code>chr</code> function.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">&#34;&lt;style&gt;.container { width:100% !important; }&lt;/style&gt;&#34;</span><span class="p">))</span>
+
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;Character: A&#34;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;ASCII code:&#34;</span><span class="p">,</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;Binary code:&#34;</span><span class="p">,</span> <span class="nb">bin</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;Hexadecimal code:&#34;</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;chr(65):&#34;</span><span class="p">,</span> <span class="nb">chr</span><span class="p">(</span><span class="mi">65</span><span class="p">))</span></code></pre></div>
+<style>.container { width:100% !important; }</style>
+<div class="highlight"><pre class="chroma">Character: A
+ASCII code: 65
+Binary code: 0b1000001
+Hexadecimal code: 0x41
+chr(65): A</pre></div>
+<p>The result above tells us that the <strong>binary</strong> code for A (starting with <code>0b</code>) corresponds to the decimal number $2^6+2^0=64+1=65$.</p>
+
+<p>Similarly, the <strong>hexadecimal</strong> code (starting with <code>0x</code>) tells us that A corresponds to $4\times 16^1+1\times 16^0=64+1=65$ in old money (base 10).</p>
+
+<p>Let&rsquo;s have a look at all the characters whose ASCII code is between 32 and 127</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">([</span><span class="nb">chr</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">127</span><span class="p">)])</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39; &#39;, &#39;!&#39;, &#39;&#34;&#39;, &#39;#&#39;, &#39;$&#39;, &#39;%&#39;, &#39;&amp;&#39;, &#34;&#39;&#34;, &#39;(&#39;, &#39;)&#39;, &#39;*&#39;, &#39;+&#39;, &#39;,&#39;, &#39;-&#39;, &#39;.&#39;, &#39;/&#39;, &#39;0&#39;, &#39;1&#39;, &#39;2&#39;, &#39;3&#39;, &#39;4&#39;, &#39;5&#39;, &#39;6&#39;, &#39;7&#39;, &#39;8&#39;, &#39;9&#39;, &#39;:&#39;, &#39;;&#39;, &#39;&lt;&#39;, &#39;=&#39;, &#39;&gt;&#39;, &#39;?&#39;, &#39;@&#39;, &#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;, &#39;E&#39;, &#39;F&#39;, &#39;G&#39;, &#39;H&#39;, &#39;I&#39;, &#39;J&#39;, &#39;K&#39;, &#39;L&#39;, &#39;M&#39;, &#39;N&#39;, &#39;O&#39;, &#39;P&#39;, &#39;Q&#39;, &#39;R&#39;, &#39;S&#39;, &#39;T&#39;, &#39;U&#39;, &#39;V&#39;, &#39;W&#39;, &#39;X&#39;, &#39;Y&#39;, &#39;Z&#39;, &#39;[&#39;, &#39;\\&#39;, &#39;]&#39;, &#39;^&#39;, &#39;_&#39;, &#39;`&#39;, &#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;, &#39;g&#39;, &#39;h&#39;, &#39;i&#39;, &#39;j&#39;, &#39;k&#39;, &#39;l&#39;, &#39;m&#39;, &#39;n&#39;, &#39;o&#39;, &#39;p&#39;, &#39;q&#39;, &#39;r&#39;, &#39;s&#39;, &#39;t&#39;, &#39;u&#39;, &#39;v&#39;, &#39;w&#39;, &#39;x&#39;, &#39;y&#39;, &#39;z&#39;, &#39;{&#39;, &#39;|&#39;, &#39;}&#39;, &#39;~&#39;]</pre></div>
+<p>Because the ASCII code is using (at most) 1 byte, it cannot represent more than 256 characters. This is sufficient to writing English text but it's not enough to code other symbols such as non-English alphabet, accented characters, as well as more esoteric characters... Hence, another type of character encoding is needed.</p>
+<p>Modern character encoding  is built on <b>Unicode</b> which contains (at this time) more than <a href="http://www.babelstone.co.uk/Unicode/HowMany.html">130,000 characters</a>. Note that not all web browsers/fonts are able to display all these characters. In Unicode each character is represented by a code point. When stored/processed by a computer the character is encoded on 1 or more bytes. </p>
+
+<div style="background-color:#FBEFFB;"><p style="font-size:20px;color:#FF0080">&#9888; Beware!</p> <!--- Warning --->
+
+<p><b>We mustn't confuse the code point and the byte encoding associated with any given character</b>.</p> 
+<p>Think of the code point as an identification number for a character (kind of like your social security number). This code point is distinct from the binary representation of said character in terms of 1s and 0s. <p>How do we connect the two?</p> <p>That's what <b>encodings</b>  are for. An encoding provides a convention for passing from code point to bytes.</p>
+
+
+<p>There are several encodings of Unicode characters. The main one for our purpose is called UTF-8. It uses a variable length encoding (1, 2, 3 or 4 bytes).</p>
+
+<p>Unicode has the advantage of being a superset of ASCII. In other words, all the ASCII codes are also valid <a href="http://unicode-table.com/en/">Unicode codes</a>.</p>
+
+<p>Here's an example. The <a href="http://www.fileformat.info/info/unicode/char/20aC/index.htm">euro sign</a>  &#8364; has code <code>U+20AC</code>.
+The <code>U+</code> tells us it's a unicode code point and the <code>20AC</code> is a hexadecimal number (base 16) which corresponds to 8364 in base 10.</p>
+
+<p>In Python 3 <b>strings are by default unicode</b>, so the type <code>str</code> holds for any valid unicode character, <em>not just those that can be encoded using ASCII</em>.</p>
+
+<p>We can represent code points in Python using a special string starting with <code>\u</code>.</p>
+
+</div>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">euro</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\u20AC</span><span class="s1">&#39;</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;Character:&#34;</span><span class="p">,</span> <span class="n">euro</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;Decimal code point:&#34;</span><span class="p">,</span> <span class="nb">ord</span><span class="p">(</span><span class="n">euro</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;Hexadecimal code point:&#34;</span><span class="p">,</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">euro</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;Binary code point:&#34;</span><span class="p">,</span> <span class="nb">bin</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">euro</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;Type:&#34;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">euro</span><span class="p">))</span> 
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;Character length:&#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">euro</span><span class="p">))</span></code></pre></div><div class="highlight"><pre class="chroma">Character: €
+Decimal code point: 8364
+Hexadecimal code point: 0x20ac
+Binary code point: 0b10000010101100
+Type: &lt;class &#39;str&#39;&gt;
+Character length: 1</pre></div>
+<p>Notice that we have an string of type <code>str</code> and its length is 1 character. 
+</p>
+<p>Notice also that, in this case, the Unicode code point used by Python is actually based on the hexadecimal code associated with the character.</p>
+
+<p>The hexadecimal value <code>20ac</code> corresponds to the decimal value $2\times 16^3+0\times 16^2+10\times 16^1+12\times 16^0=8192+160+12=8364$.</p>
+
+<p>If we encode the string (character really) using UTF-8, we get its byte representation, which <b>has type <code>bytes</code> and is encoded over 3 bytes</b>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">euroUTF8</span> <span class="o">=</span> <span class="n">euro</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;UTF-8 encoded character:&#34;</span><span class="p">,</span> <span class="n">euroUTF8</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;UTF-8 encoded type:&#34;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">euroUTF8</span><span class="p">))</span> 
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;UTF-8 encoded character length:&#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">euroUTF8</span><span class="p">))</span></code></pre></div><div class="highlight"><pre class="chroma">UTF-8 encoded character: b&#39;\xe2\x82\xac&#39;
+UTF-8 encoded type: &lt;class &#39;bytes&#39;&gt;
+UTF-8 encoded character length: 3</pre></div>
+<p>Contrast this with:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">A_UTF8</span> <span class="o">=</span> <span class="s1">&#39;A&#39;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;UTF-8 encoded character:&#34;</span><span class="p">,</span> <span class="n">A_UTF8</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;UTF-8 encoded type:&#34;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">A_UTF8</span><span class="p">))</span> 
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;UTF-8 encoded character length:&#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">A_UTF8</span><span class="p">))</span></code></pre></div><div class="highlight"><pre class="chroma">UTF-8 encoded character: b&#39;A&#39;
+UTF-8 encoded type: &lt;class &#39;bytes&#39;&gt;
+UTF-8 encoded character length: 1</pre></div>
+<p><strong>As long as we don&rsquo;t confuse unicode and bytes, and get our encodings right, we and Python strings will live happily for ever after.</strong></p>
+
+<p><strong>One way to think about this is that we encode a string to pass it to the computer, and we decode it to show it to a human.</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="s2">&#34;Unicode character:&#34;</span><span class="p">,</span> <span class="n">euro</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;UTF-8 encoded character:&#34;</span><span class="p">,</span> <span class="n">euroUTF8</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;Decoded bytes:&#34;</span><span class="p">,</span> <span class="n">euroUTF8</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span></code></pre></div><div class="highlight"><pre class="chroma">Unicode character: €
+UTF-8 encoded character: b&#39;\xe2\x82\xac&#39;
+Decoded bytes: €</pre></div>
+<p>Note that the default encoding on many systems (at least in the English speaking world) used to be ASCII, but UTF-8 has become the norm.</p>
+
+<p>(There are some additional things happening with the <code>print</code> function, but we won&rsquo;t get into it here.)</p>
+
+<p>Note that <code>ord</code> and <code>chr</code> work with Unicode.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;€&#39;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">8364</pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="nb">chr</span><span class="p">(</span><span class="mi">8364</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">&#39;€&#39;</pre></div>
+<p>You can also refer to unicode characters using their name in Python using the special <code>&lsquo;\N{NAME}&rsquo;</code> syntax.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="s1">&#39;</span><span class="se">\N{EURO SIGN}</span><span class="s1">&#39;</span></code></pre></div><div class="highlight"><pre class="chroma">&#39;€&#39;</pre></div>
+<p>Most of the agonising pain associated with Unicode in Python has to do with not specifying (or knowing) whether we&rsquo;re dealing with unicode or bytes.</p>
+
+<p>Once that&rsquo;s clear, your Python code can handle non-ASCII characters. Let&rsquo;s start with something easy.</p>
+
+<h4> German</h4>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;Straße&#39;</span>
+<span class="n">sUTF8</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="n">s</span><span class="p">,</span> <span class="n">sUTF8</span></code></pre></div><div class="highlight"><pre class="chroma">(&#39;Straße&#39;, b&#39;Stra\xc3\x9fe&#39;)</pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="s2">&#34;Length of s :&#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;Length of encoded s:&#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sUTF8</span><span class="p">))</span></code></pre></div><div class="highlight"><pre class="chroma">Length of s : 6
+Length of encoded s: 7</pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="s2">&#34;Unicode :&#34;</span><span class="p">,</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">])</span></code></pre></div><div class="highlight"><pre class="chroma">Unicode : [&#39;S&#39;, &#39;t&#39;, &#39;r&#39;, &#39;a&#39;, &#39;ß&#39;, &#39;e&#39;]</pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="s2">&#34;UTF-8   :&#34;</span><span class="p">,[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">sUTF8</span><span class="p">])</span></code></pre></div><div class="highlight"><pre class="chroma">UTF-8   : [83, 116, 114, 97, 195, 159, 101]</pre></div>
+<div style="background-color:#F7F2E0;">
+<h3> <font color=MediumVioletRed>Remark:</font> </h3>
+<p>Notice how the character ß is represented by the 2 bytes <code>\xc3\x9f</code> however, 223 is the code point for the German <em>Eszett</em>, so is there a problem? </p>    
+</div>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="nb">chr</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">&#39;ß&#39;</pre></div>
+<p>In base 16 (hexadecimal), <code>df</code> corresponds to the number 223.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="nb">int</span><span class="p">(</span><span class="s1">&#39;df&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">223</pre></div>
+<p>We can specify a hexadecimal code in a string using the <code>\x</code> prefix.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="s1">&#39;</span><span class="se">\xdf</span><span class="s1">&#39;</span></code></pre></div><div class="highlight"><pre class="chroma">&#39;ß&#39;</pre></div>
+<p>So if <code>&lsquo;\xdf&rsquo;</code> represents our unicode character, what does <code>&ldquo;\xc3\x9f&rdquo;</code> represents?</p>
+
+<p>It represents the encoding of our unicode character over 2 bytes using UTF-8.</p>
+
+<p>We can decode the corresponding byte string and get the unicode character to print to the notebook.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="sa">b</span><span class="s2">&#34;</span><span class="se">\xc3\x9f</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">&#39;ß&#39;</pre></div>
+<p>In a different encoding (e.g. <code>latin-1</code>), the same letter would be encoded as <code>\xdf</code>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">s</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;latin-1&#39;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">b&#39;Stra\xdfe&#39;</pre></div>
+<h4 id="french">French</h4>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">s</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&#34;Les cons, ça ose tout. C&#39;est même à ça qu&#39;on les reconnaît.&#34;</span>
+<span class="n">sUTF8</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">sUTF8</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">Les cons, ça ose tout. C&#39;est même à ça qu&#39;on les reconnaît.
+b&#34;Les cons, \xc3\xa7a ose tout. C&#39;est m\xc3\xaame \xc3\xa0 \xc3\xa7a qu&#39;on les reconna\xc3\xaet.&#34;</pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">sLATIN1</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;latin-1&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> 
+<span class="k">print</span><span class="p">(</span><span class="n">sLATIN1</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">Les cons, ça ose tout. C&#39;est même à ça qu&#39;on les reconnaît.
+b&#34;Les cons, \xe7a ose tout. C&#39;est m\xeame \xe0 \xe7a qu&#39;on les reconna\xeet.&#34;</pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="s2">&#34;Length of s :&#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="s2">&#34;</span><span class="se">\t</span><span class="s2">&#34;</span><span class="p">,</span>  
+      <span class="s2">&#34;Length of UTF-8 encoded s:&#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sUTF8</span><span class="p">),</span> <span class="s2">&#34;</span><span class="se">\t</span><span class="s2">&#34;</span><span class="p">,</span>  
+      <span class="s2">&#34;Length of LATIN-1 encoded s:&#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sLATIN1</span><span class="p">),</span>
+      <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;Unicode :&#34;</span><span class="p">,</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">s</span><span class="p">],</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;UTF-8   :&#34;</span><span class="p">,[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">sUTF8</span><span class="p">],</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;Latin-1 :&#34;</span><span class="p">,[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">sLATIN1</span><span class="p">],</span> <span class="s2">&#34;</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">Length of s : 59     Length of UTF-8 encoded s: 64   Length of LATIN-1 encoded s: 59 
+
+Unicode : [&#39;L&#39;, &#39;e&#39;, &#39;s&#39;, &#39; &#39;, &#39;c&#39;, &#39;o&#39;, &#39;n&#39;, &#39;s&#39;, &#39;,&#39;, &#39; &#39;, &#39;ç&#39;, &#39;a&#39;, &#39; &#39;, &#39;o&#39;, &#39;s&#39;, &#39;e&#39;, &#39; &#39;, &#39;t&#39;, &#39;o&#39;, &#39;u&#39;, &#39;t&#39;, &#39;.&#39;, &#39; &#39;, &#39;C&#39;, &#34;&#39;&#34;, &#39;e&#39;, &#39;s&#39;, &#39;t&#39;, &#39; &#39;, &#39;m&#39;, &#39;ê&#39;, &#39;m&#39;, &#39;e&#39;, &#39; &#39;, &#39;à&#39;, &#39; &#39;, &#39;ç&#39;, &#39;a&#39;, &#39; &#39;, &#39;q&#39;, &#39;u&#39;, &#34;&#39;&#34;, &#39;o&#39;, &#39;n&#39;, &#39; &#39;, &#39;l&#39;, &#39;e&#39;, &#39;s&#39;, &#39; &#39;, &#39;r&#39;, &#39;e&#39;, &#39;c&#39;, &#39;o&#39;, &#39;n&#39;, &#39;n&#39;, &#39;a&#39;, &#39;î&#39;, &#39;t&#39;, &#39;.&#39;] 
+
+UTF-8   : [76, 101, 115, 32, 99, 111, 110, 115, 44, 32, 195, 167, 97, 32, 111, 115, 101, 32, 116, 111, 117, 116, 46, 32, 67, 39, 101, 115, 116, 32, 109, 195, 170, 109, 101, 32, 195, 160, 32, 195, 167, 97, 32, 113, 117, 39, 111, 110, 32, 108, 101, 115, 32, 114, 101, 99, 111, 110, 110, 97, 195, 174, 116, 46] 
+
+Latin-1 : [76, 101, 115, 32, 99, 111, 110, 115, 44, 32, 231, 97, 32, 111, 115, 101, 32, 116, 111, 117, 116, 46, 32, 67, 39, 101, 115, 116, 32, 109, 234, 109, 101, 32, 224, 32, 231, 97, 32, 113, 117, 39, 111, 110, 32, 108, 101, 115, 32, 114, 101, 99, 111, 110, 110, 97, 238, 116, 46] </pre></div>
+<p>This is fine but these languages are using the usual latin alphabet with the exception of a few special characters such as accents.</p>
+
+<p>What about languages that use a completely different alphabet? Let&rsquo;s find out.</p>
+
+<h4 id="greek">Greek</h4>
+
+<p>(source: <a href="http://sacred-texts.com/cla/homer/greek/ili01.htm">http://sacred-texts.com/cla/homer/greek/ili01.htm</a>)</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># unicode string</span>
+<span class="n">iliad</span> <span class="o">=</span>  <span class="s2">&#34;μῆνιν ἄειδε θεὰ Πηληϊάδεω Ἀχιλῆος&#34;</span>
+<span class="k">print</span><span class="p">(</span><span class="n">iliad</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">iliad</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">iliad</span><span class="p">))</span></code></pre></div><div class="highlight"><pre class="chroma">μῆνιν ἄειδε θεὰ Πηληϊάδεω Ἀχιλῆος
+&lt;class &#39;str&#39;&gt;
+34</pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># byte string</span>
+<span class="n">iliad</span> <span class="o">=</span> <span class="s2">&#34;μῆνιν ἄειδε θεὰ Πηληϊάδεω Ἀχιλῆος&#34;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">iliad</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">iliad</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">iliad</span><span class="p">))</span></code></pre></div><div class="highlight"><pre class="chroma">b&#39;\xce\xbc\xe1\xbf\x86\xce\xbd\xce\xb9\xce\xbd \xe1\xbc\x84\xce\xb5\xce\xb9\xce\xb4\xce\xb5 \xce\xb8\xce\xb5\xe1\xbd\xb0 \xce\xa0\xce\xb7\xce\xbb\xce\xb7\xce\xb9\xcc\x88\xe1\xbd\xb1\xce\xb4\xce\xb5\xcf\x89 \xe1\xbc\x88\xcf\x87\xce\xb9\xce\xbb\xe1\xbf\x86\xce\xbf\xcf\x82&#39;
+&lt;class &#39;bytes&#39;&gt;
+70</pre></div>
+<p><br>
+<div style="background-color:#FBEFFB;"><p style="font-size:20px;color:#FF0080">&#9888; Stop and think!</p> <!--- Warning --->
+So how many characters are there in the string? 70 or 34?
+How would you list the individual characters within the string?
+</div>
+<br></p>
+
+<p>The answer is 34. These are the actual characters that compose the string.</p>
+
+<p>The encoded version will have a different number of bytes depending on the encoding.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># unicode string</span>
+<span class="n">iliad</span> <span class="o">=</span>  <span class="s2">&#34;μῆνιν ἄειδε θεὰ Πηληϊάδεω Ἀχιλῆος&#34;</span>
+
+<span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">iliad</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&#34;</span><span class="se">\t</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">1    μ
+2    ῆ
+3    ν
+4    ι
+5    ν
+6     
+7    ἄ
+8    ε
+9    ι
+10   δ
+11   ε
+12    
+13   θ
+14   ε
+15   ὰ
+16    
+17   Π
+18   η
+19   λ
+20   η
+21   ι
+22   ̈
+23   ά
+24   δ
+25   ε
+26   ω
+27    
+28   Ἀ
+29   χ
+30   ι
+31   λ
+32   ῆ
+33   ο
+34   ς</pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># byte string</span>
+<span class="n">iliad_encoded</span> <span class="o">=</span>  <span class="s2">&#34;μῆνιν ἄειδε θεὰ Πηληϊάδεω Ἀχιλῆος&#34;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+
+<span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">iliad_encoded</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&#34;</span><span class="se">\t</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">1    206
+2    188
+3    225
+4    191
+5    134
+6    206
+7    189
+8    206
+9    185
+10   206
+11   189
+12   32
+13   225
+14   188
+15   132
+16   206
+17   181
+18   206
+19   185
+20   206
+21   180
+22   206
+23   181
+24   32
+25   206
+26   184
+27   206
+28   181
+29   225
+30   189
+31   176
+32   32
+33   206
+34   160
+35   206
+36   183
+37   206
+38   187
+39   206
+40   183
+41   206
+42   185
+43   204
+44   136
+45   225
+46   189
+47   177
+48   206
+49   180
+50   206
+51   181
+52   207
+53   137
+54   32
+55   225
+56   188
+57   136
+58   207
+59   135
+60   206
+61   185
+62   206
+63   187
+64   225
+65   191
+66   134
+67   206
+68   191
+69   207
+70   130</pre></div>
+<h4 id="what-s-going-on">What&rsquo;s going on?</h4>
+
+<p>We have a <strong>sequence of bytes</strong> and we are outputing each individual byte value.</p>
+
+<p>Python has no way of knowing what characters these bytes represent, hence we see a bunch of numbers.</p>
+
+<p>The same applies to any other language.</p>
+
+<h4 id="hebrew">Hebrew</h4>
+
+<p>(source: <a href="http://sacred-texts.com/bib/tan/gen001.htm">http://sacred-texts.com/bib/tan/gen001.htm</a>)</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># unicode string</span>
+<span class="n">gen1</span> <span class="o">=</span> <span class="s2">&#34;בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ&#34;</span>
+<span class="k">print</span><span class="p">(</span><span class="n">gen1</span><span class="p">)</span> 
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">gen1</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gen1</span><span class="p">))</span></code></pre></div><div class="highlight"><pre class="chroma">בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ
+&lt;class &#39;str&#39;&gt;
+64</pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># byte string</span>
+<span class="n">gen1_UTF8</span> <span class="o">=</span> <span class="s2">&#34;בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ&#34;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">gen1_UTF8</span><span class="p">)</span> 
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">gen1_UTF8</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gen1_UTF8</span><span class="p">))</span></code></pre></div><div class="highlight"><pre class="chroma">b&#39;\xd7\x91\xd6\xbc\xd6\xb0\xd7\xa8\xd6\xb5\xd7\x90\xd7\xa9\xd7\x81\xd6\xb4\xd6\x96\xd7\x99\xd7\xaa \xd7\x91\xd6\xbc\xd6\xb8\xd7\xa8\xd6\xb8\xd6\xa3\xd7\x90 \xd7\x90\xd6\xb1\xd7\x9c\xd6\xb9\xd7\x94\xd6\xb4\xd6\x91\xd7\x99\xd7\x9d \xd7\x90\xd6\xb5\xd6\xa5\xd7\xaa \xd7\x94\xd6\xb7\xd7\xa9\xd7\x81\xd6\xbc\xd6\xb8\xd7\x9e\xd6\xb7\xd6\x96\xd7\x99\xd6\xb4\xd7\x9d \xd7\x95\xd6\xb0\xd7\x90\xd6\xb5\xd6\xa5\xd7\xaa \xd7\x94\xd6\xb8\xd7\x90\xd6\xb8\xd6\xbd\xd7\xa8\xd6\xb6\xd7\xa5&#39;
+&lt;class &#39;bytes&#39;&gt;
+122</pre></div>
+<h4 id="chinese">Chinese</h4>
+
+<p>(source: <a href="http://ctext.org/art-of-war">http://ctext.org/art-of-war</a>)</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># unicode string</span>
+<span class="n">sun</span> <span class="o">=</span> <span class="s2">&#34;孫子曰：兵者，國之大事，死生之地，存亡之道，不可不察也&#34;</span>
+<span class="k">print</span><span class="p">(</span><span class="n">sun</span><span class="p">)</span> 
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">sun</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sun</span><span class="p">))</span></code></pre></div><div class="highlight"><pre class="chroma">孫子曰：兵者，國之大事，死生之地，存亡之道，不可不察也
+&lt;class &#39;str&#39;&gt;
+27</pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># byte string</span>
+<span class="n">sun_UTF8</span> <span class="o">=</span> <span class="sa">u</span><span class="s2">&#34;孫子曰：兵者，國之大事，死生之地，存亡之道，不可不察也&#34;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">sun_UTF8</span><span class="p">)</span> 
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">sun_UTF8</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sun_UTF8</span><span class="p">))</span></code></pre></div><div class="highlight"><pre class="chroma">b&#39;\xe5\xad\xab\xe5\xad\x90\xe6\x9b\xb0\xef\xbc\x9a\xe5\x85\xb5\xe8\x80\x85\xef\xbc\x8c\xe5\x9c\x8b\xe4\xb9\x8b\xe5\xa4\xa7\xe4\xba\x8b\xef\xbc\x8c\xe6\xad\xbb\xe7\x94\x9f\xe4\xb9\x8b\xe5\x9c\xb0\xef\xbc\x8c\xe5\xad\x98\xe4\xba\xa1\xe4\xb9\x8b\xe9\x81\x93\xef\xbc\x8c\xe4\xb8\x8d\xe5\x8f\xaf\xe4\xb8\x8d\xe5\xaf\x9f\xe4\xb9\x9f&#39;
+&lt;class &#39;bytes&#39;&gt;
+81</pre></div>
+<h4 id="other-characters">Other characters</h4>
+
+<p>Unicode is not restricted to what we may traditionally think as human languages. It also includes many other characters.</p>
+
+<p>Let&rsquo;s create a helper function to print a large number of unicode characters in a nice way.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">print_unicode</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">code</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">):</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="k">if</span> <span class="p">(</span><span class="n">code</span><span class="o">-</span><span class="n">start</span><span class="p">)</span><span class="o">%</span><span class="n">width</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39; &#39;</span>
+        <span class="k">print</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">code</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">print_unicode</span><span class="p">(</span><span class="mi">128000</span><span class="p">,</span> <span class="mi">128300</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">🐀
+🐁 🐂 🐃 🐄 🐅 🐆 🐇 🐈 🐉 🐊 🐋 🐌 🐍 🐎 🐏 🐐 🐑 🐒 🐓 🐔 🐕 🐖 🐗 🐘 🐙 🐚 🐛 🐜 🐝 🐞
+🐟 🐠 🐡 🐢 🐣 🐤 🐥 🐦 🐧 🐨 🐩 🐪 🐫 🐬 🐭 🐮 🐯 🐰 🐱 🐲 🐳 🐴 🐵 🐶 🐷 🐸 🐹 🐺 🐻 🐼
+🐽 🐾 🐿 👀 👁 👂 👃 👄 👅 👆 👇 👈 👉 👊 👋 👌 👍 👎 👏 👐 👑 👒 👓 👔 👕 👖 👗 👘 👙 👚
+👛 👜 👝 👞 👟 👠 👡 👢 👣 👤 👥 👦 👧 👨 👩 👪 👫 👬 👭 👮 👯 👰 👱 👲 👳 👴 👵 👶 👷 👸
+👹 👺 👻 👼 👽 👾 👿 💀 💁 💂 💃 💄 💅 💆 💇 💈 💉 💊 💋 💌 💍 💎 💏 💐 💑 💒 💓 💔 💕 💖
+💗 💘 💙 💚 💛 💜 💝 💞 💟 💠 💡 💢 💣 💤 💥 💦 💧 💨 💩 💪 💫 💬 💭 💮 💯 💰 💱 💲 💳 💴
+💵 💶 💷 💸 💹 💺 💻 💼 💽 💾 💿 📀 📁 📂 📃 📄 📅 📆 📇 📈 📉 📊 📋 📌 📍 📎 📏 📐 📑 📒
+📓 📔 📕 📖 📗 📘 📙 📚 📛 📜 📝 📞 📟 📠 📡 📢 📣 📤 📥 📦 📧 📨 📩 📪 📫 📬 📭 📮 📯 📰
+📱 📲 📳 📴 📵 📶 📷 📸 📹 📺 📻 📼 📽 📾 📿 🔀 🔁 🔂 🔃 🔄 🔅 🔆 🔇 🔈 🔉 🔊 🔋 🔌 🔍 🔎
+🔏 🔐 🔑 🔒 🔓 🔔 🔕 🔖 🔗 🔘 🔙 🔚 🔛 🔜 🔝 🔞 🔟 🔠 🔡 🔢 🔣 🔤 🔥 🔦 🔧 🔨 🔩 🔪 🔫 </pre></div>
+<div style="background-color:#F7F2E0;">
+<h3> <font color=MediumVioletRed>Remark:</font> </h3>
+These are characters, not images. You can write them to a file on your computer's hard drive, and read them back in.
+</div>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># UTF-8 is used by default on my machine</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;unicode.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">code</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">128000</span><span class="p">,</span> <span class="mi">128300</span><span class="p">):</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">code</span><span class="p">))</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="err">!</span><span class="n">cat</span> <span class="nb">unicode</span><span class="o">.</span><span class="n">txt</span></code></pre></div><div class="highlight"><pre class="chroma">🐀🐁🐂🐃🐄🐅🐆🐇🐈🐉🐊🐋🐌🐍🐎🐏🐐🐑🐒🐓🐔🐕🐖🐗🐘🐙🐚🐛🐜🐝🐞🐟🐠🐡🐢🐣🐤🐥🐦🐧🐨🐩🐪🐫🐬🐭🐮🐯🐰🐱🐲🐳🐴🐵🐶🐷🐸🐹🐺🐻🐼🐽🐾🐿👀👁👂👃👄👅👆👇👈👉👊👋👌👍👎👏👐👑👒👓👔👕👖👗👘👙👚👛👜👝👞👟👠👡👢👣👤👥👦👧👨👩👪👫👬👭👮👯👰👱👲👳👴👵👶👷👸👹👺👻👼👽👾👿💀💁💂💃💄💅💆💇💈💉💊💋💌💍💎💏💐💑💒💓💔💕💖💗💘💙💚💛💜💝💞💟💠💡💢💣💤💥💦💧💨💩💪💫💬💭💮💯💰💱💲💳💴💵💶💷💸💹💺💻💼💽💾💿📀📁📂📃📄📅📆📇📈📉📊📋📌📍📎📏📐📑📒📓📔📕📖📗📘📙📚📛📜📝📞📟📠📡📢📣📤📥📦📧📨📩📪📫📬📭📮📯📰📱📲📳📴📵📶📷📸📹📺📻📼📽📾📿🔀🔁🔂🔃🔄🔅🔆🔇🔈🔉🔊🔋🔌🔍🔎🔏🔐🔑🔒🔓🔔🔕🔖🔗🔘🔙🔚🔛🔜🔝🔞🔟🔠🔡🔢🔣🔤🔥🔦🔧🔨🔩🔪🔫</pre></div>
+<div style="background-color:#F7F2E0;">
+<h3> <font color=MediumVioletRed>Remark:</font> </h3>
+We can also get Python to print out the names of the characters.
+</div>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">unicodedata</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">128000</span><span class="p">,</span> <span class="mi">128100</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">c</span><span class="p">),</span> <span class="n">unicodedata</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">c</span><span class="p">)))</span></code></pre></div><div class="highlight"><pre class="chroma">🐀 RAT
+🐁 MOUSE
+🐂 OX
+🐃 WATER BUFFALO
+🐄 COW
+🐅 TIGER
+🐆 LEOPARD
+🐇 RABBIT
+🐈 CAT
+🐉 DRAGON
+🐊 CROCODILE
+🐋 WHALE
+🐌 SNAIL
+🐍 SNAKE
+🐎 HORSE
+🐏 RAM
+🐐 GOAT
+🐑 SHEEP
+🐒 MONKEY
+🐓 ROOSTER
+🐔 CHICKEN
+🐕 DOG
+🐖 PIG
+🐗 BOAR
+🐘 ELEPHANT
+🐙 OCTOPUS
+🐚 SPIRAL SHELL
+🐛 BUG
+🐜 ANT
+🐝 HONEYBEE
+🐞 LADY BEETLE
+🐟 FISH
+🐠 TROPICAL FISH
+🐡 BLOWFISH
+🐢 TURTLE
+🐣 HATCHING CHICK
+🐤 BABY CHICK
+🐥 FRONT-FACING BABY CHICK
+🐦 BIRD
+🐧 PENGUIN
+🐨 KOALA
+🐩 POODLE
+🐪 DROMEDARY CAMEL
+🐫 BACTRIAN CAMEL
+🐬 DOLPHIN
+🐭 MOUSE FACE
+🐮 COW FACE
+🐯 TIGER FACE
+🐰 RABBIT FACE
+🐱 CAT FACE
+🐲 DRAGON FACE
+🐳 SPOUTING WHALE
+🐴 HORSE FACE
+🐵 MONKEY FACE
+🐶 DOG FACE
+🐷 PIG FACE
+🐸 FROG FACE
+🐹 HAMSTER FACE
+🐺 WOLF FACE
+🐻 BEAR FACE
+🐼 PANDA FACE
+🐽 PIG NOSE
+🐾 PAW PRINTS
+🐿 CHIPMUNK
+👀 EYES
+👁 EYE
+👂 EAR
+👃 NOSE
+👄 MOUTH
+👅 TONGUE
+👆 WHITE UP POINTING BACKHAND INDEX
+👇 WHITE DOWN POINTING BACKHAND INDEX
+👈 WHITE LEFT POINTING BACKHAND INDEX
+👉 WHITE RIGHT POINTING BACKHAND INDEX
+👊 FISTED HAND SIGN
+👋 WAVING HAND SIGN
+👌 OK HAND SIGN
+👍 THUMBS UP SIGN
+👎 THUMBS DOWN SIGN
+👏 CLAPPING HANDS SIGN
+👐 OPEN HANDS SIGN
+👑 CROWN
+👒 WOMANS HAT
+👓 EYEGLASSES
+👔 NECKTIE
+👕 T-SHIRT
+👖 JEANS
+👗 DRESS
+👘 KIMONO
+👙 BIKINI
+👚 WOMANS CLOTHES
+👛 PURSE
+👜 HANDBAG
+👝 POUCH
+👞 MANS SHOE
+👟 ATHLETIC SHOE
+👠 HIGH-HEELED SHOE
+👡 WOMANS SANDAL
+👢 WOMANS BOOTS
+👣 FOOTPRINTS</pre></div>
+<p>Similarly, we can find out the names of the characters we used previously.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">iliad</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">unicodedata</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="n">c</span><span class="p">))</span></code></pre></div><div class="highlight"><pre class="chroma">μ GREEK SMALL LETTER MU
+ῆ GREEK SMALL LETTER ETA WITH PERISPOMENI
+ν GREEK SMALL LETTER NU
+ι GREEK SMALL LETTER IOTA
+ν GREEK SMALL LETTER NU
+  SPACE
+ἄ GREEK SMALL LETTER ALPHA WITH PSILI AND OXIA
+ε GREEK SMALL LETTER EPSILON
+ι GREEK SMALL LETTER IOTA
+δ GREEK SMALL LETTER DELTA
+ε GREEK SMALL LETTER EPSILON
+  SPACE
+θ GREEK SMALL LETTER THETA
+ε GREEK SMALL LETTER EPSILON
+ὰ GREEK SMALL LETTER ALPHA WITH VARIA
+  SPACE
+Π GREEK CAPITAL LETTER PI
+η GREEK SMALL LETTER ETA
+λ GREEK SMALL LETTER LAMDA
+η GREEK SMALL LETTER ETA
+ι GREEK SMALL LETTER IOTA
+̈ COMBINING DIAERESIS
+ά GREEK SMALL LETTER ALPHA WITH OXIA
+δ GREEK SMALL LETTER DELTA
+ε GREEK SMALL LETTER EPSILON
+ω GREEK SMALL LETTER OMEGA
+  SPACE
+Ἀ GREEK CAPITAL LETTER ALPHA WITH PSILI
+χ GREEK SMALL LETTER CHI
+ι GREEK SMALL LETTER IOTA
+λ GREEK SMALL LETTER LAMDA
+ῆ GREEK SMALL LETTER ETA WITH PERISPOMENI
+ο GREEK SMALL LETTER OMICRON
+ς GREEK SMALL LETTER FINAL SIGMA</pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">gen1</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">unicodedata</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="n">c</span><span class="p">))</span></code></pre></div><div class="highlight"><pre class="chroma">ב HEBREW LETTER BET
+ּ HEBREW POINT DAGESH OR MAPIQ
+ְ HEBREW POINT SHEVA
+ר HEBREW LETTER RESH
+ֵ HEBREW POINT TSERE
+א HEBREW LETTER ALEF
+ש HEBREW LETTER SHIN
+ׁ HEBREW POINT SHIN DOT
+ִ HEBREW POINT HIRIQ
+֖ HEBREW ACCENT TIPEHA
+י HEBREW LETTER YOD
+ת HEBREW LETTER TAV
+  SPACE
+ב HEBREW LETTER BET
+ּ HEBREW POINT DAGESH OR MAPIQ
+ָ HEBREW POINT QAMATS
+ר HEBREW LETTER RESH
+ָ HEBREW POINT QAMATS
+֣ HEBREW ACCENT MUNAH
+א HEBREW LETTER ALEF
+  SPACE
+א HEBREW LETTER ALEF
+ֱ HEBREW POINT HATAF SEGOL
+ל HEBREW LETTER LAMED
+ֹ HEBREW POINT HOLAM
+ה HEBREW LETTER HE
+ִ HEBREW POINT HIRIQ
+֑ HEBREW ACCENT ETNAHTA
+י HEBREW LETTER YOD
+ם HEBREW LETTER FINAL MEM
+  SPACE
+א HEBREW LETTER ALEF
+ֵ HEBREW POINT TSERE
+֥ HEBREW ACCENT MERKHA
+ת HEBREW LETTER TAV
+  SPACE
+ה HEBREW LETTER HE
+ַ HEBREW POINT PATAH
+ש HEBREW LETTER SHIN
+ׁ HEBREW POINT SHIN DOT
+ּ HEBREW POINT DAGESH OR MAPIQ
+ָ HEBREW POINT QAMATS
+מ HEBREW LETTER MEM
+ַ HEBREW POINT PATAH
+֖ HEBREW ACCENT TIPEHA
+י HEBREW LETTER YOD
+ִ HEBREW POINT HIRIQ
+ם HEBREW LETTER FINAL MEM
+  SPACE
+ו HEBREW LETTER VAV
+ְ HEBREW POINT SHEVA
+א HEBREW LETTER ALEF
+ֵ HEBREW POINT TSERE
+֥ HEBREW ACCENT MERKHA
+ת HEBREW LETTER TAV
+  SPACE
+ה HEBREW LETTER HE
+ָ HEBREW POINT QAMATS
+א HEBREW LETTER ALEF
+ָ HEBREW POINT QAMATS
+ֽ HEBREW POINT METEG
+ר HEBREW LETTER RESH
+ֶ HEBREW POINT SEGOL
+ץ HEBREW LETTER FINAL TSADI</pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">sun</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">unicodedata</span><span class="o">.</span><span class="n">name</span><span class="p">(</span><span class="n">c</span><span class="p">))</span></code></pre></div><div class="highlight"><pre class="chroma">孫 CJK UNIFIED IDEOGRAPH-5B6B
+子 CJK UNIFIED IDEOGRAPH-5B50
+曰 CJK UNIFIED IDEOGRAPH-66F0
+： FULLWIDTH COLON
+兵 CJK UNIFIED IDEOGRAPH-5175
+者 CJK UNIFIED IDEOGRAPH-8005
+， FULLWIDTH COMMA
+國 CJK UNIFIED IDEOGRAPH-570B
+之 CJK UNIFIED IDEOGRAPH-4E4B
+大 CJK UNIFIED IDEOGRAPH-5927
+事 CJK UNIFIED IDEOGRAPH-4E8B
+， FULLWIDTH COMMA
+死 CJK UNIFIED IDEOGRAPH-6B7B
+生 CJK UNIFIED IDEOGRAPH-751F
+之 CJK UNIFIED IDEOGRAPH-4E4B
+地 CJK UNIFIED IDEOGRAPH-5730
+， FULLWIDTH COMMA
+存 CJK UNIFIED IDEOGRAPH-5B58
+亡 CJK UNIFIED IDEOGRAPH-4EA1
+之 CJK UNIFIED IDEOGRAPH-4E4B
+道 CJK UNIFIED IDEOGRAPH-9053
+， FULLWIDTH COMMA
+不 CJK UNIFIED IDEOGRAPH-4E0D
+可 CJK UNIFIED IDEOGRAPH-53EF
+不 CJK UNIFIED IDEOGRAPH-4E0D
+察 CJK UNIFIED IDEOGRAPH-5BDF
+也 CJK UNIFIED IDEOGRAPH-4E5F</pre></div>
+<p>The End.</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://adelr.github.io//tags/python/">python</a>&nbsp;
+            
+              <a href="https://adelr.github.io//tags/unicode/">unicode</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=https%3a%2f%2fadelr.github.io%2f2018%2f10%2funicode_intro%2f&amp;text=Unicode%20strings%20in%20Python&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//plus.google.com/share?url=https%3a%2f%2fadelr.github.io%2f2018%2f10%2funicode_intro%2f" target="_blank" title="Share on Google Plus">
+          <i class="fab fa-google-plus"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fadelr.github.io%2f2018%2f10%2funicode_intro%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=https%3a%2f%2fadelr.github.io%2f2018%2f10%2funicode_intro%2f&amp;title=Unicode%20strings%20in%20Python" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fadelr.github.io%2f2018%2f10%2funicode_intro%2f&amp;title=Unicode%20strings%20in%20Python" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fadelr.github.io%2f2018%2f10%2funicode_intro%2f&amp;title=Unicode%20strings%20in%20Python" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fadelr.github.io%2f2018%2f10%2funicode_intro%2f&amp;description=Unicode%20strings%20in%20Python" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+              </div>
+            </section>
+        
+
+        
+          
+          
+          <h4 class="see-also">See also</h4>
+          <ul>
+          
+            <li><a href="/2018/08/simul_t_test/">That ain&#39;t dancing Sally!</a></li>
+          
+            <li><a href="/2018/06/simul_birthday/">Happy birthday to you!</a></li>
+          
+            <li><a href="/2018/06/simul_coin_flip/">Do you feel lucky?</a></li>
+          
+          </ul>
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://adelr.github.io/2018/08/simul_t_test/" data-toggle="tooltip" data-placement="top" title="That ain&#39;t dancing Sally!">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://adelr.github.io/2018/11/pandas_groupby/" data-toggle="tooltip" data-placement="top" title="Pandas (Blood)groupby">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:adel.rahmani&#43;dinkumdata@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/adelr" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://adelr.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              Adel Rahmani
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2018
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://adelr.github.io/">Dinkum Data Blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.54.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://adelr.github.io/js/main.js"></script>
+<script src="https://adelr.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://adelr.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [
+        ['$', '$'],
+        ['\\(', '\\)']
+      ],
+      displayMath: [
+        ['$$', '$$']
+      ],
+      processEscapes: true,
+      processEnvironments: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      TeX: {
+        equationNumbers: {
+          autoNumber: "AMS"
+        },
+        extensions: ["AMSmath.js", "AMSsymbols.js"]
+      }
+    }
+  });
+  MathJax.Hub.Queue(function () {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(),
+      i;
+    for (i = 0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+    
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+
+
+  </body>
+</html>
+

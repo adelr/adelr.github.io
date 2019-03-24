@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>That ain&#39;t dancing Sally! - Dinkum Data Blog</title>
+  <meta property="og:title" content="That ain&#39;t dancing Sally!" />
+  <meta name="twitter:title" content="That ain&#39;t dancing Sally!" />
+  <meta name="description" content="Same difference.
+Congratulations! Your simulation code from the previous post has impressed all and sundry and you&#39;ve been asked to teach introductory statistics to first year students at the prestigious Vandelay University. You&#39;ve got 2 stats classes, one with a group of 65 students, and another with a group of 35 students. We assume that the students have been randomly allocated to each group, and that they share the same final exam.">
+  <meta property="og:description" content="Same difference.
+Congratulations! Your simulation code from the previous post has impressed all and sundry and you&#39;ve been asked to teach introductory statistics to first year students at the prestigious Vandelay University. You&#39;ve got 2 stats classes, one with a group of 65 students, and another with a group of 35 students. We assume that the students have been randomly allocated to each group, and that they share the same final exam.">
+  <meta name="twitter:description" content="Same difference.
+Congratulations! Your simulation code from the previous post has impressed all and sundry and you&#39;ve been asked to teach introductory statistics to first year students at the …">
+  <meta name="author" content="Adel Rahmani"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Dinkum Data Blog",
+    
+    "url": "https://adelr.github.io/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https://adelr.github.io/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https://adelr.github.io/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https://adelr.github.io/2018/08/simul_t_test/",
+          "name": "That ain&#39;t dancing sally!"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Adel Rahmani"
+  },
+  "headline": "That ain&#39;t dancing Sally!",
+  "description" : "Same difference.
+Congratulations! Your simulation code from the previous post has impressed all and sundry and you&#39;ve been asked to teach introductory statistics to first year students at the prestigious Vandelay University. You&#39;ve got 2 stats classes, one with a group of 65 students, and another with a group of 35 students. We assume that the students have been randomly allocated to each group, and that they share the same final exam.",
+  "inLanguage" : "en",
+  "wordCount": 996,
+  "datePublished" : "2018-08-29T00:00:00",
+  "dateModified" : "2018-08-29T00:00:00",
+  "image" : "https://adelr.github.io/img/avatar-icon.png",
+  "keywords" : [ "python, probability, statistics, seinfeld" ],
+  "mainEntityOfPage" : "https://adelr.github.io/2018/08/simul_t_test/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https://adelr.github.io/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https://adelr.github.io/img/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="That ain&#39;t dancing Sally!" />
+<meta property="og:description" content="Same difference.
+Congratulations! Your simulation code from the previous post has impressed all and sundry and you&#39;ve been asked to teach introductory statistics to first year students at the prestigious Vandelay University. You&#39;ve got 2 stats classes, one with a group of 65 students, and another with a group of 35 students. We assume that the students have been randomly allocated to each group, and that they share the same final exam.">
+<meta property="og:image" content="https://adelr.github.io/img/avatar-icon.png" />
+<meta property="og:url" content="https://adelr.github.io/2018/08/simul_t_test/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Dinkum Data Blog" />
+  <meta name="twitter:title" content="That ain&#39;t dancing Sally!" />
+  <meta name="twitter:description" content="Same difference.
+Congratulations! Your simulation code from the previous post has impressed all and sundry and you&#39;ve been asked to teach introductory statistics to first year students at the …">
+  <meta name="twitter:image" content="https://adelr.github.io/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://adelr.github.io/img/avatar-icon.png" />
+  <meta name="twitter:image" content="https://adelr.github.io/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://adelr.github.io/2018/08/simul_t_test/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Dinkum Data Blog" />
+
+  <meta name="generator" content="Hugo 0.54.0" />
+  <link rel="alternate" href="https://adelr.github.io/index.xml" type="application/rss+xml" title="Dinkum Data Blog"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://adelr.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://adelr.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://adelr.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://adelr.github.io/">Dinkum Data Blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Dinkum Data Blog" href="https://adelr.github.io/">
+            <img class="avatar-img" src="https://adelr.github.io/img/avatar-icon.png" alt="Dinkum Data Blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>That ain&#39;t dancing Sally!</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on August 29, 2018
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;5&nbsp;minutes
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;996&nbsp;words
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Adel Rahmani
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<p><b>Same difference.</b></p>
+
+<p>Congratulations! Your simulation code from the previous post has impressed all and sundry and you've been asked to teach introductory statistics to first year students at the prestigious Vandelay University. </p>
+
+<p>You've got 2 stats classes, one with a group of 65 students, and another with a group of 35 students.
+We assume that the students have been randomly allocated to each group, and that they share the same
+final exam.</p>
+
+<p>The difference between the groups is the teaching technique employed. With group1 you teach a standard stats course,
+while with group2 you sometimes use interpretive dance instead of equations to explain statistical concepts.</p><br>
+
+<div align='center'>
+<img src="https://media.giphy.com/media/xT1XGXgtj8PWdvCLFS/giphy.gif" width="400">
+</div>
+
+Let's jump right in.
+
+
+```python
+from math import *
+import numpy as np
+
+# suppress warning messages.
+import warnings
+warnings.filterwarnings('ignore')
+
+# import the scipy module which comtains scientific and stats functions.
+import scipy.stats as stats
+
+# usual plotting stuff.
+import matplotlib.pyplot as plt
+from matplotlib import cm
+%matplotlib inline
+
+# set the matplotlib style 
+plt.style.use("seaborn-darkgrid")
+
+from IPython.core.display import display, HTML
+display(HTML("<style>.container { width:100% !important; }</style>"))
+```
+
+<style>.container { width:100% !important; }</style>
+
+
+<p>Here are the marks (out of 100) in the final exam for these two groups.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">group1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">57</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">75</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">74</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span>
+       <span class="mi">55</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">95</span><span class="p">,</span> <span class="mi">48</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">65</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">74</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span>
+       <span class="mi">100</span><span class="p">,</span> <span class="mi">66</span><span class="p">,</span> <span class="mi">46</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">74</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span>
+       <span class="mi">62</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">74</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">69</span><span class="p">])</span>
+
+<span class="n">group2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span>
+       <span class="mi">59</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">62</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">74</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">73</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="mi">98</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span>
+       <span class="mi">52</span><span class="p">])</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">group1</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">group2</span><span class="o">.</span><span class="n">size</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">65 35</pre></div>
+<p>When you compare the marks between the two groups you notice that, on average, the marks in group2 are lower
+that those in group1.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">diff</span> <span class="o">=</span> <span class="n">group1</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">group2</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">7.934065934065934</pre></div>
+<p>We can visualise the distribution of marks in both groups using a box plot.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">boxplot</span><span class="p">((</span><span class="n">group1</span><span class="p">,</span> <span class="n">group2</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&#34;group&#34;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&#34;mark&#34;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></div>
+<p><img src="output_9_0.png" alt="png" /></p>
+
+<h5 id="is-this-difference-in-means-statistically-significant-i-e-should-you-drop-the-interpretive-dance-routine">Is this difference in means statistically significant (i.e., should you drop the interpretive dance routine)?</h5>
+
+<p>Statistics should be able to provide us with an answer. Thankfully, some of my best friends are statisticians.
+I found one of those magnificent statistical creatures, and I asked them about differences between means of two groups.
+They mumbled something about beer, students, and tea test or something&hellip; I couldn&rsquo;t tell what they were saying so I went to <code>scipy</code> instead and
+it turns out there&rsquo;s an app for that.</p>
+
+<p>The t-test is a statistical test that can tell us whether the difference in means between our two groups is statistically significant.</p>
+
+<p>First, let us observe that the two groups have similar variances (this allows us to run a particular flavour of the test).</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">group1</span><span class="o">.</span><span class="n">var</span><span class="p">(),</span> <span class="n">group2</span><span class="o">.</span><span class="n">var</span><span class="p">()</span></code></pre></div><div class="highlight"><pre class="chroma">(179.0248520710059, 175.55102040816323)</pre></div>
+<p>Close enough for us. Let&rsquo;s run the test.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">group1</span><span class="p">,</span> <span class="n">group2</span><span class="p">,</span> <span class="n">equal_var</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Probability that a difference at least as extreme as {diff:0.2f} is due to chance (t test): {p*100:.2f}%&#39;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">Probability that a difference at least as extreme as 7.93 is due to chance (t test): 0.60%</pre></div>
+<h6 id="but-what-does-it-all-mean">But what does it all mean?</h6>
+
+<p>To the simulation!</p>
+
+<p>We are trying to test whether there is a genuine (statistically significant) difference between the two groups.</p>
+
+<p>One way that we can test this is to estimate how likely we are to observe a difference between the means of the two groups of at least 7.93, <strong>if we assume that there&rsquo;s no difference in marks between the two groups</strong> (null hypothesis).</p>
+
+<p>We can accomplish that by pooling all the values together and randomly shuffling (assigning) 65 of these values to group1 and the rest to group2.</p>
+
+<p>Using this shuffling scheme, we will get an average difference between the two groups around zero, and the spread of the values we get will tell us how extreme (i.e., unlikely) a value of 7.93 or larger would be under the null hypothesis.</p>
+
+<p>Let&rsquo;s randomly shuffle the data across the two groups and compute the difference in means 100,000 times.
+(this may take a moment)</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">N</span> <span class="o">=</span> <span class="mi">100000</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">12345</span><span class="p">)</span>
+
+<span class="c1"># Let&#39;s pool the marks together</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">group1</span><span class="p">,</span> <span class="n">group2</span><span class="p">))</span>
+
+<span class="n">i</span> <span class="o">=</span> <span class="n">group1</span><span class="o">.</span><span class="n">size</span>
+
+<span class="n">L</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="c1"># shuffle the data using random permutation (most useless code comment ever!)</span>
+    <span class="n">shuffle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    
+    <span class="c1"># split the shuffled data into 2 groups</span>
+    <span class="n">grp1</span><span class="p">,</span> <span class="n">grp2</span> <span class="o">=</span> <span class="n">shuffle</span><span class="p">[:</span><span class="n">i</span><span class="p">],</span> <span class="n">shuffle</span><span class="p">[</span><span class="n">i</span><span class="p">:]</span>
+    
+    <span class="c1"># compute the difference in means</span>
+    <span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">grp1</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">grp2</span><span class="p">))</span>
+    
+<span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">L</span><span class="p">)</span></code></pre></div>
+<p>Let&rsquo;s plot a histogram of the results.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">normed</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Difference between group means&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">diff</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&#34;Observed</span><span class="se">\n</span><span class="s2">difference</span><span class="se">\n</span><span class="s2">($7.93$)&#34;</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mf">8.5</span><span class="p">,</span> <span class="mi">5000</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&#34;difference in means&#34;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&#34;count&#34;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></div>
+<p><img src="output_18_0.png" alt="png" /></p>
+
+<p>On the histogram, we see that the observed difference is quite far from the mode of the distribution.</p>
+
+<p>In other words, it appears that a difference of 7.93 or more (in magnitude) does not occur very often. Let&rsquo;s quantify this.</p>
+
+<p><strong>Proportion of simulated trials where the (absolute value of the) difference exceeds the observed difference.</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pSim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="nb">abs</span><span class="p">(</span><span class="n">L</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">diff</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Probability that the difference at least as extreme as {diff:0.2f} is due to chance (Simulation): {pSim*100:.2f}%&#39;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">Probability that the difference at least as extreme as 7.93 is due to chance (Simulation): 0.58%</pre></div>
+<h5 id="this-is-not-too-bad-considering-the-true-result-is-0-60">This is not too bad considering the true result is  0.60%.</h5>
+
+<p>This result means that if we assume that the two groups are sampled from the same population of students, the probability of observing a difference in means of at least 7.93 between the group just by random chance is only around 0.6%.</p>
+
+<p>It is quite typical for the threshold for statistical significance to be set at 5%. Therefore, in this case,
+we&rsquo;d conclude that the difference between the two groups is statistically significant. In other words, the teaching
+method has an impact on the marks. You might want to put that leotard away, stop the gyrations cause <a href="https://youtu.be/B5dogmMj-s0"><em>that ain&rsquo;t dancing Sally!</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://adelr.github.io//tags/python/">python</a>&nbsp;
+            
+              <a href="https://adelr.github.io//tags/probability/">probability</a>&nbsp;
+            
+              <a href="https://adelr.github.io//tags/statistics/">statistics</a>&nbsp;
+            
+              <a href="https://adelr.github.io//tags/seinfeld/">seinfeld</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=https%3a%2f%2fadelr.github.io%2f2018%2f08%2fsimul_t_test%2f&amp;text=That%20ain%27t%20dancing%20Sally%21&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//plus.google.com/share?url=https%3a%2f%2fadelr.github.io%2f2018%2f08%2fsimul_t_test%2f" target="_blank" title="Share on Google Plus">
+          <i class="fab fa-google-plus"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fadelr.github.io%2f2018%2f08%2fsimul_t_test%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=https%3a%2f%2fadelr.github.io%2f2018%2f08%2fsimul_t_test%2f&amp;title=That%20ain%27t%20dancing%20Sally%21" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fadelr.github.io%2f2018%2f08%2fsimul_t_test%2f&amp;title=That%20ain%27t%20dancing%20Sally%21" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fadelr.github.io%2f2018%2f08%2fsimul_t_test%2f&amp;title=That%20ain%27t%20dancing%20Sally%21" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fadelr.github.io%2f2018%2f08%2fsimul_t_test%2f&amp;description=That%20ain%27t%20dancing%20Sally%21" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+              </div>
+            </section>
+        
+
+        
+          
+          
+          <h4 class="see-also">See also</h4>
+          <ul>
+          
+            <li><a href="/2018/06/simul_birthday/">Happy birthday to you!</a></li>
+          
+            <li><a href="/2018/06/simul_coin_flip/">Do you feel lucky?</a></li>
+          
+            <li><a href="/2018/05/seinfeld_effect/">Seinfeld&#39;s Magnificent Seven</a></li>
+          
+          </ul>
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://adelr.github.io/2018/06/simul_birthday/" data-toggle="tooltip" data-placement="top" title="Happy birthday to you!">&larr; Previous Post</a>
+            </li>
+          
+          
+            <li class="next">
+              <a href="https://adelr.github.io/2018/10/unicode_intro/" data-toggle="tooltip" data-placement="top" title="Unicode strings in Python">Next Post &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:adel.rahmani&#43;dinkumdata@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/adelr" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://adelr.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              Adel Rahmani
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2018
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://adelr.github.io/">Dinkum Data Blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.54.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://adelr.github.io/js/main.js"></script>
+<script src="https://adelr.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://adelr.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [
+        ['$', '$'],
+        ['\\(', '\\)']
+      ],
+      displayMath: [
+        ['$$', '$$']
+      ],
+      processEscapes: true,
+      processEnvironments: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      TeX: {
+        equationNumbers: {
+          autoNumber: "AMS"
+        },
+        extensions: ["AMSmath.js", "AMSsymbols.js"]
+      }
+    }
+  });
+  MathJax.Hub.Queue(function () {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(),
+      i;
+    for (i = 0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+    
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+
+
+  </body>
+</html>
+

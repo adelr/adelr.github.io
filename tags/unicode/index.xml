@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Unicode on Dinkum Data Blog</title>
+    <link>https://adelr.github.io/tags/unicode/</link>
+    <description>Recent content in Unicode on Dinkum Data Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <managingEditor>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</managingEditor>
+    <webMaster>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</webMaster>
+    <lastBuildDate>Fri, 05 Oct 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://adelr.github.io/tags/unicode/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Unicode strings in Python</title>
+      <link>https://adelr.github.io/2018/10/unicode_intro/</link>
+      <pubDate>Fri, 05 Oct 2018 00:00:00 +0000</pubDate>
+      <author>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</author>
+      <guid>https://adelr.github.io/2018/10/unicode_intro/</guid>
+      <description>1. Unicode: an introduction. Computers only understand one thing: binary code. For instance, when you type the letter &amp;ldquo;A&amp;rdquo; the computer must represent this as a sequence of 0s and 1s.
+Therefore we need a rule (code) for converting between characters and sequences of 0s and 1s. A basic way to do this is provided by the ASCII code.
+The ASCII code uses 1 byte (8 bits) to encode 256 possible characters, corresponding to a binary number between 0 and $255 = 2^7+2^6+2^5+2^4+2^3+2^2+2^1+2^0$.</description>
+    </item>
+    
+  </channel>
+</rss>

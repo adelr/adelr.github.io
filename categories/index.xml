@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Dinkum Data Blog</title>
+    <link>https://adelr.github.io/categories/</link>
+    <description>Recent content in Categories on Dinkum Data Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <managingEditor>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</managingEditor>
+    <webMaster>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</webMaster>
+    <lastBuildDate>Thu, 15 Nov 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://adelr.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Blogging</title>
+      <link>https://adelr.github.io/categories/blogging/</link>
+      <pubDate>Thu, 15 Nov 2018 00:00:00 +0000</pubDate>
+      <author>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</author>
+      <guid>https://adelr.github.io/categories/blogging/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>https://adelr.github.io/categories/python/</link>
+      <pubDate>Thu, 15 Nov 2018 00:00:00 +0000</pubDate>
+      <author>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</author>
+      <guid>https://adelr.github.io/categories/python/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
