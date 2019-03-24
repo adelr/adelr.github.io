@@ -70,7 +70,7 @@ While the origin of many names can be found in popular culture and (what&#39;s t
 While the origin of many names can be found in popular culture and (what&#39;s the alternative to popular culture? impopular culture?) elsewhere, we shall focus on how the TV show Seinfeld may have influenced the naming of hundreds of innocent babies.
 We&#39;ll roughly follow the steps outlined by Wes McKinney in his excellent book Python for Data Analysis to load the data.",
   "inLanguage" : "en",
-  "wordCount": 3098,
+  "wordCount": 3087,
   "datePublished" : "2018-05-10T00:00:00",
   "dateModified" : "2018-05-10T00:00:00",
   "image" : "https://adelr.github.io/img/avatar-icon.png",
@@ -246,7 +246,7 @@ While the origin of many names can be found in popular culture and (what&#39;s t
     &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;15&nbsp;minutes
   
   
-    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;3098&nbsp;words
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;3087&nbsp;words
   
   
     &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Adel Rahmani
@@ -1015,14 +1015,15 @@ Name: sex, dtype: int64</pre></div>
 <p>For other names, a change in popularity may be due to a less conventional reason... </p>
 
 <p>In an episode of <a href="http://www.imdb.com/title/tt0697774/">Seinfeld</a> George mentions to his friends that should he ever have a kid, he'd name him (or her) Seven, after the jersey number of Yankee baseball player Mickey Mantle.</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">YouTubeVideo</span>
-<span class="n">YouTubeVideo</span><span class="p">(</span><span class="s2">&#34;NRUdaWZ4FN0&#34;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">    &lt;iframe
-        width=&#34;400&#34;
-        height=&#34;300&#34;
-        src=&#34;https://www.youtube.com/embed/NRUdaWZ4FN0&#34;
-        frameborder=&#34;0&#34;
+
+<iframe
+        width="400"
+        height="300"
+        src="https://www.youtube.com/embed/NRUdaWZ4FN0"
+        frameborder="0"
         allowfullscreen
-    &gt;&lt;/iframe&gt;</pre></div>
+        ></iframe>
+
 <p>First, let&rsquo;s check whether &ldquo;Seven&rdquo; is in our data set.</p>
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="s1">&#39;Seven&#39;</span> <span class="ow">in</span> <span class="n">names</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span></code></pre></div><div class="highlight"><pre class="chroma">True</pre></div>
 <p>Giddy up!</p>
