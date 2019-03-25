@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Regex on Dinkum Data Blog</title>
+    <link>https://adelr.github.io/tags/regex/</link>
+    <description>Recent content in Regex on Dinkum Data Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <managingEditor>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</managingEditor>
+    <webMaster>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</webMaster>
+    <lastBuildDate>Wed, 30 Jan 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://adelr.github.io/tags/regex/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Introduction to regular expressions</title>
+      <link>https://adelr.github.io/2019/01/regex_intro/</link>
+      <pubDate>Wed, 30 Jan 2019 00:00:00 +0000</pubDate>
+      <author>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</author>
+      <guid>https://adelr.github.io/2019/01/regex_intro/</guid>
+      <description>Jamie Zawinski: Some people, when confronted with a problem, think &#34;I know, I&#39;ll use regular expressions&#34;. Now they have two problems.    1. Prelude: Regular expressions are powerful...  http://xkcd.com/208/   ...but at first, they can be puzzling.  http://xkcd.com/1171/   from math import * import numpy as np import pandas as pd from pathlib import Path %matplotlib inline import matplotlib.pyplot as plt from IPython.core.display import display, HTML display(HTML(&amp;#34;&amp;lt;style&amp;gt;.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Introduction to regular expressions - Dinkum Data Blog</title>
+  <meta property="og:title" content="Introduction to regular expressions" />
+  <meta name="twitter:title" content="Introduction to regular expressions" />
+  <meta name="description" content="Jamie Zawinski: Some people, when confronted with a problem, think &#34;I know, I&#39;ll use regular expressions&#34;. Now they have two problems.    1. Prelude: Regular expressions are powerful...  http://xkcd.com/208/   ...but at first, they can be puzzling.  http://xkcd.com/1171/   from math import * import numpy as np import pandas as pd from pathlib import Path %matplotlib inline import matplotlib.pyplot as plt from IPython.core.display import display, HTML display(HTML(&#34;&lt;style&gt;.">
+  <meta property="og:description" content="Jamie Zawinski: Some people, when confronted with a problem, think &#34;I know, I&#39;ll use regular expressions&#34;. Now they have two problems.    1. Prelude: Regular expressions are powerful...  http://xkcd.com/208/   ...but at first, they can be puzzling.  http://xkcd.com/1171/   from math import * import numpy as np import pandas as pd from pathlib import Path %matplotlib inline import matplotlib.pyplot as plt from IPython.core.display import display, HTML display(HTML(&#34;&lt;style&gt;.">
+  <meta name="twitter:description" content="Jamie Zawinski: Some people, when confronted with a problem, think &#34;I know, I&#39;ll use regular expressions&#34;. Now they have two problems.    1. Prelude: Regular expressions are powerful... …">
+  <meta name="author" content="Adel Rahmani"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "Dinkum Data Blog",
+    
+    "url": "https://adelr.github.io/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https://adelr.github.io/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https://adelr.github.io/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https://adelr.github.io/2019/01/regex_intro/",
+          "name": "Introduction to regular expressions"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Adel Rahmani"
+  },
+  "headline": "Introduction to regular expressions",
+  "description" : "Jamie Zawinski: Some people, when confronted with a problem, think &#34;I know, I&#39;ll use regular expressions&#34;. Now they have two problems.    1. Prelude: Regular expressions are powerful...  http://xkcd.com/208/   ...but at first, they can be puzzling.  http://xkcd.com/1171/   from math import * import numpy as np import pandas as pd from pathlib import Path %matplotlib inline import matplotlib.pyplot as plt from IPython.core.display import display, HTML display(HTML(&amp;#34;&amp;lt;style&amp;gt;.",
+  "inLanguage" : "en",
+  "wordCount": 3625,
+  "datePublished" : "2019-01-30T00:00:00",
+  "dateModified" : "2019-01-30T00:00:00",
+  "image" : "https://adelr.github.io/img/avatar-icon.png",
+  "keywords" : [ "python, regex" ],
+  "mainEntityOfPage" : "https://adelr.github.io/2019/01/regex_intro/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https://adelr.github.io/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https://adelr.github.io/img/avatar-icon.png",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Introduction to regular expressions" />
+<meta property="og:description" content="Jamie Zawinski: Some people, when confronted with a problem, think &#34;I know, I&#39;ll use regular expressions&#34;. Now they have two problems.    1. Prelude: Regular expressions are powerful...  http://xkcd.com/208/   ...but at first, they can be puzzling.  http://xkcd.com/1171/   from math import * import numpy as np import pandas as pd from pathlib import Path %matplotlib inline import matplotlib.pyplot as plt from IPython.core.display import display, HTML display(HTML(&#34;&lt;style&gt;.">
+<meta property="og:image" content="https://adelr.github.io/img/avatar-icon.png" />
+<meta property="og:url" content="https://adelr.github.io/2019/01/regex_intro/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Dinkum Data Blog" />
+  <meta name="twitter:title" content="Introduction to regular expressions" />
+  <meta name="twitter:description" content="Jamie Zawinski: Some people, when confronted with a problem, think &#34;I know, I&#39;ll use regular expressions&#34;. Now they have two problems.    1. Prelude: Regular expressions are powerful... …">
+  <meta name="twitter:image" content="https://adelr.github.io/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:image" content="https://adelr.github.io/img/avatar-icon.png" />
+  <meta name="twitter:image" content="https://adelr.github.io/img/avatar-icon.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:url" content="https://adelr.github.io/2019/01/regex_intro/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Dinkum Data Blog" />
+
+  <meta name="generator" content="Hugo 0.54.0" />
+  <link rel="alternate" href="https://adelr.github.io/index.xml" type="application/rss+xml" title="Dinkum Data Blog"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://adelr.github.io/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://adelr.github.io/css/highlight.min.css" /><link rel="stylesheet" href="https://adelr.github.io/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://adelr.github.io/">Dinkum Data Blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="Dinkum Data Blog" href="https://adelr.github.io/">
+            <img class="avatar-img" src="https://adelr.github.io/img/avatar-icon.png" alt="Dinkum Data Blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>Introduction to regular expressions</h1>
+              
+              
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on January 30, 2019
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;18&nbsp;minutes
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;3625&nbsp;words
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Adel Rahmani
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <div style="background-color:#FBEFFB;">
+<hr style="height:5px;border:none;color:#333;background-color:#333;" />
+<h3>Jamie Zawinski:</h3>
+<blockquote><b>Some people, when confronted with a problem, think <em>"I know, I'll use regular expressions".</em> <br>Now they have two problems.</b></blockquote>
+
+<hr style="height:5px;border:none;color:#333;background-color:#333;" />
+</div>
+
+<div>
+<h2> 1. Prelude:</h2>
+<h4>Regular expressions are powerful...</h4>
+<br>
+<figure>
+<img src="http://imgs.xkcd.com/comics/regular_expressions.png" width="500">
+<figcaption><center>http://xkcd.com/208/</center></figcaption>
+</figure>
+
+<br />
+<br />
+<h4> ...but at first, they can be puzzling.</h4>
+<br>
+<figure>
+<img src="http://imgs.xkcd.com/comics/perl_problems.png" width="600">
+<figcaption><center>http://xkcd.com/1171/</center></figcaption>
+</figure>
+</div>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">&#34;&lt;style&gt;.container { width:90% !important; }&lt;/style&gt;&#34;</span><span class="p">))</span></code></pre></div>
+<style>.container { width:90% !important; }</style>
+
+<div>
+<h2> 2. Introduction</h2>
+<p>A regular expression (<a href="http://en.wikipedia.org/wiki/Regular_expression">regex</a>) is a sequence of literal characters, and metacharacters, which defines <b>search patterns</b>. </p>
+
+<p>Most programming languages have some implementation of regular expressions, however, their syntax may vary.</p>
+
+<p>One basic example is the asterisk used as a wildcard by most file systems to denote any number of characters. </p>
+
+<p>For instance, <code>*.txt</code> 
+denotes all files with a <code>.txt</code> extension.</p>
+
+<p>The most elementary search pattern is the one that consists of the very characters you're looking for. </p>
+
+<p>The <code>find</code> method of strings does just that.</p>
+</div>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">s</span> <span class="o">=</span> <span class="s2">&#34;To be or not to be&#34;</span>
+<span class="k">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;not&#39;</span><span class="p">),</span> <span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;question&#39;</span><span class="p">))</span></code></pre></div><div class="highlight"><pre class="chroma">9 -1</pre></div>
+<p><strong>For a more general, and powerful approach to pattern searching, Python has the <code>re</code> module</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">re</span></code></pre></div>
+<p>We&rsquo;ll use the opening paragraphs from <em>A Tale of Two Cities</em> as an example.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">dickens</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;
+</span><span class="s1">It was the best of times, it was the worst of times, 
+</span><span class="s1">it was the age of wisdom, it was the age of foolishness, it was the epoch of belief,
+</span><span class="s1">it was the epoch of incredulity, it was the season of Light, it was the season of Darkness,
+</span><span class="s1">it was the spring of hope, it was the winter of despair, we had everything before us, we had
+</span><span class="s1">nothing before us, we were all going direct to Heaven, we were all going direct the other way -
+</span><span class="s1">in short, the period was so far like the present period, that some of its noisiest authorities
+</span><span class="s1">insisted on its being received, for good or for evil, in the superlative degree of comparison only.
+</span><span class="s1">
+</span><span class="s1">There were a king with a large jaw and a queen with a plain face, on the
+</span><span class="s1">throne of England; there were a king with a large jaw and a queen with
+</span><span class="s1">a fair face, on the throne of France. In both countries it was clearer
+</span><span class="s1">than crystal to the lords of the State preserves of loaves and fishes,
+</span><span class="s1">that things in general were settled for ever.
+</span><span class="s1">
+</span><span class="s1">It was the year of Our Lord one thousand seven hundred and seventy-five.
+</span><span class="s1">Spiritual revelations were conceded to England at that favoured period,
+</span><span class="s1">as at this. Mrs. Southcott had recently attained her five-and-twentieth
+</span><span class="s1">blessed birthday, of whom a prophetic private in the Life Guards had
+</span><span class="s1">heralded the sublime appearance by announcing that arrangements were
+</span><span class="s1">made for the swallowing up of London and Westminster. Even the Cock-lane
+</span><span class="s1">ghost had been laid only a round dozen of years, after rapping out its
+</span><span class="s1">messages, as the spirits of this very year last past (supernaturally
+</span><span class="s1">deficient in originality) rapped out theirs. Mere messages in the
+</span><span class="s1">earthly order of events had lately come to the English Crown and People,
+</span><span class="s1">from a congress of British subjects in America: which, strange
+</span><span class="s1">to relate, have proved more important to the human race than any
+</span><span class="s1">communications yet received through any of the chickens of the Cock-lane
+</span><span class="s1">brood.
+</span><span class="s1">&#39;&#39;&#39;</span></code></pre></div>
+<h3> <center><font color=MediumVioletRed>A. Literals</font></center></h3>
+
+<p><strong>The <code>search</code> method of the <code>re</code> module returns a <code>_sre.SRE_Match</code> object which has some useful properties.</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;times&#39;</span><span class="p">,</span> <span class="n">dickens</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)],</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">&lt;class &#39;_sre.SRE_Match&#39;&gt;
+end
+endpos
+expand
+group
+groupdict
+groups
+lastgroup
+lastindex
+pos
+re
+regs
+span
+start
+string</pre></div>
+<p><strong>The result of the search will tell us if, and where the pattern is found in the string.</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="s2">&#34;result.span(): &#34;</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">span</span><span class="p">())</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;result.group():&#34;</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">span</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">dickens</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span></code></pre></div><div class="highlight"><pre class="chroma">result.span():  (20, 25)
+result.group(): times
+times</pre></div>
+<p><strong>There are other useful functions for finding a pattern beside the <code>search</code> function.</h4></strong></p>
+
+<div style="background-color:#F7F2E0;">
+<h3> <font color=MediumVioletRed>Remark:</font> </h3><br />
+If a search pattern is to be reused, it is faster to <em>compile</em> it first. We'll do that henceforth.
+ <br>
+</div>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;times&#39;</span><span class="p">)</span>
+
+<span class="c1"># only matches the beginning of the string.</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">dickens</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;match:  &#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># search for first match</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">dickens</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;search: &#39;</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+
+<span class="c1"># returns a list of all matches.</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">dickens</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;findall:&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">match:   None
+search:  times
+findall: [&#39;times&#39;, &#39;times&#39;]</pre></div>
+<div style="background-color:#F7F2E0;">
+<h4> <font color=MediumVioletRed>Note:</font> </h4>
+<p>What we've used above is an example of search pattern involving literals. 
+<b>The pattern was the very string we were looking for.</b></p>
+
+<p>Notice that we didn't have to worry about punctuation. The pattern is the only sub-string returned by the <code>search</code> or <code>findall</code> function, if it is found.</p>
+</div>
+
+<h3> <center><font color=MediumVioletRed>B. Character classes</font></center></h3>
+
+<p>Sometimes we&rsquo;d like to consider variants of a string. For, instance, <code>&quot;It&quot;</code> and <code>&quot;it&quot;</code>.</p>
+
+<p>This means that we need to look for <strong>either</strong> an uppercase &ldquo;i&rdquo; or a lowercase one, followed by the letter &ldquo;t&rdquo;.</p>
+
+<p>Character classes are specified using <strong>square brackets</strong>.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[Ii]t&#39;</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">dickens</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;It&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;, &#39;It&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;]</pre></div>
+<p>This is a simple example of character set.</p>
+
+<p><code>[Ii]</code> means match <b>any one</b> of the characters between the square brackets.</p>
+
+<p>Using character sets allows us to greatly simplify our syntax.</p>
+
+<p>Python has some <b>predefined character sets</b> which help us write compact code.</p>
+
+<table style="width:90%">
+  <th>Character Class
+  </th>
+  <th>Matches
+  </th>
+  <tr>
+      <td><code>[A-Z]</code></td>
+      <td><b>any single</b> letter of the Latin alphabet in uppercase</td> 
+  </tr>
+  <tr>
+      <td><code>[a-z]</code></td>
+      <td><b>any single</b>  letter of the Latin alphabet in uppercase</td> 
+  </tr>
+  <tr>
+      <td><code>[A-z]</code></td>
+      <td><b>any single</b>  letter of the Latin alphabet in either lowercase or uppercase</td> 
+  </tr>
+  <tr>
+      <td><code>[0-9]</code></td>
+      <td><b>any single digit</b> between 0 and 9</td> 
+  </tr>  <tr>
+    <td><code>[^0-9]</code></td>
+    <td><b>any character except for single digit</b> between 0 and 9</td> 
+  </tr>
+</table>
+
+<p>Here's an example:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[0-9]&#39;</span><span class="p">,</span> <span class="s2">&#34;Today is the 23rd of May&#34;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;2&#39;, &#39;3&#39;]</pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[A-z]&#39;</span><span class="p">,</span> <span class="s2">&#34;Today is the 23rd of May&#34;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;T&#39;,
+ &#39;o&#39;,
+ &#39;d&#39;,
+ &#39;a&#39;,
+ &#39;y&#39;,
+ &#39;i&#39;,
+ &#39;s&#39;,
+ &#39;t&#39;,
+ &#39;h&#39;,
+ &#39;e&#39;,
+ &#39;r&#39;,
+ &#39;d&#39;,
+ &#39;o&#39;,
+ &#39;f&#39;,
+ &#39;M&#39;,
+ &#39;a&#39;,
+ &#39;y&#39;]</pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[^A-z ]&#39;</span><span class="p">,</span> <span class="s2">&#34;Today is the 23rd of May&#34;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;2&#39;, &#39;3&#39;]</pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[^0-9]&#39;</span><span class="p">,</span> <span class="s2">&#34;Today is the 23rd of May&#34;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;T&#39;,
+ &#39;o&#39;,
+ &#39;d&#39;,
+ &#39;a&#39;,
+ &#39;y&#39;,
+ &#39; &#39;,
+ &#39;i&#39;,
+ &#39;s&#39;,
+ &#39; &#39;,
+ &#39;t&#39;,
+ &#39;h&#39;,
+ &#39;e&#39;,
+ &#39; &#39;,
+ &#39;r&#39;,
+ &#39;d&#39;,
+ &#39; &#39;,
+ &#39;o&#39;,
+ &#39;f&#39;,
+ &#39; &#39;,
+ &#39;M&#39;,
+ &#39;a&#39;,
+ &#39;y&#39;]</pre></div>
+<p>Back to our long string.</p>
+
+<p>If we were searching for a substring made of any single uppercase letter followed by any single lower case letter
+we could write:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[A-Z][a-z]&#39;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">dickens</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;It&#39;, &#39;Li&#39;, &#39;Da&#39;, &#39;He&#39;, &#39;Th&#39;, &#39;En&#39;, &#39;Fr&#39;, &#39;In&#39;, &#39;St&#39;, &#39;It&#39;, &#39;Ou&#39;, &#39;Lo&#39;, &#39;Sp&#39;, &#39;En&#39;, &#39;Mr&#39;, &#39;So&#39;, &#39;Li&#39;, &#39;Gu&#39;, &#39;Lo&#39;, &#39;We&#39;, &#39;Ev&#39;, &#39;Co&#39;, &#39;Me&#39;, &#39;En&#39;, &#39;Cr&#39;, &#39;Pe&#39;, &#39;Br&#39;, &#39;Am&#39;, &#39;Co&#39;]</pre></div>
+<div style="background-color:#F7F2E0;">
+<h3> <font color=MediumVioletRed>Note:</font> </h3>
+<ul>
+<li>Notice that except for a couple of elements in the list, we didn't get entire words. 
+</li><br>
+<li>The regular expression only specifies a pattern with one uppercase letter, followed by one lower case letter.</li><br>
+<li>That's usually not what you're after. You'd probably want to extract <b>whole words</b> which start with an uppercase letter, followed by any number of lowercase letters (capitalised words).  </li>
+</ul>
+
+</div>
+
+<p><strong>Maybe all we need is to add more <code>[a-z]</code> sets to our patterns? Let&rsquo;s try that&hellip;</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[A-Z][a-z][a-z]&#39;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">dickens</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;Lig&#39;, &#39;Dar&#39;, &#39;Hea&#39;, &#39;The&#39;, &#39;Eng&#39;, &#39;Fra&#39;, &#39;Sta&#39;, &#39;Our&#39;, &#39;Lor&#39;, &#39;Spi&#39;, &#39;Eng&#39;, &#39;Mrs&#39;, &#39;Sou&#39;, &#39;Lif&#39;, &#39;Gua&#39;, &#39;Lon&#39;, &#39;Wes&#39;, &#39;Eve&#39;, &#39;Coc&#39;, &#39;Mer&#39;, &#39;Eng&#39;, &#39;Cro&#39;, &#39;Peo&#39;, &#39;Bri&#39;, &#39;Ame&#39;, &#39;Coc&#39;]</pre></div>
+<p><strong>That&rsquo;s not really what we want.</strong></p>
+
+<p>Sure we&rsquo;ve now got one more lowercase letter after the first, uppercase one, but we still don&rsquo;t have whole words, unless our string contains capitalised, three-letter words. To top it off, we&rsquo;ve now lost <code>&quot;It&quot;</code>!</p>
+
+<p>In other words, unless you want to only extract capitalised words, with a <strong>specific number of letter</strong>, this is not the way to go.</p>
+
+<p>Actually, even in that case, this is not a smart way to do it.</p>
+
+<p>If we wanted to find all the capitalised words that are, say, 10 letters long, we don&rsquo;t really want to have to type a pattern such as:</p>
+<div class="highlight"><pre class="chroma">[A-Z][a-z][a-z][a-z][a-z][a-z][a-z][a-z][a-z][a-z]</pre></div>
+<p>We need a way to specify that we want <strong>one or more</strong> lowercase letters.</p>
+
+<p>For this we need more than literals or character sets, we need <strong>metacharacters</strong>.</p>
+
+<h3><center><font color=MediumVioletRed>C. Metacharacters</font></center></h3>
+
+<p>Literals are characters which are simply part of the pattern we are looking for.</p>
+
+<p>Metacharacters, on the other hand, act like <b>modifiers</b>. They change how the literals, or character classes are handled.</p>
+
+<p>By default each literal is matched only once. By using the <code>+</code> symbol, any character or character class appearing <b>just before</b>  the metacharacter will be matched <b>one or more times</b>.</p>
+
+<p>There are several modifiers that we can use.</p>
+
+<table style="width:60%">
+  <th>Modifier
+  </th>
+  <th>Number of occurences
+  </th>
+  <tr>
+      <td><code>+</code></td>
+    <td><b>one</b> or more</td> 
+  </tr>
+  <tr>
+      <td><code>*</code></td>
+    <td><b>zero</b> or more</td> 
+  </tr>
+  <tr>
+      <td><code>?</code></td>
+    <td>zero or one</td> 
+  </tr>
+  <tr>
+      <td><code>{m}</code></td>
+      <td><code>m</code> times</td> 
+  </tr> 
+  <tr>
+      <td><code>{m, n}</code></td>
+      <td>between <code>m</code> and <code>n</code> times</td> 
+  </tr> 
+</table>
+
+<p>For instance, if we wanted to extract a list of the words that are capitalised in a string, in the past we may have written something like this:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">([</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">dickens</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isupper</span><span class="p">()</span> <span class="ow">and</span> <span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">islower</span><span class="p">()])</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;It&#39;, &#39;Light,&#39;, &#39;Darkness,&#39;, &#39;Heaven,&#39;, &#39;There&#39;, &#39;England;&#39;, &#39;France.&#39;, &#39;In&#39;, &#39;State&#39;, &#39;It&#39;, &#39;Our&#39;, &#39;Lord&#39;, &#39;Spiritual&#39;, &#39;England&#39;, &#39;Mrs.&#39;, &#39;Southcott&#39;, &#39;Life&#39;, &#39;Guards&#39;, &#39;London&#39;, &#39;Westminster.&#39;, &#39;Even&#39;, &#39;Cock-lane&#39;, &#39;Mere&#39;, &#39;English&#39;, &#39;Crown&#39;, &#39;People,&#39;, &#39;British&#39;, &#39;America:&#39;, &#39;Cock-lane&#39;]</pre></div>
+<p>Notice, however, that some of the words have punctuation symbols attached to them.</p>
+
+<p>No big deal, we know how to deal with this.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">string</span> 
+<span class="k">print</span><span class="p">([</span><span class="n">word</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">dickens</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isupper</span><span class="p">()</span> <span class="ow">and</span> <span class="n">word</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">islower</span><span class="p">()])</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;It&#39;, &#39;Light&#39;, &#39;Darkness&#39;, &#39;Heaven&#39;, &#39;There&#39;, &#39;England&#39;, &#39;France&#39;, &#39;In&#39;, &#39;State&#39;, &#39;It&#39;, &#39;Our&#39;, &#39;Lord&#39;, &#39;Spiritual&#39;, &#39;England&#39;, &#39;Mrs&#39;, &#39;Southcott&#39;, &#39;Life&#39;, &#39;Guards&#39;, &#39;London&#39;, &#39;Westminster&#39;, &#39;Even&#39;, &#39;Cock-lane&#39;, &#39;Mere&#39;, &#39;English&#39;, &#39;Crown&#39;, &#39;People&#39;, &#39;British&#39;, &#39;America&#39;, &#39;Cock-lane&#39;]</pre></div>
+<p>That worked fine, however the syntax is a bit unwieldy.</p>
+
+<p>Another version could be.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">string</span> 
+<span class="k">print</span><span class="p">([</span><span class="n">word</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">dickens</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> 
+ <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">istitle</span><span class="p">()])</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;It&#39;, &#39;Light&#39;, &#39;Darkness&#39;, &#39;Heaven&#39;, &#39;There&#39;, &#39;England&#39;, &#39;France&#39;, &#39;In&#39;, &#39;State&#39;, &#39;It&#39;, &#39;Our&#39;, &#39;Lord&#39;, &#39;Spiritual&#39;, &#39;England&#39;, &#39;Mrs&#39;, &#39;Southcott&#39;, &#39;Life&#39;, &#39;Guards&#39;, &#39;London&#39;, &#39;Westminster&#39;, &#39;Even&#39;, &#39;Mere&#39;, &#39;English&#39;, &#39;Crown&#39;, &#39;People&#39;, &#39;British&#39;, &#39;America&#39;]</pre></div>
+<p>Notice, however, that we lost a word&hellip;</p>
+
+<p><strong>Using a regular expression, we can specify character sets which match our pattern.</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[A-Z][a-z]+&#39;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">dickens</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;It&#39;, &#39;Light&#39;, &#39;Darkness&#39;, &#39;Heaven&#39;, &#39;There&#39;, &#39;England&#39;, &#39;France&#39;, &#39;In&#39;, &#39;State&#39;, &#39;It&#39;, &#39;Our&#39;, &#39;Lord&#39;, &#39;Spiritual&#39;, &#39;England&#39;, &#39;Mrs&#39;, &#39;Southcott&#39;, &#39;Life&#39;, &#39;Guards&#39;, &#39;London&#39;, &#39;Westminster&#39;, &#39;Even&#39;, &#39;Cock&#39;, &#39;Mere&#39;, &#39;English&#39;, &#39;Crown&#39;, &#39;People&#39;, &#39;British&#39;, &#39;America&#39;, &#39;Cock&#39;]</pre></div>
+<p><strong>Notice that with this pattern, hyphenated words are split and only the first part is returned. Let&rsquo;s handle this case.</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[A-Z][a-z]+-?[a-z]*&#39;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">dickens</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;It&#39;, &#39;Light&#39;, &#39;Darkness&#39;, &#39;Heaven&#39;, &#39;There&#39;, &#39;England&#39;, &#39;France&#39;, &#39;In&#39;, &#39;State&#39;, &#39;It&#39;, &#39;Our&#39;, &#39;Lord&#39;, &#39;Spiritual&#39;, &#39;England&#39;, &#39;Mrs&#39;, &#39;Southcott&#39;, &#39;Life&#39;, &#39;Guards&#39;, &#39;London&#39;, &#39;Westminster&#39;, &#39;Even&#39;, &#39;Cock-lane&#39;, &#39;Mere&#39;, &#39;English&#39;, &#39;Crown&#39;, &#39;People&#39;, &#39;British&#39;, &#39;America&#39;, &#39;Cock-lane&#39;]</pre></div>
+<h3><center><font color=MediumVioletRed>D. Other built-in character classes and metacharacters</font></center></h3>
+
+<table style="width:90%">
+  <th>Class
+  </th>
+  <th>Matches
+  </th>
+  <tr>
+      <td><code>.</code></td>
+      <td>any character except <code>\n</code></td> 
+  </tr>
+  <tr>
+      <td><code>\d</code></td>
+    <td>Any numeric character</td> 
+  </tr>
+  <tr>
+      <td><code>\D</code></td>
+    <td>Non-numeric character</td> 
+  </tr>
+  <tr>
+      <td><code>\w</code></td>
+      <td>alphanumeric characters (same as <code>[0-9a-zA-Z_]</code>)</td> 
+  </tr>
+  <tr>
+      <td><code>\W</code></td>
+    <td>Non-alphanumeric characters</td> 
+  </tr>
+  <tr>
+      <td><code>\b</code></td>
+    <td>word boundary</td> 
+  </tr> 
+  <tr>
+      <td><code>\s</code></td>
+      <td>whitespace character (including <code>\n</code>, <code>\t</code>)</td> 
+  </tr> 
+  <tr>
+      <td><code>\S</code></td>
+    <td>Non-whitespace character </td> 
+  </tr> 
+  <tr>
+      <td><code>^</code></td>
+    <td>Start of line </td> 
+  </tr> 
+  <tr>
+    <td><code>$</code></td>
+    <td>End of line </td> 
+  </tr> 
+</table>
+
+<p><strong>First word of each sentence.</strong></p>
+
+<p>We use <code>re.MULTILINE</code> to have the patterned searched across more than one line.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^\w+&#39;</span><span class="p">,</span> <span class="n">dickens</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;It&#39;, &#39;it&#39;, &#39;it&#39;, &#39;it&#39;, &#39;nothing&#39;, &#39;in&#39;, &#39;insisted&#39;, &#39;There&#39;, &#39;throne&#39;, &#39;a&#39;, &#39;than&#39;, &#39;that&#39;, &#39;It&#39;, &#39;Spiritual&#39;, &#39;as&#39;, &#39;blessed&#39;, &#39;heralded&#39;, &#39;made&#39;, &#39;ghost&#39;, &#39;messages&#39;, &#39;deficient&#39;, &#39;earthly&#39;, &#39;from&#39;, &#39;to&#39;, &#39;communications&#39;, &#39;brood&#39;]</pre></div>
+<p><strong>Last word of each sentence.</strong></p>
+
+<p>This is a bit more tricky. First note the following:</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\w+$&#39;</span><span class="p">,</span> <span class="n">dickens</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;had&#39;, &#39;authorities&#39;, &#39;the&#39;, &#39;with&#39;, &#39;clearer&#39;, &#39;twentieth&#39;, &#39;had&#39;, &#39;were&#39;, &#39;lane&#39;, &#39;its&#39;, &#39;supernaturally&#39;, &#39;the&#39;, &#39;strange&#39;, &#39;any&#39;, &#39;lane&#39;]</pre></div>
+<p>The problem here is that our pattern will only consider a word as being a match if it is at the end of a line if there is no other character after it.</p>
+
+<p>Let&rsquo;s try to include the possibility of a punctuation symbol.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\w+.?$&#39;</span><span class="p">,</span> <span class="n">dickens</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;belief,&#39;, &#39;Darkness,&#39;, &#39;had&#39;, &#39;authorities&#39;, &#39;only.&#39;, &#39;the&#39;, &#39;with&#39;, &#39;clearer&#39;, &#39;fishes,&#39;, &#39;ever.&#39;, &#39;five.&#39;, &#39;period,&#39;, &#39;twentieth&#39;, &#39;had&#39;, &#39;were&#39;, &#39;lane&#39;, &#39;its&#39;, &#39;supernaturally&#39;, &#39;the&#39;, &#39;People,&#39;, &#39;strange&#39;, &#39;any&#39;, &#39;lane&#39;, &#39;brood.&#39;]</pre></div>
+<p>That&rsquo;s better but we don&rsquo;t actually want the punctuation symbols to appear in the result.</p>
+
+<h3> <center><font color=MediumVioletRed>E. Capture Groups</font></center></h3>
+
+<p>We can use a <strong>capture group</strong> to specify which part of the pattern should be returned as a group, using parentheses.</p>
+
+<p>Let&rsquo;s first see how this works on a simple example.</p>
+
+<p><strong>No groups</strong></p>
+
+<p>We get a list back.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\w+\s\d+\w{0,2}&#39;</span><span class="p">,</span> <span class="s2">&#34;Let&#39;s meet on November 9 at 5pm, or November 12 at 11am or 4pm.&#34;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;November 9&#39;, &#39;at 5pm&#39;, &#39;November 12&#39;, &#39;at 11am&#39;, &#39;or 4pm&#39;]</pre></div>
+<p><strong>2 capture groups</strong></p>
+
+<p>We get a list of tuples with 2 elements.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\w+)\s(\d+)\w{0,2}&#39;</span><span class="p">,</span> <span class="s2">&#34;Let&#39;s meet on November 9 at 5pm, or November 12 at 11am or 4pm.&#34;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[(&#39;November&#39;, &#39;9&#39;), (&#39;at&#39;, &#39;5&#39;), (&#39;November&#39;, &#39;12&#39;), (&#39;at&#39;, &#39;11&#39;), (&#39;or&#39;, &#39;4&#39;)]</pre></div>
+<p><strong>1 non-capture group, starting with <code>(?:</code> and 1 capture group.</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?:\w+)\s(\d+)\w{0,2}&#39;</span><span class="p">,</span> <span class="s2">&#34;Let&#39;s meet on November 9 at 5pm, or November 12 at 11am or 4pm.&#34;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;9&#39;, &#39;5&#39;, &#39;12&#39;, &#39;11&#39;, &#39;4&#39;]</pre></div>
+<p><strong>Note:</strong></p>
+
+<p>This example is a bit lame. The same result could be achieved more simply, but it illustrates how non-capture groups work.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\d+&#39;</span><span class="p">,</span> <span class="s2">&#34;Let&#39;s meet on November 9 at 5pm, or November 12 at 11am or 4pm.&#34;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;9&#39;, &#39;5&#39;, &#39;12&#39;, &#39;11&#39;, &#39;4&#39;]</pre></div>
+<p><strong>Back to our problem of finding the last words of each line.</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\w+).?$&#39;</span><span class="p">,</span> <span class="n">dickens</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;belief&#39;, &#39;Darkness&#39;, &#39;had&#39;, &#39;authorities&#39;, &#39;only&#39;, &#39;the&#39;, &#39;with&#39;, &#39;clearer&#39;, &#39;fishes&#39;, &#39;ever&#39;, &#39;five&#39;, &#39;period&#39;, &#39;twentieth&#39;, &#39;had&#39;, &#39;were&#39;, &#39;lane&#39;, &#39;its&#39;, &#39;supernaturally&#39;, &#39;the&#39;, &#39;People&#39;, &#39;strange&#39;, &#39;any&#39;, &#39;lane&#39;, &#39;brood&#39;]</pre></div>
+<p>Almost there. We just need to take care of hyphenated words and whitespaces.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># You can usually write multiple regular expressions to perform a task,</span>
+<span class="c1"># however, it&#39;s best to try and make the regular expression as discriminating as possible.</span>
+
+<span class="c1"># Method 1</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;([\w+-?]+\w+).?[\s-]*$&#39;</span><span class="p">,</span> <span class="n">dickens</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+
+<span class="c1"># Method 2</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;([\w+-?]+\w+).?\W*$&#39;</span><span class="p">,</span> <span class="n">dickens</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+
+<span class="c1"># Method 3</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;([\w-]+)\W*$&#39;</span><span class="p">,</span> <span class="n">dickens</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;times&#39;, &#39;belief&#39;, &#39;Darkness&#39;, &#39;had&#39;, &#39;way&#39;, &#39;authorities&#39;, &#39;only&#39;, &#39;the&#39;, &#39;with&#39;, &#39;clearer&#39;, &#39;fishes&#39;, &#39;ever&#39;, &#39;seventy-five&#39;, &#39;period&#39;, &#39;five-and-twentieth&#39;, &#39;had&#39;, &#39;were&#39;, &#39;Cock-lane&#39;, &#39;its&#39;, &#39;supernaturally&#39;, &#39;the&#39;, &#39;People&#39;, &#39;strange&#39;, &#39;any&#39;, &#39;Cock-lane&#39;, &#39;brood&#39;]
+[&#39;times&#39;, &#39;belief&#39;, &#39;Darkness&#39;, &#39;had&#39;, &#39;way&#39;, &#39;authorities&#39;, &#39;only&#39;, &#39;the&#39;, &#39;with&#39;, &#39;clearer&#39;, &#39;fishes&#39;, &#39;ever&#39;, &#39;seventy-five&#39;, &#39;period&#39;, &#39;five-and-twentieth&#39;, &#39;had&#39;, &#39;were&#39;, &#39;Cock-lane&#39;, &#39;its&#39;, &#39;supernaturally&#39;, &#39;the&#39;, &#39;People&#39;, &#39;strange&#39;, &#39;any&#39;, &#39;Cock-lane&#39;, &#39;brood&#39;]
+[&#39;times&#39;, &#39;belief&#39;, &#39;Darkness&#39;, &#39;had&#39;, &#39;way&#39;, &#39;authorities&#39;, &#39;only&#39;, &#39;the&#39;, &#39;with&#39;, &#39;clearer&#39;, &#39;fishes&#39;, &#39;ever&#39;, &#39;seventy-five&#39;, &#39;period&#39;, &#39;five-and-twentieth&#39;, &#39;had&#39;, &#39;were&#39;, &#39;Cock-lane&#39;, &#39;its&#39;, &#39;supernaturally&#39;, &#39;the&#39;, &#39;People&#39;, &#39;strange&#39;, &#39;any&#39;, &#39;Cock-lane&#39;, &#39;brood&#39;]</pre></div>
+<h2>3. Data Extraction</h2>
+
+<p>When we're working with data you haven't generated, we usually have little control over the formatting of the data.</p>
+
+<p>What's worse, the formatting can be inconsistent. This is where regular expression can be extremely useful.</p>
+
+<p>Consider the data below. We'd like to extract the credit card information for each entry.<p> 
+
+<p>Notice that the credit card numbers are not formatted in a consistent way.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">messy_data</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;
+</span><span class="s1">Ms. Dixie T Patenaude 18 rue Descartes STRASBOURG Alsace 67100 FR France Dixie.Patenaude@teleworm.us Shound Cheecaey3s 03.66.62.81.38 Grondin 4/15/1958 MasterCard 5379 7969 2881 8421 958 12/2017 nan 1Z 114 58A 80 2148 893 8 Blue Safety specialist Atlas Realty 2000 Subaru Outback AnalystWatch.fr O- 191.0 86.8 5&#39; 11&#34; 156 dd0548bb-a8b5-438d-b181-c76ad282a9a1 48.577584 7.842637
+</span><span class="s1">Mr. Silvano G Romani 34 Faunce Crescent WHITE TOP NSW 2675 AU Australia Silvano-Romani@einrot.com Pock1993 AeV7ziek (02) 6166 5988 Sagese 2/25/1993 MasterCard 5253-7637-4959-3303 404 06-2018 nan 1Z 814 E43 42 9322 015 2 Green Coin vending and amusement machine servicer repairer Miller &amp; Rhoads 1998 Honda S-MX StarJock.com.au B+ 128.3 58.3 6&#39; 2&#34; 189 7e310daa-46f5-407e-8dda-d975715ac4d5 -33.429793 145.234214
+</span><span class="s1">Mr. Felix C Fried 37 Jubilee Drive CAXTON nan CB3 5WG GB United Kingdom FelixFried@rhyta.com Derser Aisequ0haz 078 1470 0903 Eisenhauer 1/19/1933 Visa 4716046346218902 738 02 2018 SP 39 75 51 D 1Z V88 635 94 7608 112 4 Blue School psychologist Wetson&#39;s 2001 Audi Allroad MoverRelocation.co.uk O+ 188.5 85.7 5&#39; 7&#34; 169 95515377-74a9-4c1e-9117-44b9753dad8c 51.922175 -0.353221
+</span><span class="s1">&#39;&#39;&#39;</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">credit_card_number</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4})&#39;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">credit_card_number</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">messy_data</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[&#39;5379 7969 2881 8421&#39;, &#39;5253-7637-4959-3303&#39;, &#39;4716046346218902&#39;]</pre></div>
+<p>Let&rsquo;s write a regular expression called <code>height</code> to extract the height of each person in the data.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">height</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(\d)</span><span class="se">\&#39;</span><span class="s1">\s+(\d{,2})&#34;&#39;</span><span class="p">)</span>
+
+<span class="n">height</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">messy_data</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[(&#39;5&#39;, &#39;11&#39;), (&#39;6&#39;, &#39;2&#39;), (&#39;5&#39;, &#39;7&#39;)]</pre></div>
+<p><strong>For more complex patterns we can use <em>named</em> capture groups.</strong></p>
+
+<h3> <center><font color=MediumVioletRed>A. Named Capture Groups</font></center></h3>
+
+<p>Let's write a regular expression that will extract not just the credit card number, but also the card type, CCV number, and expiry date.</p>
+
+<div style="background-color:#F7F2E0;">
+<h3> <font color=MediumVioletRed>Note:</font> </h3>
+<p>When you are extracting several groups that correspond to a particular type of information, it's often useful to associate a name with each group. That's what named groups allow you to do.</p>
+
+<p>A named group has the form <code>(?P&lt;name&gt;regex)</code>.</p>
+</div>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">credit_card_details</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?P&lt;CardType&gt;Visa|MasterCard).*&#39;</span>
+                                 <span class="sa">r</span><span class="s1">&#39;(?P&lt;CardNumber&gt;\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4})[-\s]?&#39;</span>
+                                 <span class="sa">r</span><span class="s1">&#39;(?P&lt;CCV&gt;\d{3})\s+&#39;</span>
+                                 <span class="sa">r</span><span class="s1">&#39;(?P&lt;Expiry&gt;\d{2}[- /]{1}\d{4})&#39;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">messy_data</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">credit_card_details</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">())</span></code></pre></div><div class="highlight"><pre class="chroma">{&#39;CardType&#39;: &#39;MasterCard&#39;, &#39;CardNumber&#39;: &#39;5379 7969 2881 8421&#39;, &#39;CCV&#39;: &#39;958&#39;, &#39;Expiry&#39;: &#39;12/2017&#39;}
+{&#39;CardType&#39;: &#39;MasterCard&#39;, &#39;CardNumber&#39;: &#39;5253-7637-4959-3303&#39;, &#39;CCV&#39;: &#39;404&#39;, &#39;Expiry&#39;: &#39;06-2018&#39;}
+{&#39;CardType&#39;: &#39;Visa&#39;, &#39;CardNumber&#39;: &#39;4716046346218902&#39;, &#39;CCV&#39;: &#39;738&#39;, &#39;Expiry&#39;: &#39;02 2018&#39;}</pre></div>
+<p>We can get a nicer output by transforming the dictionary into a dataframe.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">credit_card_details</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span>  <span class="n">messy_data</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()])</span></code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CCV</th>
+      <th>CardNumber</th>
+      <th>CardType</th>
+      <th>Expiry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>958</td>
+      <td>5379 7969 2881 8421</td>
+      <td>MasterCard</td>
+      <td>12/2017</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>404</td>
+      <td>5253-7637-4959-3303</td>
+      <td>MasterCard</td>
+      <td>06-2018</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>738</td>
+      <td>4716046346218902</td>
+      <td>Visa</td>
+      <td>02 2018</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Let&rsquo;s now write a regular expression <code>email</code> that will extract the email address from our data, and return the login and internet service provider for each entry, as two named capture groups.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">email</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?P&lt;Login&gt;[\w.-]+)@(?P&lt;ISP&gt;[\w.-]+)&#39;</span><span class="p">)</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">email</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span>  <span class="n">messy_data</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()])</span></code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ISP</th>
+      <th>Login</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>teleworm.us</td>
+      <td>Dixie.Patenaude</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>einrot.com</td>
+      <td>Silvano-Romani</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>rhyta.com</td>
+      <td>FelixFried</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3> <center><font color=MediumVioletRed>B. Pandas &amp; Regular expressions</font></center></h3>
+
+<p>For more complex data sets we can of course combine the strengths of regular expressions and Pandas.</p>
+
+<p>As an example, let&rsquo;s revisit the birthday formatting problem of a previous post.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&#34;data/people.csv&#34;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>GivenName</th>
+      <th>Surname</th>
+      <th>Gender</th>
+      <th>StreetAddress</th>
+      <th>City</th>
+      <th>Country</th>
+      <th>Birthday</th>
+      <th>BloodType</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Stepanida</td>
+      <td>Sukhorukova</td>
+      <td>female</td>
+      <td>62 Ockham Road</td>
+      <td>EASTER WHYNTIE</td>
+      <td>United Kingdom</td>
+      <td>8/25/1968</td>
+      <td>A+</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Hiệu</td>
+      <td>Lương</td>
+      <td>male</td>
+      <td>4 Iolaire Road</td>
+      <td>NEW CROSS</td>
+      <td>United Kingdom</td>
+      <td>1/31/1962</td>
+      <td>A+</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Petra</td>
+      <td>Neudorf</td>
+      <td>female</td>
+      <td>56 Victoria Road</td>
+      <td>LISTON</td>
+      <td>United Kingdom</td>
+      <td>1/10/1964</td>
+      <td>B+</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Eho</td>
+      <td>Amano</td>
+      <td>female</td>
+      <td>83 Stroud Rd</td>
+      <td>OGMORE</td>
+      <td>United Kingdom</td>
+      <td>4/12/1933</td>
+      <td>O-</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Noah</td>
+      <td>Niland</td>
+      <td>male</td>
+      <td>61 Wrexham Rd</td>
+      <td>FACEBY</td>
+      <td>United Kingdom</td>
+      <td>11/20/1946</td>
+      <td>A+</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>We'd like the dates to be formatted as <code>year-month-day</code>.</p>
+
+<p>In a previous notebook we worked out a solution using the <code>datetime</code> module.</p>
+
+<p>Let's do this using regular expressions.</p>
+
+<div style="background-color:#F7F2E0;">
+<h3> <font color=MediumVioletRed>Remark:</font> </h3>
+<p>In a previous post we did more than simply change the format of the dates. We created a special datetime objects which can be used to perform <b>computations</b> on dates. Here we're merely focussing on the formatting aspect to illustrate how regular expressions can be combined with our usual Pandas workflow.</p>
+</div>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># Compile the regex first for increased speed.</span>
+<span class="n">birthday</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;(?P&lt;month&gt;\d{1,2})/(?P&lt;day&gt;\d{1,2})/(?P&lt;year&gt;\d{2,4})&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">transform_birthday</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">birthday</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;Birthday&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
+    <span class="k">return</span> <span class="s2">&#34;-&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">date</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">],</span> <span class="n">date</span><span class="p">[</span><span class="s1">&#39;month&#39;</span><span class="p">],</span> <span class="n">date</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">]])</span>
+    
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;Birthday&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="n">transform_birthday</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>GivenName</th>
+      <th>Surname</th>
+      <th>Gender</th>
+      <th>StreetAddress</th>
+      <th>City</th>
+      <th>Country</th>
+      <th>Birthday</th>
+      <th>BloodType</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Stepanida</td>
+      <td>Sukhorukova</td>
+      <td>female</td>
+      <td>62 Ockham Road</td>
+      <td>EASTER WHYNTIE</td>
+      <td>United Kingdom</td>
+      <td>1968-8-25</td>
+      <td>A+</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Hiệu</td>
+      <td>Lương</td>
+      <td>male</td>
+      <td>4 Iolaire Road</td>
+      <td>NEW CROSS</td>
+      <td>United Kingdom</td>
+      <td>1962-1-31</td>
+      <td>A+</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Petra</td>
+      <td>Neudorf</td>
+      <td>female</td>
+      <td>56 Victoria Road</td>
+      <td>LISTON</td>
+      <td>United Kingdom</td>
+      <td>1964-1-10</td>
+      <td>B+</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Eho</td>
+      <td>Amano</td>
+      <td>female</td>
+      <td>83 Stroud Rd</td>
+      <td>OGMORE</td>
+      <td>United Kingdom</td>
+      <td>1933-4-12</td>
+      <td>O-</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Noah</td>
+      <td>Niland</td>
+      <td>male</td>
+      <td>61 Wrexham Rd</td>
+      <td>FACEBY</td>
+      <td>United Kingdom</td>
+      <td>1946-11-20</td>
+      <td>A+</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>By using Pandas&rsquo; advanced regex syntax we can achieve the same thing in one line of code.</strong></p>
+
+<p>Let&rsquo;s reload the original data.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>GivenName</th>
+      <th>Surname</th>
+      <th>Gender</th>
+      <th>StreetAddress</th>
+      <th>City</th>
+      <th>Country</th>
+      <th>Birthday</th>
+      <th>BloodType</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Stepanida</td>
+      <td>Sukhorukova</td>
+      <td>female</td>
+      <td>62 Ockham Road</td>
+      <td>EASTER WHYNTIE</td>
+      <td>United Kingdom</td>
+      <td>8/25/1968</td>
+      <td>A+</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Hiệu</td>
+      <td>Lương</td>
+      <td>male</td>
+      <td>4 Iolaire Road</td>
+      <td>NEW CROSS</td>
+      <td>United Kingdom</td>
+      <td>1/31/1962</td>
+      <td>A+</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Petra</td>
+      <td>Neudorf</td>
+      <td>female</td>
+      <td>56 Victoria Road</td>
+      <td>LISTON</td>
+      <td>United Kingdom</td>
+      <td>1/10/1964</td>
+      <td>B+</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Eho</td>
+      <td>Amano</td>
+      <td>female</td>
+      <td>83 Stroud Rd</td>
+      <td>OGMORE</td>
+      <td>United Kingdom</td>
+      <td>4/12/1933</td>
+      <td>O-</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Noah</td>
+      <td>Niland</td>
+      <td>male</td>
+      <td>61 Wrexham Rd</td>
+      <td>FACEBY</td>
+      <td>United Kingdom</td>
+      <td>11/20/1946</td>
+      <td>A+</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>We can extract the day, month and year of birth for each person in one line of code by passing the compiled regex to the
+<code>str.extract</code> method of our Pandas Series corresponding to the <code>Birthday</code> column.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">data</span><span class="o">.</span><span class="n">Birthday</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">birthday</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>month</th>
+      <th>day</th>
+      <th>year</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>8</td>
+      <td>25</td>
+      <td>1968</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>31</td>
+      <td>1962</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>10</td>
+      <td>1964</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>12</td>
+      <td>1933</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>11</td>
+      <td>20</td>
+      <td>1946</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Note that the names of the columns have been automatically extracted from the named groups of the regex <code>birthday</code>.</p>
+
+<p>Using this, we can use the <code>apply</code> method to process the date in the format that we want.</p>
+
+<p>For more clarity, we wrap our method chaining expression in parentheses, which allows us to write each method call on a new line.</p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">data</span><span class="o">.</span><span class="n">Birthday</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span>
+                     <span class="o">.</span><span class="n">Birthday</span>
+                     <span class="o">.</span><span class="nb">str</span>
+                     <span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">birthday</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                     <span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">date</span><span class="p">:</span><span class="s2">&#34;-&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">date</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">],</span> 
+                                                  <span class="n">date</span><span class="p">[</span><span class="s1">&#39;month&#39;</span><span class="p">],</span> 
+                                                  <span class="n">date</span><span class="p">[</span><span class="s1">&#39;day&#39;</span><span class="p">]]),</span> 
+                            <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>GivenName</th>
+      <th>Surname</th>
+      <th>Gender</th>
+      <th>StreetAddress</th>
+      <th>City</th>
+      <th>Country</th>
+      <th>Birthday</th>
+      <th>BloodType</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Stepanida</td>
+      <td>Sukhorukova</td>
+      <td>female</td>
+      <td>62 Ockham Road</td>
+      <td>EASTER WHYNTIE</td>
+      <td>United Kingdom</td>
+      <td>1968-8-25</td>
+      <td>A+</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Hiệu</td>
+      <td>Lương</td>
+      <td>male</td>
+      <td>4 Iolaire Road</td>
+      <td>NEW CROSS</td>
+      <td>United Kingdom</td>
+      <td>1962-1-31</td>
+      <td>A+</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Petra</td>
+      <td>Neudorf</td>
+      <td>female</td>
+      <td>56 Victoria Road</td>
+      <td>LISTON</td>
+      <td>United Kingdom</td>
+      <td>1964-1-10</td>
+      <td>B+</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Eho</td>
+      <td>Amano</td>
+      <td>female</td>
+      <td>83 Stroud Rd</td>
+      <td>OGMORE</td>
+      <td>United Kingdom</td>
+      <td>1933-4-12</td>
+      <td>O-</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Noah</td>
+      <td>Niland</td>
+      <td>male</td>
+      <td>61 Wrexham Rd</td>
+      <td>FACEBY</td>
+      <td>United Kingdom</td>
+      <td>1946-11-20</td>
+      <td>A+</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>That being said, the best way to achieve our goal in pandas is to let it parse the dates automatically!</strong></p>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Birthday&#39;</span><span class="p">])</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span></code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>GivenName</th>
+      <th>Surname</th>
+      <th>Gender</th>
+      <th>StreetAddress</th>
+      <th>City</th>
+      <th>Country</th>
+      <th>Birthday</th>
+      <th>BloodType</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Stepanida</td>
+      <td>Sukhorukova</td>
+      <td>female</td>
+      <td>62 Ockham Road</td>
+      <td>EASTER WHYNTIE</td>
+      <td>United Kingdom</td>
+      <td>1968-08-25</td>
+      <td>A+</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Hiệu</td>
+      <td>Lương</td>
+      <td>male</td>
+      <td>4 Iolaire Road</td>
+      <td>NEW CROSS</td>
+      <td>United Kingdom</td>
+      <td>1962-01-31</td>
+      <td>A+</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Petra</td>
+      <td>Neudorf</td>
+      <td>female</td>
+      <td>56 Victoria Road</td>
+      <td>LISTON</td>
+      <td>United Kingdom</td>
+      <td>1964-01-10</td>
+      <td>B+</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Eho</td>
+      <td>Amano</td>
+      <td>female</td>
+      <td>83 Stroud Rd</td>
+      <td>OGMORE</td>
+      <td>United Kingdom</td>
+      <td>1933-04-12</td>
+      <td>O-</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Noah</td>
+      <td>Niland</td>
+      <td>male</td>
+      <td>61 Wrexham Rd</td>
+      <td>FACEBY</td>
+      <td>United Kingdom</td>
+      <td>1946-11-20</td>
+      <td>A+</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">data</span><span class="o">.</span><span class="n">dtypes</span></code></pre></div><div class="highlight"><pre class="chroma">GivenName                object
+Surname                  object
+Gender                   object
+StreetAddress            object
+City                     object
+Country                  object
+Birthday         datetime64[ns]
+BloodType                object
+dtype: object</pre></div>
+<p>The End&hellip;</p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://adelr.github.io//tags/python/">python</a>&nbsp;
+            
+              <a href="https://adelr.github.io//tags/regex/">regex</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=https%3a%2f%2fadelr.github.io%2f2019%2f01%2fregex_intro%2f&amp;text=Introduction%20to%20regular%20expressions&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//plus.google.com/share?url=https%3a%2f%2fadelr.github.io%2f2019%2f01%2fregex_intro%2f" target="_blank" title="Share on Google Plus">
+          <i class="fab fa-google-plus"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fadelr.github.io%2f2019%2f01%2fregex_intro%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=https%3a%2f%2fadelr.github.io%2f2019%2f01%2fregex_intro%2f&amp;title=Introduction%20to%20regular%20expressions" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fadelr.github.io%2f2019%2f01%2fregex_intro%2f&amp;title=Introduction%20to%20regular%20expressions" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fadelr.github.io%2f2019%2f01%2fregex_intro%2f&amp;title=Introduction%20to%20regular%20expressions" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fadelr.github.io%2f2019%2f01%2fregex_intro%2f&amp;description=Introduction%20to%20regular%20expressions" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+              </div>
+            </section>
+        
+
+        
+          
+          
+          <h4 class="see-also">See also</h4>
+          <ul>
+          
+            <li><a href="/2018/11/pandas_groupby/">Pandas (Blood)groupby</a></li>
+          
+            <li><a href="/2018/10/unicode_intro/">Unicode strings in Python</a></li>
+          
+            <li><a href="/2018/08/simul_t_test/">That ain&#39;t dancing Sally!</a></li>
+          
+          </ul>
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://adelr.github.io/2018/11/pandas_groupby/" data-toggle="tooltip" data-placement="top" title="Pandas (Blood)groupby">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:adel.rahmani&#43;dinkumdata@gmail.com" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/adelr" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://adelr.github.io/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              Adel Rahmani
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2019
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://adelr.github.io/">Dinkum Data Blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.54.0</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://adelr.github.io/js/main.js"></script>
+<script src="https://adelr.github.io/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://adelr.github.io/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [
+        ['$', '$'],
+        ['\\(', '\\)']
+      ],
+      displayMath: [
+        ['$$', '$$']
+      ],
+      processEscapes: true,
+      processEnvironments: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      TeX: {
+        equationNumbers: {
+          autoNumber: "AMS"
+        },
+        extensions: ["AMSmath.js", "AMSsymbols.js"]
+      }
+    }
+  });
+  MathJax.Hub.Queue(function () {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(),
+      i;
+    for (i = 0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+    
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    }
+  });
+</script>
+
+
+
+  </body>
+</html>
+
