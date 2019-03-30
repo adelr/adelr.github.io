@@ -5,8 +5,8 @@
     <link>https://adelr.github.io/categories/python/</link>
     <description>Recent content in Python on Dinkum Data Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <managingEditor>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</managingEditor>
-    <webMaster>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</webMaster>
+    <managingEditor>dinkumdata@gmail.com (Adel Rahmani)</managingEditor>
+    <webMaster>dinkumdata@gmail.com (Adel Rahmani)</webMaster>
     <lastBuildDate>Wed, 30 Jan 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://adelr.github.io/categories/python/index.xml" rel="self" type="application/rss+xml" />
@@ -16,7 +16,7 @@
       <title>Introduction to regular expressions</title>
       <link>https://adelr.github.io/2019/01/regex_intro/</link>
       <pubDate>Wed, 30 Jan 2019 00:00:00 +0000</pubDate>
-      <author>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</author>
+      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
       <guid>https://adelr.github.io/2019/01/regex_intro/</guid>
       <description>Jamie Zawinski: Some people, when confronted with a problem, think &#34;I know, I&#39;ll use regular expressions&#34;. Now they have two problems.    1. Prelude: Regular expressions are powerful...  http://xkcd.com/208/   ...but at first, they can be puzzling.  http://xkcd.com/1171/   from math import * import numpy as np import pandas as pd from pathlib import Path %matplotlib inline import matplotlib.pyplot as plt from IPython.core.display import display, HTML display(HTML(&amp;#34;&amp;lt;style&amp;gt;.</description>
     </item>
@@ -25,7 +25,7 @@
       <title>Pandas (Blood)groupby</title>
       <link>https://adelr.github.io/2018/11/pandas_groupby/</link>
       <pubDate>Thu, 15 Nov 2018 00:00:00 +0000</pubDate>
-      <author>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</author>
+      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
       <guid>https://adelr.github.io/2018/11/pandas_groupby/</guid>
       <description>from math import * import numpy as np import pandas as pd from pathlib import Path %matplotlib inline import matplotlib.pyplot as plt from IPython.core.display import display, HTML display(HTML(&amp;#34;&amp;lt;style&amp;gt;.container { width:100% !important; }&amp;lt;/style&amp;gt;&amp;#34;)) .container { width:100% !important; } 1. Pandas GroupBy To illustrate how the pandas groupby operation works let&amp;rsquo;s use some fake data. With numpy it&amp;rsquo;s trivial to generate random numerical data, however, it&amp;rsquo;s usually a lot more tedious to generate random people data that looks realistic.</description>
     </item>
@@ -34,7 +34,7 @@
       <title>Unicode strings in Python</title>
       <link>https://adelr.github.io/2018/10/unicode_intro/</link>
       <pubDate>Fri, 05 Oct 2018 00:00:00 +0000</pubDate>
-      <author>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</author>
+      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
       <guid>https://adelr.github.io/2018/10/unicode_intro/</guid>
       <description>1. Unicode: an introduction. Computers only understand one thing: binary code. For instance, when you type the letter &amp;ldquo;A&amp;rdquo; the computer must represent this as a sequence of 0s and 1s.
 Therefore we need a rule (code) for converting between characters and sequences of 0s and 1s. A basic way to do this is provided by the ASCII code.
@@ -45,7 +45,7 @@ The ASCII code uses 1 byte (8 bits) to encode 256 possible characters, correspon
       <title>That ain&#39;t dancing Sally!</title>
       <link>https://adelr.github.io/2018/08/simul_t_test/</link>
       <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
-      <author>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</author>
+      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
       <guid>https://adelr.github.io/2018/08/simul_t_test/</guid>
       <description>Same difference.
 Congratulations! Your simulation code from the previous post has impressed all and sundry and you&#39;ve been asked to teach introductory statistics to first year students at the prestigious Vandelay University. You&#39;ve got 2 stats classes, one with a group of 65 students, and another with a group of 35 students. We assume that the students have been randomly allocated to each group, and that they share the same final exam.</description>
@@ -55,7 +55,7 @@ Congratulations! Your simulation code from the previous post has impressed all a
       <title>Happy birthday to you!</title>
       <link>https://adelr.github.io/2018/06/simul_birthday/</link>
       <pubDate>Fri, 29 Jun 2018 00:00:00 +0000</pubDate>
-      <author>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</author>
+      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
       <guid>https://adelr.github.io/2018/06/simul_birthday/</guid>
       <description>The Birthday Problem is a classic problem in probability theory. We will use it to illustrate how to use simulation to get an estimate of the probability of some event occuring.
 Imagine that you are at a party with $N$ people (including yourself). Let&#39;s assume that we have 365 days in a year and that the birthday of the people attending the party is randomly distributed with a uniform distribution, meaning that each of the 365 days is equally probable as a birthday (if you were born on February 29, you&#39;ll need to go to another party).</description>
@@ -65,7 +65,7 @@ Imagine that you are at a party with $N$ people (including yourself). Let&#39;s 
       <title>Do you feel lucky?</title>
       <link>https://adelr.github.io/2018/06/simul_coin_flip/</link>
       <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
-      <author>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</author>
+      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
       <guid>https://adelr.github.io/2018/06/simul_coin_flip/</guid>
       <description>A coin flipped 100 times comes up heads 60 times. How likely is it that the coin is fair?
 This is a basic example of statistical inference, trying to infer an estimate of some quantity (here the probability for heads) from some data (observation of 100 coin flips). This type of problem is invariably described in every first year stats course. To solve it, we first need to represent the underlying process generating our observations in a mathematical form.</description>
@@ -75,7 +75,7 @@ This is a basic example of statistical inference, trying to infer an estimate of
       <title>Seinfeld&#39;s Magnificent Seven</title>
       <link>https://adelr.github.io/2018/05/seinfeld_effect/</link>
       <pubDate>Thu, 10 May 2018 00:00:00 +0000</pubDate>
-      <author>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</author>
+      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
       <guid>https://adelr.github.io/2018/05/seinfeld_effect/</guid>
       <description>In this post I want to take a look at a classic data set: the US baby names.
 While the origin of many names can be found in popular culture and (what&#39;s the alternative to popular culture? impopular culture?) elsewhere, we shall focus on how the TV show Seinfeld may have influenced the naming of hundreds of innocent babies.

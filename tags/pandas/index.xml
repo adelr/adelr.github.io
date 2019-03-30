@@ -5,8 +5,8 @@
     <link>https://adelr.github.io/tags/pandas/</link>
     <description>Recent content in Pandas on Dinkum Data Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <managingEditor>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</managingEditor>
-    <webMaster>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</webMaster>
+    <managingEditor>dinkumdata@gmail.com (Adel Rahmani)</managingEditor>
+    <webMaster>dinkumdata@gmail.com (Adel Rahmani)</webMaster>
     <lastBuildDate>Thu, 15 Nov 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://adelr.github.io/tags/pandas/index.xml" rel="self" type="application/rss+xml" />
@@ -16,7 +16,7 @@
       <title>Pandas (Blood)groupby</title>
       <link>https://adelr.github.io/2018/11/pandas_groupby/</link>
       <pubDate>Thu, 15 Nov 2018 00:00:00 +0000</pubDate>
-      <author>adel.rahmani&#43;dinkumdata@gmail.com (Adel Rahmani)</author>
+      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
       <guid>https://adelr.github.io/2018/11/pandas_groupby/</guid>
       <description>from math import * import numpy as np import pandas as pd from pathlib import Path %matplotlib inline import matplotlib.pyplot as plt from IPython.core.display import display, HTML display(HTML(&amp;#34;&amp;lt;style&amp;gt;.container { width:100% !important; }&amp;lt;/style&amp;gt;&amp;#34;)) .container { width:100% !important; } 1. Pandas GroupBy To illustrate how the pandas groupby operation works let&amp;rsquo;s use some fake data. With numpy it&amp;rsquo;s trivial to generate random numerical data, however, it&amp;rsquo;s usually a lot more tedious to generate random people data that looks realistic.</description>
     </item>
