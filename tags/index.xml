@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>dinkumdata@gmail.com (Adel Rahmani)</managingEditor>
     <webMaster>dinkumdata@gmail.com (Adel Rahmani)</webMaster>
-    <lastBuildDate>Thu, 15 Nov 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 28 Mar 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://adelr.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>Data Wrangling</title>
       <link>https://adelr.github.io/tags/data-wrangling/</link>
-      <pubDate>Thu, 15 Nov 2018 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
       <author>dinkumdata@gmail.com (Adel Rahmani)</author>
       <guid>https://adelr.github.io/tags/data-wrangling/</guid>
       <description></description>
@@ -51,9 +51,18 @@
     <item>
       <title>Python</title>
       <link>https://adelr.github.io/tags/python/</link>
-      <pubDate>Wed, 30 Jan 2019 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
       <author>dinkumdata@gmail.com (Adel Rahmani)</author>
       <guid>https://adelr.github.io/tags/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>https://adelr.github.io/tags/r/</link>
+      <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
+      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
+      <guid>https://adelr.github.io/tags/r/</guid>
       <description></description>
     </item>
     
@@ -72,6 +81,15 @@
       <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
       <author>dinkumdata@gmail.com (Adel Rahmani)</author>
       <guid>https://adelr.github.io/tags/seinfeld/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sql</title>
+      <link>https://adelr.github.io/tags/sql/</link>
+      <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
+      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
+      <guid>https://adelr.github.io/tags/sql/</guid>
       <description></description>
     </item>
     
