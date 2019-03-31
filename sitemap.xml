@@ -74,7 +74,7 @@
   
   <url>
     <loc>https://adelr.github.io/tags/pandas/</loc>
-    <lastmod>2018-11-15T00:00:00+00:00</lastmod>
+    <lastmod>2019-03-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -134,6 +134,12 @@
   
   <url>
     <loc>https://adelr.github.io/tags/</loc>
+    <lastmod>2019-03-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://adelr.github.io/tags/tidyverse/</loc>
     <lastmod>2019-03-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

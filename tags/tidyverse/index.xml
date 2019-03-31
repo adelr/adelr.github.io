@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tidyverse on Dinkum Data Blog</title>
+    <link>https://adelr.github.io/tags/tidyverse/</link>
+    <description>Recent content in Tidyverse on Dinkum Data Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <managingEditor>dinkumdata@gmail.com (Adel Rahmani)</managingEditor>
+    <webMaster>dinkumdata@gmail.com (Adel Rahmani)</webMaster>
+    <lastBuildDate>Thu, 28 Mar 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://adelr.github.io/tags/tidyverse/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Polyglot Data Wrangling</title>
+      <link>https://adelr.github.io/2019/03/polyglot_wrangling/</link>
+      <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
+      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
+      <guid>https://adelr.github.io/2019/03/polyglot_wrangling/</guid>
+      <description>SQL vs Python vs R In this post we will look a how basic data wrangling operations can be performed in 3 languages commonly used in data science:
+ Structured Query Language (SQL) Python R   Note that while Python and R have obvious similarities in their approach to data wrangling, SQL is designed to work with relational data, where most of the time consuming operations are (ideally) performed on the database side rather than in the client&amp;rsquo;s memory.</description>
+    </item>
+    
+  </channel>
+</rss>

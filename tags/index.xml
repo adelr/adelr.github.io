@@ -33,7 +33,7 @@
     <item>
       <title>Pandas</title>
       <link>https://adelr.github.io/tags/pandas/</link>
-      <pubDate>Thu, 15 Nov 2018 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
       <author>dinkumdata@gmail.com (Adel Rahmani)</author>
       <guid>https://adelr.github.io/tags/pandas/</guid>
       <description></description>
@@ -99,6 +99,15 @@
       <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
       <author>dinkumdata@gmail.com (Adel Rahmani)</author>
       <guid>https://adelr.github.io/tags/statistics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Tidyverse</title>
+      <link>https://adelr.github.io/tags/tidyverse/</link>
+      <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
+      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
+      <guid>https://adelr.github.io/tags/tidyverse/</guid>
       <description></description>
     </item>
     
