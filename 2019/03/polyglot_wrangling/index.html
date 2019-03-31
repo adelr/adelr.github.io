@@ -67,7 +67,7 @@
   "description" : "SQL vs Python vs R In this post we will look a how basic data wrangling operations can be performed in 3 languages commonly used in data science:
  Structured Query Language (SQL) Python R   Note that while Python and R have obvious similarities in their approach to data wrangling, SQL is designed to work with relational data, where most of the time consuming operations are (ideally) performed on the database side rather than in the client&amp;rsquo;s memory.",
   "inLanguage" : "en",
-  "wordCount": 8266,
+  "wordCount": 8449,
   "datePublished" : "2019-03-28T00:00:00",
   "dateModified" : "2019-03-28T00:00:00",
   "image" : "https://adelr.github.io/img/avatar-icon.png",
@@ -250,10 +250,10 @@ if (!doNotTrack) {
   <i class="fas fa-calendar"></i>&nbsp;Posted on March 28, 2019
   
   
-    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;39&nbsp;minutes
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;40&nbsp;minutes
   
   
-    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;8266&nbsp;words
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;8449&nbsp;words
   
   
     &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Adel Rahmani
@@ -658,7 +658,7 @@ df_r <span class="o">=</span> payment <span class="o">%&gt;%</span>
 
 <hr />
 
-<h3 id="which-transactions-occured-in-the-month-of-march-only-irrespective-of-the-year">Which transactions occured in the month of March only (irrespective of the year)?</h3>
+<h3 id="which-transactions-occured-in-the-month-of-march-only">Which transactions occured in the month of March only?</h3>
 
 <p>The <code>payment</code> table has a <code>payment_date</code> feature from which we will need to extract the month.</p>
 
@@ -1345,7 +1345,7 @@ df_r</code></pre></div><div class="highlight"><pre class="chroma">   payment_dat
 
 <h3 id="how-much-did-each-customer-spend-and-when">How much did each customer spend and when?</h3>
 
-<p>There are a number of ways to answer this question. To look at a different way of aggregating the data we will return the collection of transaction dates for each customer. In SQL we can do that with an array.</p>
+<p>We can answer this question in a number of ways. Let&rsquo;s return a sequence of transaction dates for each customer. In SQL we can do that with an array.</p>
 
 <h4 id="sql-3">▶ SQL</h4>
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">q</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;
@@ -5288,7 +5288,21 @@ df_r <span class="o">=</span> film <span class="o">%&gt;%</span>
 3     460    Innocent Usual    PG-13 191.74
 4     764    Saturday Lambs        G 190.74
 5     938 Velvet Terminator        R 152.77</pre></div>
-<p>To be continued&hellip;</p>
+<hr />
+
+<p>Hopefully, the examples above show that a significant part of the syntax used to wrangle structured data (data arranged in tables), in both Python (pandas) and R (tidyverse), has been influenced by SQL.</p>
+
+<p>Many of the pipelines we built are comprised of the same steps as the corresponding SQL query. This is especially true for basic queries where we do
+simple things like group by columns or build a simple aggregate measure.
+Similarly, syntactic differences aside, joining operations work in a comparable way across the three languages.</p>
+
+<p>As we consider more complex operations, however, a direct port of the SQL querie to the other languages may not be the most optimal way.
+We saw a small example of this when we computed which days in March had no rentals.
+The good news, however, is that these languages aren&rsquo;t mutually exclusive. After all, we did run all our SQL via Python (pandas).
+Rather these languages complement each other and can be used in conjunction to build pipelines that can perform complex manipulation of the data in an
+efficient way.</p>
+
+<p>To steal a line from  Alexandre Dumas&rsquo; The Three Musketeers, this is truly a case of <em>All for one and one for all</em>!</p>
 
 
         
