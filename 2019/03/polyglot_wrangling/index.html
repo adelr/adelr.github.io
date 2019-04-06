@@ -67,7 +67,7 @@
   "description" : "SQL vs Python vs R In this post we will look a how basic data wrangling operations can be performed in 3 languages commonly used in data science:
  Structured Query Language (SQL) Python R   Note that while Python and R have obvious similarities in their approach to data wrangling, SQL is designed to work with relational data, where most of the time consuming operations are (ideally) performed on the database side rather than in the client&amp;rsquo;s memory.",
   "inLanguage" : "en",
-  "wordCount": 8451,
+  "wordCount": 8478,
   "datePublished" : "2019-03-28T00:00:00",
   "dateModified" : "2019-03-28T00:00:00",
   "image" : "https://adelr.github.io/img/avatar-icon.png",
@@ -253,7 +253,7 @@ if (!doNotTrack) {
     &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;40&nbsp;minutes
   
   
-    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;8451&nbsp;words
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;8478&nbsp;words
   
   
     &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;Adel Rahmani
@@ -899,7 +899,7 @@ df_r <span class="o">=</span> payment <span class="o">%&gt;%</span>
 
 <p>Henceforth, we won&rsquo;t be worrying about this issue. We&rsquo;ll simply check that the dataframes shape match and
 the first few rows are consistent.</p>
-<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="nb">all</span><span class="p">(</span><span class="n">df</span><span class="o">==</span><span class="n">df_sql</span><span class="p">),</span> <span class="nb">all</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">df_r</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span></code></pre></div><div class="highlight"><pre class="chroma">(True, True)</pre></div>
+<div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="nb">all</span><span class="p">(</span><span class="n">df</span><span class="o">==</span><span class="n">df_sql</span><span class="p">),</span> <span class="nb">all</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">df_r</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span></code></pre></div><div class="highlight"><pre class="chroma">(True, True)</pre></div>
 <hr />
 
 <h3 id="which-day-saw-the-most-business-largest-number-of-transactions">Which day saw the most business (largest number of transactions)?</h3>
@@ -1579,7 +1579,7 @@ Name: gs, dtype: object</pre></div>
 
 <p>We could do something similar in Python, however let&rsquo;s try a more pythonic approach and use set operations to extract the dates we want. We simply construct the set of all dates in March 2007 and take the difference with the dates that are already in the database. The moral of the story here is that whereas the Python (and R) syntax can often look <em>SQLish</em>, this is not always the most concise or even suitable way to get to the answer.</p>
 <div class="highlight"><pre class="chroma"><code class="language-python" data-lang="python"><span class="n">gs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s1">&#39;20070301&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;20070331&#39;</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="s1">&#39;D&#39;</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">gs</span><span class="o">.</span><span class="n">date</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">payment</span><span class="o">.</span><span class="n">payment_date</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">gs</span><span class="o">.</span><span class="n">date</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">payment</span><span class="o">.</span><span class="n">payment_date</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="o">.</span><span class="n">values</span><span class="p">))</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
 <span class="k">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="n">df</span></code></pre></div><div class="highlight"><pre class="chroma">(21, 0)</pre></div>
 <div>
@@ -1602,52 +1602,13 @@ Name: gs, dtype: object</pre></div>
   </thead>
   <tbody>
     <tr>
-      <th>2007-03-28</th>
-    </tr>
-    <tr>
-      <th>2007-03-30</th>
-    </tr>
-    <tr>
-      <th>2007-03-26</th>
-    </tr>
-    <tr>
-      <th>2007-03-13</th>
-    </tr>
-    <tr>
-      <th>2007-03-10</th>
-    </tr>
-    <tr>
-      <th>2007-03-15</th>
-    </tr>
-    <tr>
-      <th>2007-03-08</th>
-    </tr>
-    <tr>
-      <th>2007-03-09</th>
-    </tr>
-    <tr>
-      <th>2007-03-24</th>
-    </tr>
-    <tr>
       <th>2007-03-03</th>
     </tr>
     <tr>
-      <th>2007-03-12</th>
+      <th>2007-03-04</th>
     </tr>
     <tr>
       <th>2007-03-05</th>
-    </tr>
-    <tr>
-      <th>2007-03-27</th>
-    </tr>
-    <tr>
-      <th>2007-03-25</th>
-    </tr>
-    <tr>
-      <th>2007-03-29</th>
-    </tr>
-    <tr>
-      <th>2007-03-31</th>
     </tr>
     <tr>
       <th>2007-03-06</th>
@@ -1656,13 +1617,52 @@ Name: gs, dtype: object</pre></div>
       <th>2007-03-07</th>
     </tr>
     <tr>
+      <th>2007-03-08</th>
+    </tr>
+    <tr>
+      <th>2007-03-09</th>
+    </tr>
+    <tr>
+      <th>2007-03-10</th>
+    </tr>
+    <tr>
       <th>2007-03-11</th>
     </tr>
     <tr>
-      <th>2007-03-04</th>
+      <th>2007-03-12</th>
+    </tr>
+    <tr>
+      <th>2007-03-13</th>
     </tr>
     <tr>
       <th>2007-03-14</th>
+    </tr>
+    <tr>
+      <th>2007-03-15</th>
+    </tr>
+    <tr>
+      <th>2007-03-24</th>
+    </tr>
+    <tr>
+      <th>2007-03-25</th>
+    </tr>
+    <tr>
+      <th>2007-03-26</th>
+    </tr>
+    <tr>
+      <th>2007-03-27</th>
+    </tr>
+    <tr>
+      <th>2007-03-28</th>
+    </tr>
+    <tr>
+      <th>2007-03-29</th>
+    </tr>
+    <tr>
+      <th>2007-03-30</th>
+    </tr>
+    <tr>
+      <th>2007-03-31</th>
     </tr>
   </tbody>
 </table>
@@ -1674,7 +1674,7 @@ Name: gs, dtype: object</pre></div>
 We could flatten the nested list but it would only obfuscate the code so we&rsquo;ll leave it like that.</p>
 <div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="o">%%</span>R
 gs <span class="o">=</span> <span class="kp">seq</span><span class="p">(</span>lubridate<span class="o">::</span>ymd<span class="p">(</span><span class="s">&#39;2007-03-01&#39;</span><span class="p">),</span> lubridate<span class="o">::</span>ymd<span class="p">(</span><span class="s">&#39;2007-03-31&#39;</span><span class="p">),</span> by <span class="o">=</span> <span class="s">&#39;1 day&#39;</span><span class="p">)</span>
-<span class="kp">lapply</span><span class="p">(</span><span class="kp">setdiff</span><span class="p">(</span>gs<span class="p">,</span> lubridate<span class="o">::</span><span class="kp">date</span><span class="p">(</span>payment<span class="o">$</span>payment_date<span class="p">)),</span> <span class="kp">as.Date</span><span class="p">,</span> origin<span class="o">=</span><span class="s">&#39;1970-01-01&#39;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[[1]]
+<span class="kp">lapply</span><span class="p">(</span><span class="kp">sort</span><span class="p">(</span><span class="kp">setdiff</span><span class="p">(</span>gs<span class="p">,</span> lubridate<span class="o">::</span><span class="kp">date</span><span class="p">(</span>payment<span class="o">$</span>payment_date<span class="p">))),</span> <span class="kp">as.Date</span><span class="p">,</span> origin<span class="o">=</span><span class="s">&#39;1970-01-01&#39;</span><span class="p">)</span></code></pre></div><div class="highlight"><pre class="chroma">[[1]]
 [1] &#34;2007-03-03&#34;
 
 [[2]]
@@ -2136,7 +2136,7 @@ gs <span class="o">=</span> <span class="kp">seq</span><span class="p">(</span>l
 <h4 id="r-5">▶  R</h4>
 
 <p>Once again, the pattern for R follows the same principles.</p>
-<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="o">%%</span>R <span class="o">-</span>o df_r
+<div class="highlight"><pre class="chroma"><code class="language-r" data-lang="r"><span class="o">%%</span>R 
 gs <span class="o">=</span> <span class="kt">data_frame</span><span class="p">(</span>payment_date<span class="o">=</span><span class="kp">seq</span><span class="p">(</span>lubridate<span class="o">::</span>ymd<span class="p">(</span><span class="s">&#39;2007-03-01&#39;</span><span class="p">),</span> 
                                  lubridate<span class="o">::</span>ymd<span class="p">(</span><span class="s">&#39;2007-03-31&#39;</span><span class="p">),</span> 
                                  by <span class="o">=</span> <span class="s">&#39;1 day&#39;</span><span class="p">))</span>
@@ -5300,7 +5300,7 @@ Similarly, syntactic differences aside, joining operations work in a comparable 
 We saw a small example of this when we computed which days in March had no rentals.
 The good news, however, is that these languages aren&rsquo;t mutually exclusive. After all, we did run all our SQL via Python (pandas).
 Rather these languages complement each other and can be used in conjunction to build pipelines that can perform complex manipulation of the data in an
-efficient way.</p>
+efficient way. Very often, SQL is used to first extract a subset of the data from a large database, which can then be manipulated and transformed further in Python or R.</p>
 
 <p>To steal a line from  Alexandre Dumas&rsquo; The Three Musketeers, this is truly a case of <em>All for one and one for all</em>!</p>
 
