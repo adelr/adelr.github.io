@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Pandas on Dinkum Data Blog</title>
+    <title>pandas on Dinkum Data Blog</title>
     <link>https://adelr.github.io/tags/pandas/</link>
-    <description>Recent content in Pandas on Dinkum Data Blog</description>
+    <description>Recent content in pandas on Dinkum Data Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <managingEditor>dinkumdata@gmail.com (Adel Rahmani)</managingEditor>
     <webMaster>dinkumdata@gmail.com (Adel Rahmani)</webMaster>
@@ -18,8 +18,7 @@
       <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
       <author>dinkumdata@gmail.com (Adel Rahmani)</author>
       <guid>https://adelr.github.io/2019/03/polyglot_wrangling/</guid>
-      <description>SQL vs Python vs R In this post we will look a how basic data wrangling operations can be performed in 3 languages commonly used in data science:
- Structured Query Language (SQL) Python R   Note that while Python and R have obvious similarities in their approach to data wrangling, SQL is designed to work with relational data, where most of the time consuming operations are (ideally) performed on the database side rather than in the client&amp;rsquo;s memory.</description>
+      <description>SQL vs Python vs R - Tous pour un, un pour tous!</description>
     </item>
     
     <item>
@@ -28,7 +27,7 @@
       <pubDate>Thu, 15 Nov 2018 00:00:00 +0000</pubDate>
       <author>dinkumdata@gmail.com (Adel Rahmani)</author>
       <guid>https://adelr.github.io/2018/11/pandas_groupby/</guid>
-      <description>from math import * import numpy as np import pandas as pd from pathlib import Path %matplotlib inline import matplotlib.pyplot as plt from IPython.core.display import display, HTML display(HTML(&amp;#34;&amp;lt;style&amp;gt;.container { width:100% !important; }&amp;lt;/style&amp;gt;&amp;#34;)) .container { width:100% !important; } 1. Pandas GroupBy To illustrate how the pandas groupby operation works let&amp;rsquo;s use some fake data. With numpy it&amp;rsquo;s trivial to generate random numerical data, however, it&amp;rsquo;s usually a lot more tedious to generate random people data that looks realistic.</description>
+      <description>An introduction to groupby operations in pandas</description>
     </item>
     
   </channel>

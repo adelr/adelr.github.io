@@ -13,20 +13,20 @@
     
     
     <item>
-      <title>Blogging</title>
-      <link>https://adelr.github.io/categories/blogging/</link>
-      <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
-      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
-      <guid>https://adelr.github.io/categories/blogging/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Python</title>
       <link>https://adelr.github.io/categories/python/</link>
       <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
       <author>dinkumdata@gmail.com (Adel Rahmani)</author>
       <guid>https://adelr.github.io/categories/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>blogging</title>
+      <link>https://adelr.github.io/categories/blogging/</link>
+      <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
+      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
+      <guid>https://adelr.github.io/categories/blogging/</guid>
       <description></description>
     </item>
     

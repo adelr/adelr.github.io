@@ -3,59 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://adelr.github.io/2019/03/polyglot_wrangling/</loc>
-    <lastmod>2019-03-28T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://adelr.github.io/2019/01/regex_intro/</loc>
-    <lastmod>2019-01-30T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://adelr.github.io/2018/11/pandas_groupby/</loc>
-    <lastmod>2018-11-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://adelr.github.io/2018/10/unicode_intro/</loc>
-    <lastmod>2018-10-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://adelr.github.io/2018/08/simul_t_test/</loc>
-    <lastmod>2018-08-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://adelr.github.io/2018/06/simul_birthday/</loc>
-    <lastmod>2018-06-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://adelr.github.io/2018/06/simul_coin_flip/</loc>
-    <lastmod>2018-06-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://adelr.github.io/2018/05/seinfeld_effect/</loc>
-    <lastmod>2018-05-10T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://adelr.github.io/categories/blogging/</loc>
-    <lastmod>2019-03-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://adelr.github.io/categories/</loc>
-    <lastmod>2019-03-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://adelr.github.io/tags/data-wrangling/</loc>
     <lastmod>2019-03-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -67,15 +15,8 @@
   </url>
   
   <url>
-    <loc>https://adelr.github.io/tags/groupby/</loc>
-    <lastmod>2018-11-15T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://adelr.github.io/tags/pandas/</loc>
+    <loc>https://adelr.github.io/2019/03/polyglot_wrangling/</loc>
     <lastmod>2019-03-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -85,13 +26,31 @@
   </url>
   
   <url>
-    <loc>https://adelr.github.io/tags/probability/</loc>
-    <lastmod>2018-08-29T00:00:00+00:00</lastmod>
+    <loc>https://adelr.github.io/categories/python/</loc>
+    <lastmod>2019-03-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://adelr.github.io/categories/python/</loc>
+    <loc>https://adelr.github.io/tags/</loc>
+    <lastmod>2019-03-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://adelr.github.io/categories/blogging/</loc>
+    <lastmod>2019-03-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://adelr.github.io/tags/data-wrangling/</loc>
+    <lastmod>2019-03-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://adelr.github.io/tags/pandas/</loc>
     <lastmod>2019-03-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -109,31 +68,7 @@
   </url>
   
   <url>
-    <loc>https://adelr.github.io/tags/regex/</loc>
-    <lastmod>2019-01-30T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://adelr.github.io/tags/seinfeld/</loc>
-    <lastmod>2018-08-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://adelr.github.io/tags/sql/</loc>
-    <lastmod>2019-03-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://adelr.github.io/tags/statistics/</loc>
-    <lastmod>2018-08-29T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://adelr.github.io/tags/</loc>
     <lastmod>2019-03-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -145,9 +80,74 @@
   </url>
   
   <url>
+    <loc>https://adelr.github.io/2019/01/regex_intro/</loc>
+    <lastmod>2019-01-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://adelr.github.io/tags/regex/</loc>
+    <lastmod>2019-01-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://adelr.github.io/2018/11/pandas_groupby/</loc>
+    <lastmod>2018-11-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://adelr.github.io/tags/groupby/</loc>
+    <lastmod>2018-11-15T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://adelr.github.io/2018/10/unicode_intro/</loc>
+    <lastmod>2018-10-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://adelr.github.io/tags/unicode/</loc>
     <lastmod>2018-10-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://adelr.github.io/2018/08/simul_t_test/</loc>
+    <lastmod>2018-08-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://adelr.github.io/tags/probability/</loc>
+    <lastmod>2018-08-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://adelr.github.io/tags/seinfeld/</loc>
+    <lastmod>2018-08-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://adelr.github.io/tags/statistics/</loc>
+    <lastmod>2018-08-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://adelr.github.io/2018/06/simul_birthday/</loc>
+    <lastmod>2018-06-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://adelr.github.io/2018/06/simul_coin_flip/</loc>
+    <lastmod>2018-06-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://adelr.github.io/2018/05/seinfeld_effect/</loc>
+    <lastmod>2018-05-10T00:00:00+00:00</lastmod>
   </url>
   
 </urlset>

@@ -13,7 +13,7 @@
     
     
     <item>
-      <title>Data Wrangling</title>
+      <title>data wrangling</title>
       <link>https://adelr.github.io/tags/data-wrangling/</link>
       <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
       <author>dinkumdata@gmail.com (Adel Rahmani)</author>
@@ -22,16 +22,7 @@
     </item>
     
     <item>
-      <title>Groupby</title>
-      <link>https://adelr.github.io/tags/groupby/</link>
-      <pubDate>Thu, 15 Nov 2018 00:00:00 +0000</pubDate>
-      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
-      <guid>https://adelr.github.io/tags/groupby/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Pandas</title>
+      <title>pandas</title>
       <link>https://adelr.github.io/tags/pandas/</link>
       <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
       <author>dinkumdata@gmail.com (Adel Rahmani)</author>
@@ -40,16 +31,7 @@
     </item>
     
     <item>
-      <title>Probability</title>
-      <link>https://adelr.github.io/tags/probability/</link>
-      <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
-      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
-      <guid>https://adelr.github.io/tags/probability/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Python</title>
+      <title>python</title>
       <link>https://adelr.github.io/tags/python/</link>
       <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
       <author>dinkumdata@gmail.com (Adel Rahmani)</author>
@@ -58,7 +40,7 @@
     </item>
     
     <item>
-      <title>R</title>
+      <title>r</title>
       <link>https://adelr.github.io/tags/r/</link>
       <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
       <author>dinkumdata@gmail.com (Adel Rahmani)</author>
@@ -67,25 +49,7 @@
     </item>
     
     <item>
-      <title>Regex</title>
-      <link>https://adelr.github.io/tags/regex/</link>
-      <pubDate>Wed, 30 Jan 2019 00:00:00 +0000</pubDate>
-      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
-      <guid>https://adelr.github.io/tags/regex/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Seinfeld</title>
-      <link>https://adelr.github.io/tags/seinfeld/</link>
-      <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
-      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
-      <guid>https://adelr.github.io/tags/seinfeld/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Sql</title>
+      <title>sql</title>
       <link>https://adelr.github.io/tags/sql/</link>
       <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
       <author>dinkumdata@gmail.com (Adel Rahmani)</author>
@@ -94,16 +58,7 @@
     </item>
     
     <item>
-      <title>Statistics</title>
-      <link>https://adelr.github.io/tags/statistics/</link>
-      <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
-      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
-      <guid>https://adelr.github.io/tags/statistics/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Tidyverse</title>
+      <title>tidyverse</title>
       <link>https://adelr.github.io/tags/tidyverse/</link>
       <pubDate>Thu, 28 Mar 2019 00:00:00 +0000</pubDate>
       <author>dinkumdata@gmail.com (Adel Rahmani)</author>
@@ -112,11 +67,56 @@
     </item>
     
     <item>
-      <title>Unicode</title>
+      <title>regex</title>
+      <link>https://adelr.github.io/tags/regex/</link>
+      <pubDate>Wed, 30 Jan 2019 00:00:00 +0000</pubDate>
+      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
+      <guid>https://adelr.github.io/tags/regex/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>groupby</title>
+      <link>https://adelr.github.io/tags/groupby/</link>
+      <pubDate>Thu, 15 Nov 2018 00:00:00 +0000</pubDate>
+      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
+      <guid>https://adelr.github.io/tags/groupby/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>unicode</title>
       <link>https://adelr.github.io/tags/unicode/</link>
       <pubDate>Fri, 05 Oct 2018 00:00:00 +0000</pubDate>
       <author>dinkumdata@gmail.com (Adel Rahmani)</author>
       <guid>https://adelr.github.io/tags/unicode/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>probability</title>
+      <link>https://adelr.github.io/tags/probability/</link>
+      <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
+      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
+      <guid>https://adelr.github.io/tags/probability/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>seinfeld</title>
+      <link>https://adelr.github.io/tags/seinfeld/</link>
+      <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
+      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
+      <guid>https://adelr.github.io/tags/seinfeld/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>statistics</title>
+      <link>https://adelr.github.io/tags/statistics/</link>
+      <pubDate>Wed, 29 Aug 2018 00:00:00 +0000</pubDate>
+      <author>dinkumdata@gmail.com (Adel Rahmani)</author>
+      <guid>https://adelr.github.io/tags/statistics/</guid>
       <description></description>
     </item>
     
